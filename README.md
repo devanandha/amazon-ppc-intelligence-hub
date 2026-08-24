@@ -58,3 +58,23 @@ No employer data is bundled with this project. For a public portfolio or Global 
 Document the problem, your independent contribution, the technical architecture, validation approach and business outcome. Useful evidence can include anonymised screenshots, a short demonstration video, a public code repository containing only non-confidential code, stakeholder feedback where permitted, and quantified improvements approved for disclosure.
 
 This project can support evidence of technical contribution, innovation and business impact, but the code alone does not guarantee endorsement under any immigration route.
+
+## Application Screenshots
+
+The following screenshots use entirely synthetic demonstration data.
+
+### Executive KPI Dashboard
+
+![Executive KPI Dashboard](screenshots/executive-kpi-dashboard.png)
+
+### Campaign Performance
+
+![Campaign Performance Charts](screenshots/campaign-performance-charts.png)
+
+### Campaign Health Classification
+
+![Campaign Health Summary](screenshots/campaign-health-summary.png)
+
+### Performance Over Time
+
+![Performance Over Time](screenshots/performance-over-time.png)
