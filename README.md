@@ -65,8 +65,8 @@ The following screenshots use entirely synthetic demonstration data.
 
 ### Executive KPI Dashboard
 
-![Executive KPI Dashboard](<img width="954" height="467" alt="executive-kpi-dashboard png" src="https://github.com/user-attachments/assets/741934df-e09e-461f-b423-a89571b3cc62" />
-)
+![Executive KPI Dashboard](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/executive-kpi-dashboard.png.png)
+
 
 ### Campaign Performance
 
