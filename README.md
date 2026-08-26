@@ -141,8 +141,6 @@ The following screenshots use entirely fictional demonstration data.
 
 ### Campaign performance charts
 
-### Campaign performance charts
-
 ![Campaign Performance Charts](screenshots/campaign-performance-charts%202.png)
 
 ### Performance over time
@@ -151,15 +149,15 @@ The following screenshots use entirely fictional demonstration data.
 
 ### Campaign health summary
 
-![Campaign Health Summary](screenshots/campaign-health-summary%202.png.png)
+![Campaign Health Summary](screenshots/campaign-health-summary%202.png)
 
 ### Search-term performance
 
-![Search Term Performance](screenshots/search-term-performance%202.png.png)
+![Search Term Performance](screenshots/search-term-performance%202.png)
 
 ### Action Centre
 
-![Action Centre Harvest Opportunities](screenshots/action-centre-harvest%202.png.png)
+![Action Centre Harvest Opportunities](screenshots/action-centre-harvest%202.png.)
 
 ## Portfolio value
 
