@@ -16,7 +16,6 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-
 COL = {
     "date": "Start Date",
     "portfolio": "Portfolio name",
@@ -60,6 +59,11 @@ def load_report(file_bytes: bytes) -> pd.DataFrame:
     df = pd.read_excel(io.BytesIO(file_bytes))
     df.columns = df.columns.astype(str).str.replace("\u00a0", " ", regex=False).str.strip()
     return df
+
+
+@st.cache_data(show_spinner=False)
+def load_business_report(file_bytes: bytes) -> pd.DataFrame:
+    return pd.read_csv(io.BytesIO(file_bytes))
 
 
 def clean_report(df: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
@@ -139,7 +143,10 @@ def classify_actions(table: pd.DataFrame, target_acos: float, min_clicks: int, m
         else:
             action, priority, reason = "Reduce bid / pause review", "High", "ACOS materially above target"
             adjustment = max(-50, round((target_acos / acos - 1) * 100))
-        actions.append(action); priorities.append(priority); reasons.append(reason); adjustments.append(adjustment)
+        actions.append(action);
+        priorities.append(priority);
+        reasons.append(reason);
+        adjustments.append(adjustment)
 
     result["Recommended Action"] = actions
     result["Priority"] = priorities
@@ -190,7 +197,8 @@ def add_health_status(table: pd.DataFrame, target_acos: float, min_clicks: int,
 
 
 def is_asin(value: str) -> bool:
-    return bool(re.fullmatch(r"B0[A-Z0-9]{8}", str(value).strip().upper()))
+    value = str(value).strip().upper()
+    return bool(re.fullmatch(r"B[A-Z0-9]{9}", value))
 
 
 def build_action_tables(df: pd.DataFrame, target_acos: float, negative_clicks: int, min_orders: int):
@@ -199,17 +207,24 @@ def build_action_tables(df: pd.DataFrame, target_acos: float, negative_clicks: i
     search = classify_actions(search, target_acos, negative_clicks, min_orders)
 
     harvest = search[
-        (~search["Is ASIN"]) & (search[COL["orders"]] >= min_orders)
-        & search["ACOS %"].notna() & (search["ACOS %"] <= target_acos)
-    ].sort_values([COL["sales"], COL["orders"]], ascending=False)
+        (~search["Is ASIN"])
+        & (search[COL["orders"]] >= 3)
+        & (search[COL["clicks"]] >= 10)
+        & (search[COL["sales"]] >= 50)
+        & search["ACOS %"].notna()
+        & (search["ACOS %"] <= target_acos)
+        ].sort_values([COL["sales"], COL["orders"]], ascending=False)
     negatives = search[
         (~search["Is ASIN"]) & (search[COL["orders"]] == 0)
         & (search[COL["clicks"]] >= negative_clicks)
-    ].sort_values(COL["spend"], ascending=False)
+        ].sort_values(COL["spend"], ascending=False)
     asins = search[
-        search["Is ASIN"] & (search[COL["orders"]] >= min_orders)
-        & search["ACOS %"].notna() & (search["ACOS %"] <= target_acos)
-    ].sort_values(COL["sales"], ascending=False)
+        search["Is ASIN"]
+        & (search[COL["orders"]] >= 3)
+        & (search[COL["sales"]] >= 50)
+        & search["ACOS %"].notna()
+        & (search["ACOS %"] <= target_acos)
+        ].sort_values(COL["sales"], ascending=False)
     return search, harvest, negatives, asins
 
 
@@ -226,11 +241,54 @@ def totals(df: pd.DataFrame) -> dict[str, float]:
     }
 
 
-def format_excel_sheet(writer, sheet_name: str, frame: pd.DataFrame):
+def business_totals(df: pd.DataFrame):
+    sales = pd.to_numeric(
+        df["Ordered Product Sales"]
+        .astype(str)
+        .str.replace("$", "", regex=False)
+        .str.replace(",", "", regex=False),
+        errors="coerce"
+    ).fillna(0).sum()
+
+    units = pd.to_numeric(
+        df["Units Ordered"],
+        errors="coerce"
+    ).fillna(0).sum()
+
+    orders = pd.to_numeric(
+        df["Total Order Items"],
+        errors="coerce"
+    ).fillna(0).sum()
+
+    sessions = pd.to_numeric(
+        df["Sessions - Total"]
+        .astype(str)
+        .str.replace(",", "", regex=False),
+        errors="coerce"
+    ).fillna(0).sum()
+
+    conversion_rate = (
+        orders / sessions * 100
+        if sessions > 0
+        else 0
+    )
+
+    return {
+        "Total Sales": sales,
+        "Units": units,
+        "Orders": orders,
+        "Sessions": sessions,
+        "Conversion Rate": conversion_rate
+    }
+
+
+def format_excel_sheet(writer, sheet_name: str, frame: pd.DataFrame, currency_symbol: str):
     frame.to_excel(writer, sheet_name=sheet_name, index=False)
     workbook, worksheet = writer.book, writer.sheets[sheet_name]
     header = workbook.add_format({"bold": True, "font_color": "white", "bg_color": "#17365D", "border": 1})
-    money = workbook.add_format({"num_format": "£#,##0.00"})
+    money = workbook.add_format(
+        {"num_format": f'{currency_symbol}#,##0.00'}
+    )
     for col_num, name in enumerate(frame.columns):
         worksheet.write(0, col_num, name, header)
         width = min(42, max(12, len(str(name)) + 2, *(len(str(v)) + 1 for v in frame[name].head(200))))
@@ -242,7 +300,8 @@ def format_excel_sheet(writer, sheet_name: str, frame: pd.DataFrame):
 
 def make_export(summary: pd.DataFrame, campaign: pd.DataFrame, ad_group: pd.DataFrame,
                 search: pd.DataFrame, harvest: pd.DataFrame, negatives: pd.DataFrame,
-                asins: pd.DataFrame, wasted: pd.DataFrame) -> bytes:
+                asins: pd.DataFrame, wasted: pd.DataFrame,
+                currency_symbol: str) -> bytes:
     output = io.BytesIO()
     with pd.ExcelWriter(output, engine="xlsxwriter") as writer:
         for name, frame in [
@@ -251,7 +310,7 @@ def make_export(summary: pd.DataFrame, campaign: pd.DataFrame, ad_group: pd.Data
             ("Harvest Keywords", harvest), ("Negative Candidates", negatives),
             ("Winning ASINs", asins), ("Wasted Spend", wasted),
         ]:
-            format_excel_sheet(writer, name, frame)
+            format_excel_sheet(writer, name, frame, currency_symbol)
     return output.getvalue()
 
 
@@ -274,12 +333,16 @@ with st.sidebar:
     st.header("Analysis settings")
     target_acos = st.number_input("Target ACOS (%)", min_value=1.0, max_value=200.0, value=25.0, step=1.0)
     negative_clicks = st.number_input("Clicks before negative review", min_value=1, max_value=200, value=15)
-    min_orders = st.number_input("Minimum orders for a winner", min_value=1, max_value=50, value=2)
-    st.caption("Recommendations are decision support. Review relevance, profitability, placement and campaign strategy before applying changes.")
+    min_orders = st.number_input("Minimum orders for a winner", min_value=1, max_value=50, value=3)
+    st.caption(
+        "Recommendations are decision support. Review relevance, profitability, placement and campaign strategy before applying changes.")
 
 uploaded = st.file_uploader("Upload an Amazon Sponsored Products Search Term report", type=["xlsx", "xls"])
+business_uploaded = st.file_uploader("Upload Business Report (Sales & Traffic By Date)", type=["csv"]
+                                     )
 if uploaded is None:
-    st.info("Upload the report to begin. Your workbook is processed within this app session and is not included in the project files.")
+    st.info(
+        "Upload the report to begin. Your workbook is processed within this app session and is not included in the project files.")
     st.stop()
 
 try:
@@ -289,6 +352,16 @@ except Exception as exc:
     st.stop()
 
 df, missing = clean_report(raw)
+business_kpi = None
+if business_uploaded is not None:
+    business_df = load_business_report(
+        business_uploaded.getvalue()
+    )
+
+    business_kpi = business_totals(
+        business_df
+    )
+
 if missing:
     st.error("Required columns are missing: " + ", ".join(missing))
     st.stop()
@@ -304,29 +377,96 @@ if filtered.empty:
     st.warning("The selected filters contain no rows.")
     st.stop()
 
-currency_code = str(filtered[COL["currency"]].mode().iloc[0]) if COL["currency"] in filtered and not filtered[COL["currency"]].mode().empty else "GBP"
+currency_code = str(filtered[COL["currency"]].mode().iloc[0]) if COL["currency"] in filtered and not filtered[
+    COL["currency"]].mode().empty else "GBP"
 symbol = CURRENCY_SYMBOLS.get(currency_code.upper(), currency_code + " ")
 
 campaign = classify_actions(aggregate(filtered, [COL["campaign"]]), target_acos, negative_clicks, min_orders)
-ad_group = classify_actions(aggregate(filtered, [COL["campaign"], COL["ad_group"]]), target_acos, negative_clicks, min_orders)
+ad_group = classify_actions(aggregate(filtered, [COL["campaign"], COL["ad_group"]]), target_acos, negative_clicks,
+                            min_orders)
 campaign = add_health_status(campaign, target_acos, negative_clicks, min_orders)
 ad_group = add_health_status(ad_group, target_acos, negative_clicks, min_orders)
 search, harvest, negatives, asins = build_action_tables(filtered, target_acos, negative_clicks, min_orders)
-wasted = search[(search[COL["orders"]] == 0) & (search[COL["spend"]] > 0)].sort_values(COL["spend"], ascending=False)
+wasted = search[(search[COL["orders"]] == 0) & (search[COL["clicks"]] >= negative_clicks)].sort_values(COL["spend"],
+                                                                                                       ascending=False)
 kpi = totals(filtered)
+if business_kpi:
+    total_sales = business_kpi["Total Sales"]
+    organic_sales = max(
+        0,
+        total_sales - kpi["Sales"]
+    )
+
+    tacos = (
+        (kpi["Spend"] / total_sales) * 100
+        if total_sales > 0
+        else 0
+    )
+
+    ad_contribution = (
+        (kpi["Sales"] / total_sales) * 100
+        if total_sales > 0
+        else 0
+    )
+
+else:
+
+    total_sales = 0
+    organic_sales = 0
+    tacos = 0
+    ad_contribution = 0
 wasted_total = wasted[COL["spend"]].sum()
 waste_rate = safe_divide(wasted_total, kpi["Spend"], 100)
+if business_kpi:
+    st.subheader("Account Performance")
+    account_cols = st.columns(7)
+
+    account_cols[0].metric(
+        "Total Sales",
+        f"{symbol}{total_sales:,.2f}"
+    )
+
+    account_cols[1].metric(
+        "Organic Sales",
+        f"{symbol}{organic_sales:,.2f}"
+    )
+
+    account_cols[2].metric(
+        "Ad Sales",
+        f"{symbol}{kpi['Sales']:,.2f}"
+    )
+
+    account_cols[3].metric(
+        "TACOS",
+        f"{tacos:.2f}%"
+    )
+
+    account_cols[4].metric(
+        "Ad Contribution",
+        f"{ad_contribution:.2f}%"
+    )
+
+    account_cols[5].metric(
+        "Sessions",
+        f"{int(business_kpi['Sessions']):,}"
+    )
+
+    account_cols[6].metric(
+        "Account CVR",
+        f"{business_kpi['Conversion Rate']:.2f}%"
+    )
 
 st.subheader("Executive KPIs")
+
 top = st.columns(6)
 for box, label, value in zip(top, ["Ad Spend", "Ad Sales", "Orders", "ACOS", "ROAS", "Wasted Spend"],
-    [f"{symbol}{kpi['Spend']:,.2f}", f"{symbol}{kpi['Sales']:,.2f}", f"{int(kpi['Orders']):,}",
-     f"{kpi['ACOS']:.2f}%", f"{kpi['ROAS']:.2f}x", f"{symbol}{wasted_total:,.2f}"]):
+                             [f"{symbol}{kpi['Spend']:,.2f}", f"{symbol}{kpi['Sales']:,.2f}", f"{int(kpi['Orders']):,}",
+                              f"{kpi['ACOS']:.2f}%", f"{kpi['ROAS']:.2f}x", f"{symbol}{wasted_total:,.2f}"]):
     box.metric(label, value)
 bottom = st.columns(6)
 for box, label, value in zip(bottom, ["Impressions", "Clicks", "CTR", "CPC", "CVR", "AOV"],
-    [f"{int(kpi['Impressions']):,}", f"{int(kpi['Clicks']):,}", f"{kpi['CTR']:.2f}%",
-     f"{symbol}{kpi['CPC']:.2f}", f"{kpi['CVR']:.2f}%", f"{symbol}{kpi['AOV']:.2f}"]):
+                             [f"{int(kpi['Impressions']):,}", f"{int(kpi['Clicks']):,}", f"{kpi['CTR']:.2f}%",
+                              f"{symbol}{kpi['CPC']:.2f}", f"{kpi['CVR']:.2f}%", f"{symbol}{kpi['AOV']:.2f}"]):
     box.metric(label, value)
 
 st.info(
@@ -355,8 +495,46 @@ with overview_tab:
 
     if COL["date"] in filtered.columns and filtered[COL["date"]].notna().any():
         trend = aggregate(filtered.dropna(subset=[COL["date"]]), [COL["date"]]).sort_values(COL["date"])
-        fig = px.line(trend, x=COL["date"], y=[COL["spend"], COL["sales"]], markers=True,
-                      title="Performance over time")
+        from plotly.subplots import make_subplots
+        import plotly.graph_objects as go
+
+        fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+        fig.add_trace(
+            go.Scatter(
+                x=trend[COL["date"]],
+                y=trend[COL["spend"]],
+                name="Spend",
+                mode="lines+markers"
+            ),
+            secondary_y=False
+        )
+
+        fig.add_trace(
+            go.Scatter(
+                x=trend[COL["date"]],
+                y=trend[COL["sales"]],
+                name="Sales",
+                mode="lines+markers"
+            ),
+            secondary_y=True
+        )
+
+        fig.update_layout(
+            title="Performance over time",
+            hovermode="x unified"
+        )
+
+        fig.update_yaxes(
+            title_text="Spend ($)",
+            secondary_y=False
+        )
+
+        fig.update_yaxes(
+            title_text="Sales ($)",
+            secondary_y=True
+        )
+
         st.plotly_chart(fig, use_container_width=True)
 
 with campaigns_tab:
@@ -380,12 +558,13 @@ with terms_tab:
     display_table(search.sort_values(COL["spend"], ascending=False), symbol)
 
 with actions_tab:
-    a, b, c, d = st.tabs(["Harvest", "Negatives", "ASIN targets", "Wasted spend"])
+    a, b, c, d = st.tabs(["Harvest", "Negatives", "Winning ASIN targets", "Wasted spend"])
     with a:
         st.caption("Search terms with sufficient orders and ACOS at or below target. Review for exact-match campaigns.")
         display_table(harvest, symbol)
     with b:
-        st.caption("Non-ASIN terms above the selected click threshold with no attributed orders. Check relevance before negating.")
+        st.caption(
+            "Non-ASIN terms above the selected click threshold with no attributed orders. Check relevance before negating.")
         display_table(negatives, symbol)
     with c:
         st.caption("Converting ASIN search terms at or below target ACOS. Review as product-targeting opportunities.")
@@ -401,19 +580,55 @@ with quality_tab:
         "Exact duplicate rows": duplicate_rows, "Rows with zero clicks": zero_click_rows,
         "Detected currency": currency_code,
     })
-    st.caption("Rates such as ACOS, ROAS, CTR and CVR are recalculated from aggregated totals rather than averaged from report rows.")
+    st.caption(
+        "Rates such as ACOS, ROAS, CTR and CVR are recalculated from aggregated totals rather than averaged from report rows.")
 
-summary = pd.DataFrame({"KPI": list(kpi.keys()) + ["Wasted Spend", "Waste Rate %", "Harvest Opportunities", "Negative Candidates", "Winning ASINs"],
-                        "Value": list(kpi.values()) + [wasted_total, waste_rate, len(harvest), len(negatives), len(asins)]})
-export = make_export(summary, campaign, ad_group, search, harvest, negatives, asins, wasted)
+summary_metrics = {
+    "Spend": kpi["Spend"], "Sales": kpi["Sales"], "Orders": kpi["Orders"], "Units": kpi["Units"],
+    "Impressions": kpi["Impressions"], "Clicks": kpi["Clicks"], "ACOS": kpi["ACOS"], "ROAS": kpi["ROAS"],
+    "CTR": kpi["CTR"], "CVR": kpi["CVR"], "CPC": kpi["CPC"], "AOV": kpi["AOV"], "Wasted Spend": wasted_total,
+    "Waste Rate %": waste_rate, "Harvest Opportunities": len(harvest), "Negative Candidates": len(negatives),
+    "Winning ASINs": len(asins)
+}
+
+if business_kpi:
+    summary_metrics.update({
+        "Total Sales": total_sales, "Organic Sales": organic_sales, "TACOS %": tacos,
+        "Ad Contribution %": ad_contribution, "Sessions": business_kpi["Sessions"],
+        "Account Conversion Rate %": business_kpi["Conversion Rate"]
+    })
+
+summary = pd.DataFrame(
+    summary_metrics.items(),
+    columns=["KPI", "Value"]
+)
+export = make_export(summary, campaign, ad_group, search, harvest, negatives, asins, wasted, symbol)
 st.download_button("Download PPC Intelligence Action Report", export, "PPC_Intelligence_Action_Report.xlsx",
                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", type="primary")
 
 with st.expander("Methodology and limitations"):
     st.markdown("""
-    - KPIs are recalculated from summed inputs, avoiding incorrect averages of row-level ratios.
-    - Recommendations require configurable evidence thresholds and include a reason and priority.
-    - Bid adjustments are directional estimates, capped to reduce overreaction; they are not applied automatically.
-    - Attribution windows, organic sales, contribution margin, placement, budget limits and seasonality are not present in this report.
-      Final decisions should therefore be reviewed by an account owner.
+
+        - KPIs (ACOS, ROAS, CTR, CVR and AOV) are recalculated from aggregated totals to ensure accuracy.
+
+        - Search terms are aggregated before recommendations are generated, preventing duplicate terms from being analysed separately.
+
+        - Harvest opportunities require:
+                - Minimum 3 orders
+                - Minimum 10 clicks
+                - Minimum 50 sales
+                - ACOS at or below the selected target
+
+            - Negative candidates require:
+                - Zero orders
+                - Clicks at or above the selected negative-review threshold
+
+            - Winning ASIN targets require:
+                - Minimum 3 orders
+                - Minimum 50 sales
+                - ACOS at or below the selected target
+
+            - Suggested bid adjustments are directional recommendations only and are not applied automatically.
+
+            - Attribution windows, organic sales, contribution margin, placement performance, budget constraints and seasonality are not available within the Search Term Report and should be considered before making changes.
     """)
