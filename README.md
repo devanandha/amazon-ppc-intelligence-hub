@@ -2,6 +2,12 @@
 
 An explainable decision-support application for Amazon Sponsored Products advertising. It combines Search Term Report analysis with optional Business Report data to produce account-level KPIs, campaign health classifications, search-term opportunities, prioritised actions and a downloadable Excel report.
 
+## Live demonstration
+
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://devanandha-amazon-ppc-intelligence-hb.streamlit.app)
+
+Try the live application: [Amazon PPC Intelligence Hub](https://devanandha-amazon-ppc-intelligence-hb.streamlit.app)
+
 ## Key capabilities
 
 * Calculates ACOS, ROAS, CTR, CPC, CVR and AOV from aggregated totals.
