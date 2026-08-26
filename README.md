@@ -133,31 +133,33 @@ The following screenshots use entirely fictional demonstration data.
 
 ### Account overview
 
-![Account Overview]([screenshots/dashboard-account-overview.png)](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/dashboard-account-overview.png.png)
+![Account Overview](screenshots/dashboard-account-overview.png)
 
 ### Executive KPI summary
 
-![Executive KPI Summary]([screenshots/executive-kpi-summary.png](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/executive-kpi-dashboard.png.png)
+![Executive KPI Summary](screenshots/executive-kpi-summary.png)
 
 ### Campaign performance charts
 
-![Campaign Performance Charts]([screenshots/campaign-performance-charts.png](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/campaign-performance-charts%202.png.png)
+### Campaign performance charts
+
+![Campaign Performance Charts](screenshots/campaign-performance-charts%202.png)
 
 ### Performance over time
 
-![Performance Over Time]([screenshots/performance-over-time.png](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/campaign-performance-charts%202.png.png)
+![Performance Over Time](screenshots/performance-over-time%202.png)
 
 ### Campaign health summary
 
-![Campaign Health Summary]([screenshots/campaign-health-summary.png](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/campaign-health-summary%202.png.png)
+![Campaign Health Summary](screenshots/campaign-health-summary%202.png.png)
 
 ### Search-term performance
 
-([screenshots/search-term-performance.png](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/search-term-performance%202.png.png)
+![Search Term Performance](screenshots/search-term-performance%202.png.png)
 
 ### Action Centre
 
-![Action Centre Harvest Opportunities](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/action-centre-harvest%202.png.png)
+![Action Centre Harvest Opportunities](screenshots/action-centre-harvest%202.png.png)
 
 ## Portfolio value
 
