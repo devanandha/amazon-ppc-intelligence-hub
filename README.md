@@ -133,31 +133,31 @@ The following screenshots use entirely fictional demonstration data.
 
 ### Account overview
 
-![Account Overview](screenshots/dashboard-account-overview.png)
+![Account Overview]([screenshots/dashboard-account-overview.png)](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/dashboard-account-overview.png.png)
 
 ### Executive KPI summary
 
-![Executive KPI Summary](screenshots/executive-kpi-summary.png)
+![Executive KPI Summary]([screenshots/executive-kpi-summary.png](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/executive-kpi-dashboard.png.png)
 
 ### Campaign performance charts
 
-![Campaign Performance Charts](screenshots/campaign-performance-charts.png)
+![Campaign Performance Charts]([screenshots/campaign-performance-charts.png](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/campaign-performance-charts%202.png.png)
 
 ### Performance over time
 
-![Performance Over Time](screenshots/performance-over-time.png)
+![Performance Over Time]([screenshots/performance-over-time.png](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/campaign-performance-charts%202.png.png)
 
 ### Campaign health summary
 
-![Campaign Health Summary](screenshots/campaign-health-summary.png)
+![Campaign Health Summary]([screenshots/campaign-health-summary.png](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/campaign-health-summary%202.png.png)
 
 ### Search-term performance
 
-![Search Term Performance](screenshots/search-term-performance.png)
+![Search Term Performance]([screenshots/search-term-performance.png](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/search-term-performance%202.png.png)
 
 ### Action Centre
 
-![Action Centre Harvest Opportunities](screenshots/action-centre-harvest.png)
+![Action Centre Harvest Opportunities](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/action-centre-harvest%202.png.png)
 
 ## Portfolio value
 
