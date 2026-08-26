@@ -153,7 +153,7 @@ The following screenshots use entirely fictional demonstration data.
 
 ### Search-term performance
 
-![Search Term Performance]([screenshots/search-term-performance.png](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/search-term-performance%202.png.png)
+([screenshots/search-term-performance.png](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/search-term-performance%202.png.png)
 
 ### Action Centre
 
