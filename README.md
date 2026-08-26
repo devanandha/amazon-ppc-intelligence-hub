@@ -1,81 +1,179 @@
 # Amazon PPC Intelligence Hub
 
-An explainable decision-support application for Amazon Sponsored Products Search Term reports. It converts a raw advertising export into executive KPIs, campaign and ad-group drill-downs, keyword and ASIN opportunities, wasted-spend analysis, prioritised actions and a downloadable Excel report.
+An explainable decision-support application for Amazon Sponsored Products advertising. It combines Search Term Report analysis with optional Business Report data to produce account-level KPIs, campaign health classifications, search-term opportunities, prioritised actions and a downloadable Excel report.
 
 ## Key capabilities
 
-- Recalculates ACOS, ROAS, CTR, CPC, CVR and AOV correctly from aggregated totals.
-- Supports campaign and match-type filtering.
-- Aggregates repeated customer search terms before evaluating performance.
-- Identifies profitable exact-match harvesting opportunities.
-- Detects negative keyword candidates using configurable evidence thresholds.
-- Identifies converting ASINs for product-targeting review.
-- Produces explainable campaign, ad-group and search-term actions with priority, reason, estimated bid adjustment and suggested CPC.
-- Distinguishes poor performance from insufficient evidence.
-- Exports eight professionally structured Excel worksheets.
-- Includes data-quality checks and transparent limitations.
+* Calculates ACOS, ROAS, CTR, CPC, CVR and AOV from aggregated totals.
+* Combines advertising performance with optional Business Report data.
+* Calculates total sales, organic sales, ad sales and TACOS.
+* Calculates advertising contribution, sessions and account conversion rate.
+* Supports campaign and match-type filtering.
+* Aggregates repeated customer search terms before evaluating performance.
+* Classifies campaigns as Healthy, Monitor, Unhealthy or Insufficient Data.
+* Identifies profitable search terms for exact-match keyword harvesting.
+* Detects potential negative keywords using configurable evidence thresholds.
+* Identifies converting ASINs for product-targeting review.
+* Produces campaign, ad-group and search-term recommendations.
+* Provides a priority, explanation, estimated bid adjustment and suggested CPC.
+* Identifies wasted spend from search terms with clicks but no attributed orders.
+* Exports eight professionally structured Excel worksheets.
+* Includes data-quality checks and transparent methodology notes.
+
+## Technology stack
+
+* Python
+* Streamlit
+* Pandas
+* NumPy
+* Plotly
+* OpenPyXL
+* XlsxWriter
 
 ## Set up in PyCharm
 
-1. Open the `PPC_Intelligence_Hub` folder in PyCharm.
-2. Select **Python 3.13** as the interpreter and allow PyCharm to create a virtual environment.
-3. Open the PyCharm terminal and run:
+1. Open the project folder in PyCharm.
+2. Select a Python interpreter and create a virtual environment.
+3. Open the PyCharm terminal.
+4. Install the required packages:
 
-   ```bash
-   python -m pip install -r requirements.txt
-   ```
+```bash
+python -m pip install -r requirements.txt
+```
 
-4. Start the application:
+5. Start the application:
 
-   ```bash
-   python -m streamlit run app.py
-   ```
+```bash
+python -m streamlit run app.py
+```
 
-5. Upload an Amazon Sponsored Products Search Term report (`.xlsx`).
+6. Open the local Streamlit address displayed in the terminal, normally:
 
-For a confidential-data-safe demonstration, generate a fictional workbook:
+```text
+http://localhost:8501
+```
+
+## Uploading reports
+
+### Sponsored Products Search Term Report
+
+Upload an Amazon Sponsored Products Search Term Report in `.xlsx` or `.xls` format. This is the primary report required by the application.
+
+### Business Report
+
+Optionally upload a Sales and Traffic by Date Business Report in `.csv` format.
+
+When both reports are uploaded, the application calculates:
+
+* Total sales
+* Organic sales
+* Advertising sales
+* TACOS
+* Advertising contribution
+* Sessions
+* Account conversion rate
+
+## Synthetic demonstration data
+
+No employer or confidential business data is included in this repository.
+
+To create a fictional Sponsored Products report, run:
 
 ```bash
 python create_synthetic_demo.py
 ```
 
-Then upload `Synthetic_Sponsored_Products_Report.xlsx` to the application.
+Then upload the generated synthetic workbook to the application.
 
-## Expected source fields
+All screenshots in this repository were created using fictional demonstration data.
 
-The application requires campaign, ad group, targeting, match type, customer search term, impressions, clicks, spend, 7-day sales and 7-day orders. It also uses currency, units and start date when available.
+## Expected Search Term Report fields
+
+The application requires:
+
+* Campaign Name
+* Ad Group Name
+* Targeting
+* Match Type
+* Customer Search Term
+* Impressions
+* Clicks
+* Spend
+* 7 Day Total Sales
+* 7 Day Total Orders (#)
+
+It also uses currency, units, portfolio name and start date when available.
+
+## Expected Business Report fields
+
+The optional Business Report requires:
+
+* Ordered Product Sales
+* Units Ordered
+* Total Order Items
+* Sessions - Total
 
 ## Recommendation methodology
 
-The application uses configurable target ACOS, click and order thresholds. It does not label zero-sales traffic as 0% ACOS. Instead, it treats the ACOS as undefined and evaluates the evidence using clicks, spend and orders. Recommendations are directional decision support and must be reviewed before changes are made in an advertising account.
+The application uses configurable target ACOS, click and order thresholds.
+
+It does not treat traffic with zero sales as having 0% ACOS. ACOS is recorded as undefined where there are no attributed sales, and recommendations are based on the available clicks, spend and order evidence.
+
+Recommendations are directional decision support. Relevance, profitability, placement performance, campaign strategy, attribution, budget constraints and seasonality should be reviewed before applying changes to an advertising account.
 
 ## Confidentiality
 
-No employer data is bundled with this project. For a public portfolio or Global Talent application, demonstrate the interface with synthetic or anonymised data only. Do not publish campaign names, search terms, ASIN strategy, sales, spend, customer data, credentials or downloadable employer reports without written permission.
+Do not publish employer campaign names, customer search terms, sales, advertising spend, targeting strategies, credentials or downloadable reports without written permission.
 
-## Suggested portfolio evidence
+For portfolio demonstrations, use synthetic or appropriately anonymised information only.
 
-Document the problem, your independent contribution, the technical architecture, validation approach and business outcome. Useful evidence can include anonymised screenshots, a short demonstration video, a public code repository containing only non-confidential code, stakeholder feedback where permitted, and quantified improvements approved for disclosure.
+## Application screenshots
 
-This project can support evidence of technical contribution, innovation and business impact, but the code alone does not guarantee endorsement under any immigration route.
+The following screenshots use entirely fictional demonstration data.
 
-## Application Screenshots
+### Account overview
 
-The following screenshots use entirely synthetic demonstration data.
+![Account Overview](screenshots/dashboard-account-overview.png)
 
-### Executive KPI Dashboard
+### Executive KPI summary
 
-![Executive KPI Dashboard](https://github.com/devanandha/amazon-ppc-intelligence-hub/blob/main/screenshots/executive-kpi-dashboard.png.png)
+![Executive KPI Summary](screenshots/executive-kpi-summary.png)
 
-
-### Campaign Performance
+### Campaign performance charts
 
 ![Campaign Performance Charts](screenshots/campaign-performance-charts.png)
 
-### Campaign Health Classification
+### Performance over time
+
+![Performance Over Time](screenshots/performance-over-time.png)
+
+### Campaign health summary
 
 ![Campaign Health Summary](screenshots/campaign-health-summary.png)
 
-### Performance Over Time
+### Search-term performance
 
-![Performance Over Time](screenshots/performance-over-time.png)
+![Search Term Performance](screenshots/search-term-performance.png)
+
+### Action Centre
+
+![Action Centre Harvest Opportunities](screenshots/action-centre-harvest.png)
+
+## Portfolio value
+
+This project demonstrates:
+
+* Python application development
+* Data cleaning and validation
+* Advertising and commercial analytics
+* KPI development
+* Interactive data visualisation
+* Explainable decision-support logic
+* Business intelligence reporting
+* Confidential-data-safe portfolio development
+
+It can support evidence of technical contribution, independent development and applied business analytics. However, the project alone does not guarantee endorsement under any immigration route.
+
+## Disclaimer
+
+This application is an independent portfolio project and is not affiliated with or endorsed by Amazon. Recommendations should be reviewed by a qualified account owner before implementation.
