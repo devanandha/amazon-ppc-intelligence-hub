@@ -1,0 +1,7 @@
+Reproduction environment for local v4 run (17 Oct 2026)
+Python: 3.13.5
+NumPy: 2.3.5
+SciPy: 1.17.0
+Pandas: 2.2.3
+OS: Linux container environment
+See requirements.txt for supported dependency ranges. This is a version record, not a cryptographically frozen lockfile.
