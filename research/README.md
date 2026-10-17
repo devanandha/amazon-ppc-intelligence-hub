@@ -19,3 +19,7 @@ python research/evaluate.py
 ```
 
 Results are written to `research/results/`. Synthetic benchmark results are methodological evidence only and must not be represented as observed commercial performance.
+
+## Experimental Bayesian evidence-collection extension
+
+A separate, synthetic-only research extension explores Bayesian decision deferral, economic regret and model-misspecification stress tests. It is **not integrated into the Streamlit app**, and no live advertising effectiveness or research novelty is claimed. See [Bayesian evidence-collection experiments](bayesian_voi/README.md) for code, replication instructions, results and limitations.
