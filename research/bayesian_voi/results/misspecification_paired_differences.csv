@@ -1,0 +1,49 @@
+scenario,overhead,policy,mean_difference,ci95_half_width
+Stationary reference,0.0,Fixed 15-click Bayesian gate,-0.04373804915571813,0.05325763215385861
+Stationary reference,0.0,Fixed 25-click Bayesian gate,-0.008969200763310314,0.04437040335618721
+Stationary reference,0.0,95% probability Bayesian gate,0.049615440085147,0.07078351189826806
+Stationary reference,0.0,One-step Bayesian VOI,-0.3734349057607394,0.05837428784956096
+Stationary reference,2.0,Fixed 15-click Bayesian gate,0.06082195084428181,0.055206211107404556
+Stationary reference,2.0,Fixed 25-click Bayesian gate,0.19399079923668955,0.04717148410627288
+Stationary reference,2.0,95% probability Bayesian gate,0.9791754400851473,0.06845514888996233
+Stationary reference,2.0,One-step Bayesian VOI,-0.2187286807319285,0.05256010775173055
+CVR decline 40%,0.0,Fixed 15-click Bayesian gate,-0.01757173565465755,0.0475661112982059
+CVR decline 40%,0.0,Fixed 25-click Bayesian gate,0.02814428850623534,0.057427677035949955
+CVR decline 40%,0.0,95% probability Bayesian gate,0.07322198024290612,0.06691492158429732
+CVR decline 40%,0.0,One-step Bayesian VOI,-0.7158898340079294,0.07209484180195683
+CVR decline 40%,2.0,Fixed 15-click Bayesian gate,0.08698826434534249,0.049596038152440125
+CVR decline 40%,2.0,Fixed 25-click Bayesian gate,0.23110428850623524,0.059791150214370294
+CVR decline 40%,2.0,95% probability Bayesian gate,1.002781980242906,0.06569335609466011
+CVR decline 40%,2.0,One-step Bayesian VOI,-0.34853641485108866,0.05952349568716542
+CVR increase 50%,0.0,Fixed 15-click Bayesian gate,-0.4843302654373228,0.09216449254349436
+CVR increase 50%,0.0,Fixed 25-click Bayesian gate,-0.7300427376472951,0.1075912596685357
+CVR increase 50%,0.0,95% probability Bayesian gate,-2.6583794361329813,0.2167875520939368
+CVR increase 50%,0.0,One-step Bayesian VOI,-1.9133342915387146,0.1667360109576184
+CVR increase 50%,2.0,Fixed 15-click Bayesian gate,-0.3797702654373228,0.09302965521431084
+CVR increase 50%,2.0,Fixed 25-click Bayesian gate,-0.527082737647295,0.10788496373497367
+CVR increase 50%,2.0,95% probability Bayesian gate,-1.7288194361329818,0.2174799852335655
+CVR increase 50%,2.0,One-step Bayesian VOI,-1.068358760544196,0.11524954217144946
+Delayed attribution 65% visible,0.0,Fixed 15-click Bayesian gate,0.0453502661662204,0.05902341534636896
+Delayed attribution 65% visible,0.0,Fixed 25-click Bayesian gate,0.09482150990268083,0.062085750828656694
+Delayed attribution 65% visible,0.0,95% probability Bayesian gate,-0.22816111590310598,0.12550889322845588
+Delayed attribution 65% visible,0.0,One-step Bayesian VOI,-0.1616937200497103,0.10712931322909892
+Delayed attribution 65% visible,2.0,Fixed 15-click Bayesian gate,0.14991026616622044,0.061232438958715205
+Delayed attribution 65% visible,2.0,Fixed 25-click Bayesian gate,0.2977815099026807,0.0645613864900092
+Delayed attribution 65% visible,2.0,95% probability Bayesian gate,0.693878884096894,0.12610301413914998
+Delayed attribution 65% visible,2.0,One-step Bayesian VOI,-0.04395713025403314,0.09870833047350659
+Unknown true margins 12-40%,0.0,Fixed 15-click Bayesian gate,-0.06899408088232266,0.07006164688850595
+Unknown true margins 12-40%,0.0,Fixed 25-click Bayesian gate,-0.04472697806385693,0.06112427487971596
+Unknown true margins 12-40%,0.0,95% probability Bayesian gate,-0.03800748752065397,0.11085965520789567
+Unknown true margins 12-40%,0.0,One-step Bayesian VOI,-0.4013417904648703,0.10038539679576582
+Unknown true margins 12-40%,2.0,Fixed 15-click Bayesian gate,0.035565919117677106,0.07114150921292464
+Unknown true margins 12-40%,2.0,Fixed 25-click Bayesian gate,0.15823302193614291,0.06275768720820404
+Unknown true margins 12-40%,2.0,95% probability Bayesian gate,0.891552512479346,0.10918700435553796
+Unknown true margins 12-40%,2.0,One-step Bayesian VOI,-0.2180013131176044,0.0749090802848542
+Combined adverse,0.0,Fixed 15-click Bayesian gate,0.063779553727442,0.033521554372040636
+Combined adverse,0.0,Fixed 25-click Bayesian gate,0.16958602057885888,0.04021387065026546
+Combined adverse,0.0,95% probability Bayesian gate,0.3865747550732127,0.07791949463097154
+Combined adverse,0.0,One-step Bayesian VOI,-0.26200092632332467,0.07515060200043822
+Combined adverse,2.0,Fixed 15-click Bayesian gate,0.16833955372744203,0.03473853409736337
+Combined adverse,2.0,Fixed 25-click Bayesian gate,0.3725460205788588,0.04091209185249792
+Combined adverse,2.0,95% probability Bayesian gate,1.308614755073213,0.07898572652538666
+Combined adverse,2.0,One-step Bayesian VOI,-0.10644740200806121,0.04778280466110054
