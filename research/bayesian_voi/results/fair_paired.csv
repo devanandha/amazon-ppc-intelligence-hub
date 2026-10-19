@@ -1,0 +1,73 @@
+scenario,budget,voi_minus,mean_difference,ci95_half_width
+Stationary reference,0.05,Random allocation,-0.37532533124664164,0.07227646792329029
+Stationary reference,0.05,Fewest clicks,-0.2565647142357012,0.061890402892927
+Stationary reference,0.05,Profitability uncertainty,-0.14704681330919586,0.060516622682920525
+Stationary reference,0.05,Train-tuned hybrid,0.0,0.0
+Stationary reference,0.1,Random allocation,-0.5839832422339496,0.07946866405843973
+Stationary reference,0.1,Fewest clicks,-0.3895454173926869,0.05070305794588121
+Stationary reference,0.1,Profitability uncertainty,-0.11988628682371935,0.04237328784633125
+Stationary reference,0.1,Train-tuned hybrid,0.0,0.0
+Stationary reference,0.2,Random allocation,-0.8137621576244112,0.07468422024443089
+Stationary reference,0.2,Fewest clicks,-0.593659922211684,0.04087860233696283
+Stationary reference,0.2,Profitability uncertainty,0.0035486270648839024,0.017931513298580934
+Stationary reference,0.2,Train-tuned hybrid,0.0,0.0
+CVR decline 40%,0.05,Random allocation,-0.567650197559727,0.06706387360595929
+CVR decline 40%,0.05,Fewest clicks,-0.4671896980678734,0.06137243885190269
+CVR decline 40%,0.05,Profitability uncertainty,0.4021927170552337,0.04007389617092097
+CVR decline 40%,0.05,Train-tuned hybrid,0.0,0.0
+CVR decline 40%,0.1,Random allocation,-0.9180769304160823,0.0760753184154524
+CVR decline 40%,0.1,Fewest clicks,-0.7419098068955405,0.07059728049445829
+CVR decline 40%,0.1,Profitability uncertainty,0.2299007915964084,0.025423332720679537
+CVR decline 40%,0.1,Train-tuned hybrid,0.0,0.0
+CVR decline 40%,0.2,Random allocation,-1.2776330978135457,0.065190550090993
+CVR decline 40%,0.2,Fewest clicks,-1.0351543902012936,0.07056343123438596
+CVR decline 40%,0.2,Profitability uncertainty,-0.07193154777043237,0.011359851898830056
+CVR decline 40%,0.2,Train-tuned hybrid,0.0,0.0
+CVR increase 50%,0.05,Random allocation,-0.8975028348709296,0.14870899348838082
+CVR increase 50%,0.05,Fewest clicks,-0.566165285517245,0.13268137120407422
+CVR increase 50%,0.05,Profitability uncertainty,-0.9046251411184504,0.11539743728915182
+CVR increase 50%,0.05,Train-tuned hybrid,0.0,0.0
+CVR increase 50%,0.1,Random allocation,-1.6060190466434134,0.16084564241810398
+CVR increase 50%,0.1,Fewest clicks,-1.0121820700051285,0.12552368186668192
+CVR increase 50%,0.1,Profitability uncertainty,-0.8006592635368769,0.09515492391401603
+CVR increase 50%,0.1,Train-tuned hybrid,0.0,0.0
+CVR increase 50%,0.2,Random allocation,-1.759155397135509,0.1578214096905911
+CVR increase 50%,0.2,Fewest clicks,-0.9728394809576175,0.11083009895869243
+CVR increase 50%,0.2,Profitability uncertainty,0.24158257626989224,0.050907820639927145
+CVR increase 50%,0.2,Train-tuned hybrid,0.0,0.0
+Delayed attribution 65% visible,0.05,Random allocation,-0.25549214662979564,0.08059160221848725
+Delayed attribution 65% visible,0.05,Fewest clicks,-0.2363091673267395,0.061849750539831196
+Delayed attribution 65% visible,0.05,Profitability uncertainty,-0.44394205211868726,0.0724483728686107
+Delayed attribution 65% visible,0.05,Train-tuned hybrid,0.0,0.0
+Delayed attribution 65% visible,0.1,Random allocation,-0.44561243463608075,0.09756793270677439
+Delayed attribution 65% visible,0.1,Fewest clicks,-0.3715412896018971,0.0851892330778286
+Delayed attribution 65% visible,0.1,Profitability uncertainty,-0.26617916361162525,0.04253418158630053
+Delayed attribution 65% visible,0.1,Train-tuned hybrid,0.0,0.0
+Delayed attribution 65% visible,0.2,Random allocation,-0.6212743524148893,0.10503124604632012
+Delayed attribution 65% visible,0.2,Fewest clicks,-0.5037933946728382,0.07958918742850765
+Delayed attribution 65% visible,0.2,Profitability uncertainty,0.08168448091926003,0.020269926129004093
+Delayed attribution 65% visible,0.2,Train-tuned hybrid,0.0,0.0
+Unknown true margins 12-40%,0.05,Random allocation,-0.38759528622741907,0.08382098497890222
+Unknown true margins 12-40%,0.05,Fewest clicks,-0.26109085773149987,0.0686240464344812
+Unknown true margins 12-40%,0.05,Profitability uncertainty,-0.21333896660956064,0.08050248284336144
+Unknown true margins 12-40%,0.05,Train-tuned hybrid,0.0,0.0
+Unknown true margins 12-40%,0.1,Random allocation,-0.5638987288321364,0.10797093923447812
+Unknown true margins 12-40%,0.1,Fewest clicks,-0.37784166785329304,0.09349319479340508
+Unknown true margins 12-40%,0.1,Profitability uncertainty,-0.15634098682065528,0.045592546042617414
+Unknown true margins 12-40%,0.1,Train-tuned hybrid,0.0,0.0
+Unknown true margins 12-40%,0.2,Random allocation,-0.808594804021735,0.1047216834948145
+Unknown true margins 12-40%,0.2,Fewest clicks,-0.591589797425735,0.0883933189144161
+Unknown true margins 12-40%,0.2,Profitability uncertainty,0.03180054931473929,0.02749913061562335
+Unknown true margins 12-40%,0.2,Train-tuned hybrid,0.0,0.0
+Combined adverse,0.05,Random allocation,-0.4519602234765712,0.052736932769995776
+Combined adverse,0.05,Fewest clicks,-0.3379593867742602,0.053050583109930036
+Combined adverse,0.05,Profitability uncertainty,0.08666913144972045,0.04520294034059124
+Combined adverse,0.05,Train-tuned hybrid,0.0,0.0
+Combined adverse,0.1,Random allocation,-0.6859013515469167,0.07527415471347318
+Combined adverse,0.1,Fewest clicks,-0.47948694551068033,0.06495743661916087
+Combined adverse,0.1,Profitability uncertainty,0.07298416505675093,0.024749028051328503
+Combined adverse,0.1,Train-tuned hybrid,0.0,0.0
+Combined adverse,0.2,Random allocation,-1.0465084402882638,0.07047228213992915
+Combined adverse,0.2,Fewest clicks,-0.7593027515237173,0.05875212503896531
+Combined adverse,0.2,Profitability uncertainty,-0.012903099812050022,0.009565793812122927
+Combined adverse,0.2,Train-tuned hybrid,0.0,0.0

@@ -48,3 +48,9 @@ In six additional misspecification scenarios, results were mixed. Under delayed 
 - No employer or other confidential advertiser data are present or required to reproduce these experiments.
 
 **Related original research:** [Earlier rule-based PPC benchmark](../README.md). **App:** [`../../app.py`](../../app.py) (unchanged by this research extension).
+
+## v5 held-out, quota-matched validation (local, not yet merged)
+
+The proposed v5 extension adds [`fair_baselines.py`](fair_baselines.py) and a 13-test suite for budget-matched evidence-collection ranking. It uses 20 training and 30 distinct test seeds; see [`FAIR_BASELINE_PROTOCOL.md`](FAIR_BASELINE_PROTOCOL.md) and [`FAIR_BASELINE_RESULTS.md`](FAIR_BASELINE_RESULTS.md). The comparison forces equal deferral rates across policies and is **not** proof of better real advertising outcomes. The trained hybrid chose the same VOI ranking; the uncertainty gate beat VOI under some adverse synthetic scenarios.
+
+Reproduce with `python fair_baselines.py`, then read the generated `results/fair_*.csv` files. This change does not integrate the prototype into `app.py`.

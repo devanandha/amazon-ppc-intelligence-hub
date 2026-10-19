@@ -1,0 +1,13 @@
+scenario,method,regret,defer_rate,utility
+Stationary reference,No deferral (immediate Bayes),2.830955017242896,0.0,29.95788964091684
+Stationary reference,Unconstrained positive VOI,2.6837623719566164,0.047625,30.105082286203118
+CVR decline 40%,No deferral (immediate Bayes),7.05593687852158,0.0,1.236026760176526
+CVR decline 40%,Unconstrained positive VOI,6.743306708698408,0.047625,1.548656929999698
+CVR increase 50%,No deferral (immediate Bayes),10.681057657583585,0.0,65.86021824184223
+CVR increase 50%,Unconstrained positive VOI,9.904350774300939,0.047625,66.63692512512488
+Delayed attribution 65% visible,No deferral (immediate Bayes),7.5999918003315265,0.0,25.188852857828213
+Delayed attribution 65% visible,Unconstrained positive VOI,7.543067204729851,0.046375000000000006,25.245777453429884
+Unknown true margins 12-40%,No deferral (immediate Bayes),6.120671460738716,0.0,32.63548869804062
+Unknown true margins 12-40%,Unconstrained positive VOI,5.960354547549553,0.047625,32.79580561122978
+Combined adverse,No deferral (immediate Bayes),4.3704157982555945,0.0,7.003316265596088
+Combined adverse,Unconstrained positive VOI,4.210658421477193,0.046375000000000006,7.163073642374489
