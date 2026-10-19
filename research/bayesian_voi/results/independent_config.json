@@ -1,0 +1,107 @@
+{
+  "seed_set": [
+    23000,
+    23001,
+    23002,
+    23003,
+    23004,
+    23005,
+    23006,
+    23007,
+    23008,
+    23009,
+    23010,
+    23011,
+    23012,
+    23013,
+    23014,
+    23015,
+    23016,
+    23017,
+    23018,
+    23019,
+    23020,
+    23021,
+    23022,
+    23023,
+    23024,
+    23025,
+    23026,
+    23027,
+    23028,
+    23029,
+    23030,
+    23031,
+    23032,
+    23033,
+    23034,
+    23035,
+    23036,
+    23037,
+    23038,
+    23039
+  ],
+  "quotas": [
+    0.05,
+    0.1,
+    0.2
+  ],
+  "n_terms": 180,
+  "n_campaigns": 6,
+  "campaign_budget_reference": 440,
+  "probe_clicks": 10,
+  "overhead": 2.0,
+  "assumed_margin": 0.25,
+  "fixed_prior": [
+    2.0,
+    18.0
+  ],
+  "source_of_prior": "v5 training split",
+  "policy_rank": "v5 one-step VOI (unchanged formula)",
+  "outcome_model": "independent portfolio simulator, synthetic only",
+  "scenario_specs": {
+    "Mixture reference": {
+      "cvr_mult": 1.0,
+      "auction_mult": 1.0,
+      "visible_fraction": 1.0,
+      "budget_mult": 1.0,
+      "scale_quality": 0.9
+    },
+    "Auction costs +35%": {
+      "cvr_mult": 1.0,
+      "auction_mult": 1.35,
+      "visible_fraction": 1.0,
+      "budget_mult": 1.0,
+      "scale_quality": 0.85
+    },
+    "Conversions 50% visible": {
+      "cvr_mult": 1.0,
+      "auction_mult": 1.0,
+      "visible_fraction": 0.5,
+      "budget_mult": 1.0,
+      "scale_quality": 0.9
+    },
+    "Campaign budgets halved": {
+      "cvr_mult": 1.0,
+      "auction_mult": 1.0,
+      "visible_fraction": 1.0,
+      "budget_mult": 0.5,
+      "scale_quality": 0.9
+    },
+    "Future CVR -40%": {
+      "cvr_mult": 0.6,
+      "auction_mult": 1.0,
+      "visible_fraction": 1.0,
+      "budget_mult": 1.0,
+      "scale_quality": 0.9
+    },
+    "Combined adverse": {
+      "cvr_mult": 0.6,
+      "auction_mult": 1.35,
+      "visible_fraction": 0.5,
+      "budget_mult": 0.6,
+      "scale_quality": 0.85
+    }
+  },
+  "unmatched_diagnostic": "No exploration and positive-model VOI gate (not matched quota)"
+}
