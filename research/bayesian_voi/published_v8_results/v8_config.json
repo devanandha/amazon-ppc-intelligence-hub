@@ -1,0 +1,87 @@
+{
+  "training_seeds": [
+    32000,
+    32001,
+    32002,
+    32003,
+    32004,
+    32005,
+    32006,
+    32007,
+    32008,
+    32009,
+    32010,
+    32011
+  ],
+  "training_scenarios": [
+    "Mixture reference",
+    "Auction costs +35%",
+    "Campaign budgets halved"
+  ],
+  "test_seeds": [
+    42000,
+    42001,
+    42002,
+    42003,
+    42004,
+    42005,
+    42006,
+    42007,
+    42008,
+    42009,
+    42010,
+    42011,
+    42012,
+    42013,
+    42014,
+    42015,
+    42016,
+    42017,
+    42018,
+    42019,
+    42020,
+    42021,
+    42022,
+    42023,
+    42024,
+    42025,
+    42026,
+    42027,
+    42028,
+    42029
+  ],
+  "test_scenarios": [
+    "Mixture reference",
+    "Auction costs +35%",
+    "Conversions 50% visible",
+    "Campaign budgets halved",
+    "Future CVR -40%",
+    "Combined adverse"
+  ],
+  "candidate_gamma": [
+    0.0,
+    0.2,
+    0.5
+  ],
+  "selected_gamma": 0.0,
+  "quotas": [
+    0.05,
+    0.1,
+    0.2
+  ],
+  "primary_quota": 0.1,
+  "policies": [
+    "Random",
+    "Fewest clicks",
+    "Profitability uncertainty",
+    "v5 VOI rank",
+    "v8 budget VOI"
+  ],
+  "action_modes": [
+    "v7 heuristic action",
+    "v8 budget action"
+  ],
+  "simulator": "unmodified v7 make_cohort; v7 accounting loops with action-only switch",
+  "data": "synthetic only, not Amazon Ads"
+}
+

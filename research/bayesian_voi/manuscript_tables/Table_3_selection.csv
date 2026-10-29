@@ -1,0 +1,4 @@
+quota,cohorts,identical_sets,mean_selected_overlap,mean_term_agreement
+0.05,180,180,1.0,1.0
+0.1,180,180,1.0,1.0
+0.2,180,142,0.9912037037037037,0.9964814814814815

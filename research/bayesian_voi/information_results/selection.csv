@@ -1,0 +1,541 @@
+scenario,seed,quota,identical,selected_overlap
+Mixture reference,52000,0.05,True,1.0
+Mixture reference,52000,0.1,True,1.0
+Mixture reference,52000,0.2,True,1.0
+Mixture reference,52001,0.05,True,1.0
+Mixture reference,52001,0.1,True,1.0
+Mixture reference,52001,0.2,True,1.0
+Mixture reference,52002,0.05,True,1.0
+Mixture reference,52002,0.1,True,1.0
+Mixture reference,52002,0.2,True,1.0
+Mixture reference,52003,0.05,True,1.0
+Mixture reference,52003,0.1,True,1.0
+Mixture reference,52003,0.2,True,1.0
+Mixture reference,52004,0.05,True,1.0
+Mixture reference,52004,0.1,True,1.0
+Mixture reference,52004,0.2,True,1.0
+Mixture reference,52005,0.05,True,1.0
+Mixture reference,52005,0.1,True,1.0
+Mixture reference,52005,0.2,True,1.0
+Mixture reference,52006,0.05,True,1.0
+Mixture reference,52006,0.1,True,1.0
+Mixture reference,52006,0.2,True,1.0
+Mixture reference,52007,0.05,True,1.0
+Mixture reference,52007,0.1,True,1.0
+Mixture reference,52007,0.2,True,1.0
+Mixture reference,52008,0.05,True,1.0
+Mixture reference,52008,0.1,True,1.0
+Mixture reference,52008,0.2,True,1.0
+Mixture reference,52009,0.05,True,1.0
+Mixture reference,52009,0.1,True,1.0
+Mixture reference,52009,0.2,True,1.0
+Mixture reference,52010,0.05,True,1.0
+Mixture reference,52010,0.1,True,1.0
+Mixture reference,52010,0.2,True,1.0
+Mixture reference,52011,0.05,True,1.0
+Mixture reference,52011,0.1,True,1.0
+Mixture reference,52011,0.2,True,1.0
+Mixture reference,52012,0.05,True,1.0
+Mixture reference,52012,0.1,True,1.0
+Mixture reference,52012,0.2,True,1.0
+Mixture reference,52013,0.05,True,1.0
+Mixture reference,52013,0.1,True,1.0
+Mixture reference,52013,0.2,True,1.0
+Mixture reference,52014,0.05,True,1.0
+Mixture reference,52014,0.1,True,1.0
+Mixture reference,52014,0.2,True,1.0
+Mixture reference,52015,0.05,True,1.0
+Mixture reference,52015,0.1,True,1.0
+Mixture reference,52015,0.2,True,1.0
+Mixture reference,52016,0.05,True,1.0
+Mixture reference,52016,0.1,True,1.0
+Mixture reference,52016,0.2,True,1.0
+Mixture reference,52017,0.05,True,1.0
+Mixture reference,52017,0.1,True,1.0
+Mixture reference,52017,0.2,True,1.0
+Mixture reference,52018,0.05,True,1.0
+Mixture reference,52018,0.1,True,1.0
+Mixture reference,52018,0.2,True,1.0
+Mixture reference,52019,0.05,True,1.0
+Mixture reference,52019,0.1,True,1.0
+Mixture reference,52019,0.2,True,1.0
+Mixture reference,52020,0.05,True,1.0
+Mixture reference,52020,0.1,True,1.0
+Mixture reference,52020,0.2,True,1.0
+Mixture reference,52021,0.05,True,1.0
+Mixture reference,52021,0.1,True,1.0
+Mixture reference,52021,0.2,True,1.0
+Mixture reference,52022,0.05,True,1.0
+Mixture reference,52022,0.1,True,1.0
+Mixture reference,52022,0.2,True,1.0
+Mixture reference,52023,0.05,True,1.0
+Mixture reference,52023,0.1,True,1.0
+Mixture reference,52023,0.2,True,1.0
+Mixture reference,52024,0.05,True,1.0
+Mixture reference,52024,0.1,True,1.0
+Mixture reference,52024,0.2,True,1.0
+Mixture reference,52025,0.05,True,1.0
+Mixture reference,52025,0.1,True,1.0
+Mixture reference,52025,0.2,True,1.0
+Mixture reference,52026,0.05,True,1.0
+Mixture reference,52026,0.1,True,1.0
+Mixture reference,52026,0.2,True,1.0
+Mixture reference,52027,0.05,True,1.0
+Mixture reference,52027,0.1,True,1.0
+Mixture reference,52027,0.2,True,1.0
+Mixture reference,52028,0.05,True,1.0
+Mixture reference,52028,0.1,True,1.0
+Mixture reference,52028,0.2,True,1.0
+Mixture reference,52029,0.05,True,1.0
+Mixture reference,52029,0.1,True,1.0
+Mixture reference,52029,0.2,True,1.0
+Auction costs +35%,52000,0.05,True,1.0
+Auction costs +35%,52000,0.1,True,1.0
+Auction costs +35%,52000,0.2,True,1.0
+Auction costs +35%,52001,0.05,True,1.0
+Auction costs +35%,52001,0.1,True,1.0
+Auction costs +35%,52001,0.2,True,1.0
+Auction costs +35%,52002,0.05,True,1.0
+Auction costs +35%,52002,0.1,True,1.0
+Auction costs +35%,52002,0.2,True,1.0
+Auction costs +35%,52003,0.05,True,1.0
+Auction costs +35%,52003,0.1,True,1.0
+Auction costs +35%,52003,0.2,True,1.0
+Auction costs +35%,52004,0.05,True,1.0
+Auction costs +35%,52004,0.1,True,1.0
+Auction costs +35%,52004,0.2,True,1.0
+Auction costs +35%,52005,0.05,True,1.0
+Auction costs +35%,52005,0.1,True,1.0
+Auction costs +35%,52005,0.2,True,1.0
+Auction costs +35%,52006,0.05,True,1.0
+Auction costs +35%,52006,0.1,True,1.0
+Auction costs +35%,52006,0.2,True,1.0
+Auction costs +35%,52007,0.05,True,1.0
+Auction costs +35%,52007,0.1,True,1.0
+Auction costs +35%,52007,0.2,True,1.0
+Auction costs +35%,52008,0.05,True,1.0
+Auction costs +35%,52008,0.1,True,1.0
+Auction costs +35%,52008,0.2,True,1.0
+Auction costs +35%,52009,0.05,True,1.0
+Auction costs +35%,52009,0.1,True,1.0
+Auction costs +35%,52009,0.2,True,1.0
+Auction costs +35%,52010,0.05,True,1.0
+Auction costs +35%,52010,0.1,True,1.0
+Auction costs +35%,52010,0.2,True,1.0
+Auction costs +35%,52011,0.05,True,1.0
+Auction costs +35%,52011,0.1,True,1.0
+Auction costs +35%,52011,0.2,True,1.0
+Auction costs +35%,52012,0.05,True,1.0
+Auction costs +35%,52012,0.1,True,1.0
+Auction costs +35%,52012,0.2,True,1.0
+Auction costs +35%,52013,0.05,True,1.0
+Auction costs +35%,52013,0.1,True,1.0
+Auction costs +35%,52013,0.2,True,1.0
+Auction costs +35%,52014,0.05,True,1.0
+Auction costs +35%,52014,0.1,True,1.0
+Auction costs +35%,52014,0.2,True,1.0
+Auction costs +35%,52015,0.05,True,1.0
+Auction costs +35%,52015,0.1,True,1.0
+Auction costs +35%,52015,0.2,True,1.0
+Auction costs +35%,52016,0.05,True,1.0
+Auction costs +35%,52016,0.1,True,1.0
+Auction costs +35%,52016,0.2,True,1.0
+Auction costs +35%,52017,0.05,True,1.0
+Auction costs +35%,52017,0.1,True,1.0
+Auction costs +35%,52017,0.2,True,1.0
+Auction costs +35%,52018,0.05,True,1.0
+Auction costs +35%,52018,0.1,True,1.0
+Auction costs +35%,52018,0.2,True,1.0
+Auction costs +35%,52019,0.05,True,1.0
+Auction costs +35%,52019,0.1,True,1.0
+Auction costs +35%,52019,0.2,True,1.0
+Auction costs +35%,52020,0.05,True,1.0
+Auction costs +35%,52020,0.1,True,1.0
+Auction costs +35%,52020,0.2,True,1.0
+Auction costs +35%,52021,0.05,True,1.0
+Auction costs +35%,52021,0.1,True,1.0
+Auction costs +35%,52021,0.2,True,1.0
+Auction costs +35%,52022,0.05,True,1.0
+Auction costs +35%,52022,0.1,True,1.0
+Auction costs +35%,52022,0.2,True,1.0
+Auction costs +35%,52023,0.05,True,1.0
+Auction costs +35%,52023,0.1,True,1.0
+Auction costs +35%,52023,0.2,True,1.0
+Auction costs +35%,52024,0.05,True,1.0
+Auction costs +35%,52024,0.1,True,1.0
+Auction costs +35%,52024,0.2,True,1.0
+Auction costs +35%,52025,0.05,True,1.0
+Auction costs +35%,52025,0.1,True,1.0
+Auction costs +35%,52025,0.2,True,1.0
+Auction costs +35%,52026,0.05,True,1.0
+Auction costs +35%,52026,0.1,True,1.0
+Auction costs +35%,52026,0.2,True,1.0
+Auction costs +35%,52027,0.05,True,1.0
+Auction costs +35%,52027,0.1,True,1.0
+Auction costs +35%,52027,0.2,True,1.0
+Auction costs +35%,52028,0.05,True,1.0
+Auction costs +35%,52028,0.1,True,1.0
+Auction costs +35%,52028,0.2,True,1.0
+Auction costs +35%,52029,0.05,True,1.0
+Auction costs +35%,52029,0.1,True,1.0
+Auction costs +35%,52029,0.2,True,1.0
+Conversions 50% visible,52000,0.05,True,1.0
+Conversions 50% visible,52000,0.1,True,1.0
+Conversions 50% visible,52000,0.2,False,0.9444444444444444
+Conversions 50% visible,52001,0.05,True,1.0
+Conversions 50% visible,52001,0.1,False,0.9444444444444444
+Conversions 50% visible,52001,0.2,False,0.9166666666666666
+Conversions 50% visible,52002,0.05,True,1.0
+Conversions 50% visible,52002,0.1,True,1.0
+Conversions 50% visible,52002,0.2,False,0.8888888888888888
+Conversions 50% visible,52003,0.05,True,1.0
+Conversions 50% visible,52003,0.1,True,1.0
+Conversions 50% visible,52003,0.2,False,0.9166666666666666
+Conversions 50% visible,52004,0.05,True,1.0
+Conversions 50% visible,52004,0.1,True,1.0
+Conversions 50% visible,52004,0.2,True,1.0
+Conversions 50% visible,52005,0.05,True,1.0
+Conversions 50% visible,52005,0.1,True,1.0
+Conversions 50% visible,52005,0.2,False,0.8611111111111112
+Conversions 50% visible,52006,0.05,True,1.0
+Conversions 50% visible,52006,0.1,True,1.0
+Conversions 50% visible,52006,0.2,False,0.9722222222222222
+Conversions 50% visible,52007,0.05,True,1.0
+Conversions 50% visible,52007,0.1,True,1.0
+Conversions 50% visible,52007,0.2,False,0.9722222222222222
+Conversions 50% visible,52008,0.05,True,1.0
+Conversions 50% visible,52008,0.1,True,1.0
+Conversions 50% visible,52008,0.2,False,0.9722222222222222
+Conversions 50% visible,52009,0.05,True,1.0
+Conversions 50% visible,52009,0.1,True,1.0
+Conversions 50% visible,52009,0.2,False,0.8888888888888888
+Conversions 50% visible,52010,0.05,True,1.0
+Conversions 50% visible,52010,0.1,True,1.0
+Conversions 50% visible,52010,0.2,True,1.0
+Conversions 50% visible,52011,0.05,True,1.0
+Conversions 50% visible,52011,0.1,True,1.0
+Conversions 50% visible,52011,0.2,False,0.9722222222222222
+Conversions 50% visible,52012,0.05,True,1.0
+Conversions 50% visible,52012,0.1,True,1.0
+Conversions 50% visible,52012,0.2,False,0.9444444444444444
+Conversions 50% visible,52013,0.05,True,1.0
+Conversions 50% visible,52013,0.1,True,1.0
+Conversions 50% visible,52013,0.2,False,0.9722222222222222
+Conversions 50% visible,52014,0.05,True,1.0
+Conversions 50% visible,52014,0.1,True,1.0
+Conversions 50% visible,52014,0.2,False,0.8888888888888888
+Conversions 50% visible,52015,0.05,True,1.0
+Conversions 50% visible,52015,0.1,True,1.0
+Conversions 50% visible,52015,0.2,True,1.0
+Conversions 50% visible,52016,0.05,True,1.0
+Conversions 50% visible,52016,0.1,True,1.0
+Conversions 50% visible,52016,0.2,False,0.8888888888888888
+Conversions 50% visible,52017,0.05,True,1.0
+Conversions 50% visible,52017,0.1,True,1.0
+Conversions 50% visible,52017,0.2,False,0.9166666666666666
+Conversions 50% visible,52018,0.05,True,1.0
+Conversions 50% visible,52018,0.1,True,1.0
+Conversions 50% visible,52018,0.2,True,1.0
+Conversions 50% visible,52019,0.05,True,1.0
+Conversions 50% visible,52019,0.1,True,1.0
+Conversions 50% visible,52019,0.2,False,0.9444444444444444
+Conversions 50% visible,52020,0.05,True,1.0
+Conversions 50% visible,52020,0.1,True,1.0
+Conversions 50% visible,52020,0.2,False,0.9444444444444444
+Conversions 50% visible,52021,0.05,True,1.0
+Conversions 50% visible,52021,0.1,True,1.0
+Conversions 50% visible,52021,0.2,False,0.9166666666666666
+Conversions 50% visible,52022,0.05,True,1.0
+Conversions 50% visible,52022,0.1,True,1.0
+Conversions 50% visible,52022,0.2,False,0.9444444444444444
+Conversions 50% visible,52023,0.05,True,1.0
+Conversions 50% visible,52023,0.1,True,1.0
+Conversions 50% visible,52023,0.2,False,0.9444444444444444
+Conversions 50% visible,52024,0.05,True,1.0
+Conversions 50% visible,52024,0.1,True,1.0
+Conversions 50% visible,52024,0.2,True,1.0
+Conversions 50% visible,52025,0.05,True,1.0
+Conversions 50% visible,52025,0.1,True,1.0
+Conversions 50% visible,52025,0.2,False,0.9722222222222222
+Conversions 50% visible,52026,0.05,True,1.0
+Conversions 50% visible,52026,0.1,True,1.0
+Conversions 50% visible,52026,0.2,False,0.9444444444444444
+Conversions 50% visible,52027,0.05,True,1.0
+Conversions 50% visible,52027,0.1,True,1.0
+Conversions 50% visible,52027,0.2,False,0.9444444444444444
+Conversions 50% visible,52028,0.05,True,1.0
+Conversions 50% visible,52028,0.1,True,1.0
+Conversions 50% visible,52028,0.2,False,0.9444444444444444
+Conversions 50% visible,52029,0.05,True,1.0
+Conversions 50% visible,52029,0.1,True,1.0
+Conversions 50% visible,52029,0.2,False,0.9722222222222222
+Campaign budgets halved,52000,0.05,True,1.0
+Campaign budgets halved,52000,0.1,True,1.0
+Campaign budgets halved,52000,0.2,True,1.0
+Campaign budgets halved,52001,0.05,True,1.0
+Campaign budgets halved,52001,0.1,True,1.0
+Campaign budgets halved,52001,0.2,True,1.0
+Campaign budgets halved,52002,0.05,True,1.0
+Campaign budgets halved,52002,0.1,True,1.0
+Campaign budgets halved,52002,0.2,True,1.0
+Campaign budgets halved,52003,0.05,True,1.0
+Campaign budgets halved,52003,0.1,True,1.0
+Campaign budgets halved,52003,0.2,True,1.0
+Campaign budgets halved,52004,0.05,True,1.0
+Campaign budgets halved,52004,0.1,True,1.0
+Campaign budgets halved,52004,0.2,True,1.0
+Campaign budgets halved,52005,0.05,True,1.0
+Campaign budgets halved,52005,0.1,True,1.0
+Campaign budgets halved,52005,0.2,True,1.0
+Campaign budgets halved,52006,0.05,True,1.0
+Campaign budgets halved,52006,0.1,True,1.0
+Campaign budgets halved,52006,0.2,True,1.0
+Campaign budgets halved,52007,0.05,True,1.0
+Campaign budgets halved,52007,0.1,True,1.0
+Campaign budgets halved,52007,0.2,True,1.0
+Campaign budgets halved,52008,0.05,True,1.0
+Campaign budgets halved,52008,0.1,True,1.0
+Campaign budgets halved,52008,0.2,True,1.0
+Campaign budgets halved,52009,0.05,True,1.0
+Campaign budgets halved,52009,0.1,True,1.0
+Campaign budgets halved,52009,0.2,True,1.0
+Campaign budgets halved,52010,0.05,True,1.0
+Campaign budgets halved,52010,0.1,True,1.0
+Campaign budgets halved,52010,0.2,True,1.0
+Campaign budgets halved,52011,0.05,True,1.0
+Campaign budgets halved,52011,0.1,True,1.0
+Campaign budgets halved,52011,0.2,True,1.0
+Campaign budgets halved,52012,0.05,True,1.0
+Campaign budgets halved,52012,0.1,True,1.0
+Campaign budgets halved,52012,0.2,True,1.0
+Campaign budgets halved,52013,0.05,True,1.0
+Campaign budgets halved,52013,0.1,True,1.0
+Campaign budgets halved,52013,0.2,True,1.0
+Campaign budgets halved,52014,0.05,True,1.0
+Campaign budgets halved,52014,0.1,True,1.0
+Campaign budgets halved,52014,0.2,True,1.0
+Campaign budgets halved,52015,0.05,True,1.0
+Campaign budgets halved,52015,0.1,True,1.0
+Campaign budgets halved,52015,0.2,True,1.0
+Campaign budgets halved,52016,0.05,True,1.0
+Campaign budgets halved,52016,0.1,True,1.0
+Campaign budgets halved,52016,0.2,True,1.0
+Campaign budgets halved,52017,0.05,True,1.0
+Campaign budgets halved,52017,0.1,True,1.0
+Campaign budgets halved,52017,0.2,True,1.0
+Campaign budgets halved,52018,0.05,True,1.0
+Campaign budgets halved,52018,0.1,True,1.0
+Campaign budgets halved,52018,0.2,True,1.0
+Campaign budgets halved,52019,0.05,True,1.0
+Campaign budgets halved,52019,0.1,True,1.0
+Campaign budgets halved,52019,0.2,True,1.0
+Campaign budgets halved,52020,0.05,True,1.0
+Campaign budgets halved,52020,0.1,True,1.0
+Campaign budgets halved,52020,0.2,True,1.0
+Campaign budgets halved,52021,0.05,True,1.0
+Campaign budgets halved,52021,0.1,True,1.0
+Campaign budgets halved,52021,0.2,True,1.0
+Campaign budgets halved,52022,0.05,True,1.0
+Campaign budgets halved,52022,0.1,True,1.0
+Campaign budgets halved,52022,0.2,True,1.0
+Campaign budgets halved,52023,0.05,True,1.0
+Campaign budgets halved,52023,0.1,True,1.0
+Campaign budgets halved,52023,0.2,True,1.0
+Campaign budgets halved,52024,0.05,True,1.0
+Campaign budgets halved,52024,0.1,True,1.0
+Campaign budgets halved,52024,0.2,True,1.0
+Campaign budgets halved,52025,0.05,True,1.0
+Campaign budgets halved,52025,0.1,True,1.0
+Campaign budgets halved,52025,0.2,True,1.0
+Campaign budgets halved,52026,0.05,True,1.0
+Campaign budgets halved,52026,0.1,True,1.0
+Campaign budgets halved,52026,0.2,True,1.0
+Campaign budgets halved,52027,0.05,True,1.0
+Campaign budgets halved,52027,0.1,True,1.0
+Campaign budgets halved,52027,0.2,True,1.0
+Campaign budgets halved,52028,0.05,True,1.0
+Campaign budgets halved,52028,0.1,True,1.0
+Campaign budgets halved,52028,0.2,True,1.0
+Campaign budgets halved,52029,0.05,True,1.0
+Campaign budgets halved,52029,0.1,True,1.0
+Campaign budgets halved,52029,0.2,True,1.0
+Future CVR -40%,52000,0.05,True,1.0
+Future CVR -40%,52000,0.1,True,1.0
+Future CVR -40%,52000,0.2,True,1.0
+Future CVR -40%,52001,0.05,True,1.0
+Future CVR -40%,52001,0.1,True,1.0
+Future CVR -40%,52001,0.2,True,1.0
+Future CVR -40%,52002,0.05,True,1.0
+Future CVR -40%,52002,0.1,True,1.0
+Future CVR -40%,52002,0.2,True,1.0
+Future CVR -40%,52003,0.05,True,1.0
+Future CVR -40%,52003,0.1,True,1.0
+Future CVR -40%,52003,0.2,True,1.0
+Future CVR -40%,52004,0.05,True,1.0
+Future CVR -40%,52004,0.1,True,1.0
+Future CVR -40%,52004,0.2,True,1.0
+Future CVR -40%,52005,0.05,True,1.0
+Future CVR -40%,52005,0.1,True,1.0
+Future CVR -40%,52005,0.2,True,1.0
+Future CVR -40%,52006,0.05,True,1.0
+Future CVR -40%,52006,0.1,True,1.0
+Future CVR -40%,52006,0.2,True,1.0
+Future CVR -40%,52007,0.05,True,1.0
+Future CVR -40%,52007,0.1,True,1.0
+Future CVR -40%,52007,0.2,True,1.0
+Future CVR -40%,52008,0.05,True,1.0
+Future CVR -40%,52008,0.1,True,1.0
+Future CVR -40%,52008,0.2,True,1.0
+Future CVR -40%,52009,0.05,True,1.0
+Future CVR -40%,52009,0.1,True,1.0
+Future CVR -40%,52009,0.2,True,1.0
+Future CVR -40%,52010,0.05,True,1.0
+Future CVR -40%,52010,0.1,True,1.0
+Future CVR -40%,52010,0.2,True,1.0
+Future CVR -40%,52011,0.05,True,1.0
+Future CVR -40%,52011,0.1,True,1.0
+Future CVR -40%,52011,0.2,True,1.0
+Future CVR -40%,52012,0.05,True,1.0
+Future CVR -40%,52012,0.1,True,1.0
+Future CVR -40%,52012,0.2,True,1.0
+Future CVR -40%,52013,0.05,True,1.0
+Future CVR -40%,52013,0.1,True,1.0
+Future CVR -40%,52013,0.2,True,1.0
+Future CVR -40%,52014,0.05,True,1.0
+Future CVR -40%,52014,0.1,True,1.0
+Future CVR -40%,52014,0.2,True,1.0
+Future CVR -40%,52015,0.05,True,1.0
+Future CVR -40%,52015,0.1,True,1.0
+Future CVR -40%,52015,0.2,True,1.0
+Future CVR -40%,52016,0.05,True,1.0
+Future CVR -40%,52016,0.1,True,1.0
+Future CVR -40%,52016,0.2,True,1.0
+Future CVR -40%,52017,0.05,True,1.0
+Future CVR -40%,52017,0.1,True,1.0
+Future CVR -40%,52017,0.2,True,1.0
+Future CVR -40%,52018,0.05,True,1.0
+Future CVR -40%,52018,0.1,True,1.0
+Future CVR -40%,52018,0.2,True,1.0
+Future CVR -40%,52019,0.05,True,1.0
+Future CVR -40%,52019,0.1,True,1.0
+Future CVR -40%,52019,0.2,True,1.0
+Future CVR -40%,52020,0.05,True,1.0
+Future CVR -40%,52020,0.1,True,1.0
+Future CVR -40%,52020,0.2,True,1.0
+Future CVR -40%,52021,0.05,True,1.0
+Future CVR -40%,52021,0.1,True,1.0
+Future CVR -40%,52021,0.2,True,1.0
+Future CVR -40%,52022,0.05,True,1.0
+Future CVR -40%,52022,0.1,True,1.0
+Future CVR -40%,52022,0.2,True,1.0
+Future CVR -40%,52023,0.05,True,1.0
+Future CVR -40%,52023,0.1,True,1.0
+Future CVR -40%,52023,0.2,True,1.0
+Future CVR -40%,52024,0.05,True,1.0
+Future CVR -40%,52024,0.1,True,1.0
+Future CVR -40%,52024,0.2,True,1.0
+Future CVR -40%,52025,0.05,True,1.0
+Future CVR -40%,52025,0.1,True,1.0
+Future CVR -40%,52025,0.2,True,1.0
+Future CVR -40%,52026,0.05,True,1.0
+Future CVR -40%,52026,0.1,True,1.0
+Future CVR -40%,52026,0.2,True,1.0
+Future CVR -40%,52027,0.05,True,1.0
+Future CVR -40%,52027,0.1,True,1.0
+Future CVR -40%,52027,0.2,True,1.0
+Future CVR -40%,52028,0.05,True,1.0
+Future CVR -40%,52028,0.1,True,1.0
+Future CVR -40%,52028,0.2,True,1.0
+Future CVR -40%,52029,0.05,True,1.0
+Future CVR -40%,52029,0.1,True,1.0
+Future CVR -40%,52029,0.2,True,1.0
+Combined adverse,52000,0.05,True,1.0
+Combined adverse,52000,0.1,True,1.0
+Combined adverse,52000,0.2,True,1.0
+Combined adverse,52001,0.05,True,1.0
+Combined adverse,52001,0.1,True,1.0
+Combined adverse,52001,0.2,False,0.9166666666666666
+Combined adverse,52002,0.05,True,1.0
+Combined adverse,52002,0.1,True,1.0
+Combined adverse,52002,0.2,False,0.9444444444444444
+Combined adverse,52003,0.05,True,1.0
+Combined adverse,52003,0.1,True,1.0
+Combined adverse,52003,0.2,True,1.0
+Combined adverse,52004,0.05,True,1.0
+Combined adverse,52004,0.1,True,1.0
+Combined adverse,52004,0.2,True,1.0
+Combined adverse,52005,0.05,True,1.0
+Combined adverse,52005,0.1,True,1.0
+Combined adverse,52005,0.2,False,0.8888888888888888
+Combined adverse,52006,0.05,True,1.0
+Combined adverse,52006,0.1,True,1.0
+Combined adverse,52006,0.2,False,0.9722222222222222
+Combined adverse,52007,0.05,True,1.0
+Combined adverse,52007,0.1,True,1.0
+Combined adverse,52007,0.2,True,1.0
+Combined adverse,52008,0.05,True,1.0
+Combined adverse,52008,0.1,True,1.0
+Combined adverse,52008,0.2,True,1.0
+Combined adverse,52009,0.05,True,1.0
+Combined adverse,52009,0.1,True,1.0
+Combined adverse,52009,0.2,False,0.9444444444444444
+Combined adverse,52010,0.05,True,1.0
+Combined adverse,52010,0.1,True,1.0
+Combined adverse,52010,0.2,True,1.0
+Combined adverse,52011,0.05,True,1.0
+Combined adverse,52011,0.1,True,1.0
+Combined adverse,52011,0.2,False,0.9722222222222222
+Combined adverse,52012,0.05,True,1.0
+Combined adverse,52012,0.1,True,1.0
+Combined adverse,52012,0.2,False,0.9722222222222222
+Combined adverse,52013,0.05,True,1.0
+Combined adverse,52013,0.1,True,1.0
+Combined adverse,52013,0.2,True,1.0
+Combined adverse,52014,0.05,True,1.0
+Combined adverse,52014,0.1,True,1.0
+Combined adverse,52014,0.2,False,0.9444444444444444
+Combined adverse,52015,0.05,True,1.0
+Combined adverse,52015,0.1,True,1.0
+Combined adverse,52015,0.2,True,1.0
+Combined adverse,52016,0.05,True,1.0
+Combined adverse,52016,0.1,True,1.0
+Combined adverse,52016,0.2,False,0.9166666666666666
+Combined adverse,52017,0.05,True,1.0
+Combined adverse,52017,0.1,True,1.0
+Combined adverse,52017,0.2,False,0.9722222222222222
+Combined adverse,52018,0.05,True,1.0
+Combined adverse,52018,0.1,True,1.0
+Combined adverse,52018,0.2,True,1.0
+Combined adverse,52019,0.05,True,1.0
+Combined adverse,52019,0.1,True,1.0
+Combined adverse,52019,0.2,False,0.9722222222222222
+Combined adverse,52020,0.05,True,1.0
+Combined adverse,52020,0.1,True,1.0
+Combined adverse,52020,0.2,False,0.9722222222222222
+Combined adverse,52021,0.05,True,1.0
+Combined adverse,52021,0.1,True,1.0
+Combined adverse,52021,0.2,False,0.9444444444444444
+Combined adverse,52022,0.05,True,1.0
+Combined adverse,52022,0.1,True,1.0
+Combined adverse,52022,0.2,False,0.9722222222222222
+Combined adverse,52023,0.05,True,1.0
+Combined adverse,52023,0.1,True,1.0
+Combined adverse,52023,0.2,False,0.9444444444444444
+Combined adverse,52024,0.05,True,1.0
+Combined adverse,52024,0.1,True,1.0
+Combined adverse,52024,0.2,True,1.0
+Combined adverse,52025,0.05,True,1.0
+Combined adverse,52025,0.1,True,1.0
+Combined adverse,52025,0.2,False,0.9722222222222222
+Combined adverse,52026,0.05,True,1.0
+Combined adverse,52026,0.1,True,1.0
+Combined adverse,52026,0.2,False,0.9722222222222222
+Combined adverse,52027,0.05,True,1.0
+Combined adverse,52027,0.1,True,1.0
+Combined adverse,52027,0.2,False,0.9722222222222222
+Combined adverse,52028,0.05,True,1.0
+Combined adverse,52028,0.1,True,1.0
+Combined adverse,52028,0.2,False,0.9722222222222222
+Combined adverse,52029,0.05,True,1.0
+Combined adverse,52029,0.1,True,1.0
+Combined adverse,52029,0.2,True,1.0

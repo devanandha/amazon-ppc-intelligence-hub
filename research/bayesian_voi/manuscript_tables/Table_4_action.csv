@@ -1,0 +1,7 @@
+scenario,quota,action_mode,contrast,mean_diff,halfwidth_95,seed_count
+Mixture reference,0.1,action ablation,v8 budget VOI: v8 action minus v7 action,1.323733731932084,0.5072557920630205,30
+Auction costs +35%,0.1,action ablation,v8 budget VOI: v8 action minus v7 action,2.837888986753996,0.4263646346025784,30
+Conversions 50% visible,0.1,action ablation,v8 budget VOI: v8 action minus v7 action,-1.1955484362885334,0.4168274477759584,30
+Campaign budgets halved,0.1,action ablation,v8 budget VOI: v8 action minus v7 action,1.6134362624329763,0.4263149631634428,30
+Future CVR -40%,0.1,action ablation,v8 budget VOI: v8 action minus v7 action,1.5121714304035698,0.3246910670194822,30
+Combined adverse,0.1,action ablation,v8 budget VOI: v8 action minus v7 action,1.5634142101126167,0.3210311711447299,30

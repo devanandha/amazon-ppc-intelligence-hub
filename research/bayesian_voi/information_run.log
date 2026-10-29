@@ -1,0 +1,20 @@
+Complete grid 7740 policy evaluations 3780 matched information-use contrasts
+               scenario  quota        method                contrast  mean_diff  halfwidth_95  ci_low  ci_high  seed_count
+      Mixture reference    0.1 v8 budget VOI      information_effect     0.0000        0.0000 -0.0000   0.0000          30
+      Mixture reference    0.1 v8 budget VOI      use_minus_no_probe     1.9981        0.2793  1.7188   2.2775          30
+      Mixture reference    0.1 v8 budget VOI withhold_minus_no_probe     1.9981        0.2793  1.7188   2.2775          30
+     Auction costs +35%    0.1 v8 budget VOI      information_effect    -0.0107        0.0156 -0.0263   0.0049          30
+     Auction costs +35%    0.1 v8 budget VOI      use_minus_no_probe     1.6851        0.2949  1.3902   1.9800          30
+     Auction costs +35%    0.1 v8 budget VOI withhold_minus_no_probe     1.6958        0.2923  1.4035   1.9881          30
+Conversions 50% visible    0.1 v8 budget VOI      information_effect     0.0000        0.0000 -0.0000   0.0000          30
+Conversions 50% visible    0.1 v8 budget VOI      use_minus_no_probe     1.7775        0.2356  1.5418   2.0131          30
+Conversions 50% visible    0.1 v8 budget VOI withhold_minus_no_probe     1.7775        0.2356  1.5418   2.0131          30
+Campaign budgets halved    0.1 v8 budget VOI      information_effect     0.0146        0.0695 -0.0549   0.0842          30
+Campaign budgets halved    0.1 v8 budget VOI      use_minus_no_probe     1.3674        0.3416  1.0258   1.7091          30
+Campaign budgets halved    0.1 v8 budget VOI withhold_minus_no_probe     1.3528        0.3156  1.0372   1.6684          30
+        Future CVR -40%    0.1 v8 budget VOI      information_effect     0.0000        0.0000 -0.0000   0.0000          30
+        Future CVR -40%    0.1 v8 budget VOI      use_minus_no_probe     1.0088        0.1956  0.8132   1.2044          30
+        Future CVR -40%    0.1 v8 budget VOI withhold_minus_no_probe     1.0088        0.1956  0.8132   1.2044          30
+       Combined adverse    0.1 v8 budget VOI      information_effect     0.0559        0.0941 -0.0381   0.1500          30
+       Combined adverse    0.1 v8 budget VOI      use_minus_no_probe     0.5565        0.2182  0.3383   0.7747          30
+       Combined adverse    0.1 v8 budget VOI withhold_minus_no_probe     0.5005        0.2115  0.2891   0.7120          30

@@ -1,0 +1,235 @@
+scenario,quota,action_mode,contrast,mean_diff,halfwidth_95,seed_count
+Mixture reference,0.05,v7 heuristic action,v8 rank minus Random,1.2358642978031178,0.16618987456239526,30
+Mixture reference,0.05,v7 heuristic action,v8 rank minus Fewest clicks,1.199422114976959,0.2178156192150487,30
+Mixture reference,0.05,v7 heuristic action,v8 rank minus Profitability uncertainty,1.3020593989109392,0.2133673350779196,30
+Mixture reference,0.05,v7 heuristic action,v8 rank minus v5 VOI rank,1.307732874195417,0.24430152751482664,30
+Mixture reference,0.05,v8 budget action,v8 rank minus Random,1.188063106550788,0.15759312228817632,30
+Mixture reference,0.05,v8 budget action,v8 rank minus Fewest clicks,1.135785781329357,0.22235284953645107,30
+Mixture reference,0.05,v8 budget action,v8 rank minus Profitability uncertainty,1.1708793941761262,0.17383760721580324,30
+Mixture reference,0.05,v8 budget action,v8 rank minus v5 VOI rank,1.220815907026029,0.19171229014426217,30
+Mixture reference,0.1,v7 heuristic action,v8 rank minus Random,1.9945192381022312,0.2699164525916972,30
+Mixture reference,0.1,v7 heuristic action,v8 rank minus Fewest clicks,1.7733323636007114,0.3306005961357011,30
+Mixture reference,0.1,v7 heuristic action,v8 rank minus Profitability uncertainty,1.9082131354386942,0.29758655036144566,30
+Mixture reference,0.1,v7 heuristic action,v8 rank minus v5 VOI rank,1.9955510771012812,0.3367808132660725,30
+Mixture reference,0.1,v8 budget action,v8 rank minus Random,1.9621233953842514,0.2517992960110739,30
+Mixture reference,0.1,v8 budget action,v8 rank minus Fewest clicks,1.8456975746684525,0.28249818410409916,30
+Mixture reference,0.1,v8 budget action,v8 rank minus Profitability uncertainty,1.8817187057292897,0.26253212592951053,30
+Mixture reference,0.1,v8 budget action,v8 rank minus v5 VOI rank,2.067565066099038,0.27320297578362,30
+Mixture reference,0.2,v7 heuristic action,v8 rank minus Random,2.916842309906147,0.3619767076777094,30
+Mixture reference,0.2,v7 heuristic action,v8 rank minus Fewest clicks,2.812804268247403,0.32343756150402553,30
+Mixture reference,0.2,v7 heuristic action,v8 rank minus Profitability uncertainty,2.807825871549052,0.4009284368538083,30
+Mixture reference,0.2,v7 heuristic action,v8 rank minus v5 VOI rank,2.952387944825421,0.36786712024453716,30
+Mixture reference,0.2,v8 budget action,v8 rank minus Random,3.0177843219548257,0.3427344300665281,30
+Mixture reference,0.2,v8 budget action,v8 rank minus Fewest clicks,2.8485320141013393,0.3392151577470661,30
+Mixture reference,0.2,v8 budget action,v8 rank minus Profitability uncertainty,2.7666835995558214,0.39008286802121067,30
+Mixture reference,0.2,v8 budget action,v8 rank minus v5 VOI rank,2.925138129190423,0.39817012592492596,30
+Auction costs +35%,0.05,v7 heuristic action,v8 rank minus Random,1.190939238484325,0.17781302171560928,30
+Auction costs +35%,0.05,v7 heuristic action,v8 rank minus Fewest clicks,1.2153723577800952,0.2305514727220045,30
+Auction costs +35%,0.05,v7 heuristic action,v8 rank minus Profitability uncertainty,1.2750837674739384,0.16036553650938526,30
+Auction costs +35%,0.05,v7 heuristic action,v8 rank minus v5 VOI rank,1.2719861433248065,0.20014716065564545,30
+Auction costs +35%,0.05,v8 budget action,v8 rank minus Random,1.1591436322586826,0.171701910219677,30
+Auction costs +35%,0.05,v8 budget action,v8 rank minus Fewest clicks,1.20405206586042,0.2176174049730336,30
+Auction costs +35%,0.05,v8 budget action,v8 rank minus Profitability uncertainty,1.1280629511859241,0.1824380664688335,30
+Auction costs +35%,0.05,v8 budget action,v8 rank minus v5 VOI rank,1.2327187353388311,0.2091722875763115,30
+Auction costs +35%,0.1,v7 heuristic action,v8 rank minus Random,1.8504179912296772,0.2775197597080445,30
+Auction costs +35%,0.1,v7 heuristic action,v8 rank minus Fewest clicks,1.7480867482028801,0.28121474987002015,30
+Auction costs +35%,0.1,v7 heuristic action,v8 rank minus Profitability uncertainty,1.8612391351084847,0.25435563296050406,30
+Auction costs +35%,0.1,v7 heuristic action,v8 rank minus v5 VOI rank,2.0131451403538807,0.26488984923758274,30
+Auction costs +35%,0.1,v8 budget action,v8 rank minus Random,1.8797928768519916,0.26348961359637507,30
+Auction costs +35%,0.1,v8 budget action,v8 rank minus Fewest clicks,1.7976756926441786,0.3101226711131571,30
+Auction costs +35%,0.1,v8 budget action,v8 rank minus Profitability uncertainty,1.8126939124165602,0.26877282799899854,30
+Auction costs +35%,0.1,v8 budget action,v8 rank minus v5 VOI rank,1.9707017060612761,0.28204474518401795,30
+Auction costs +35%,0.2,v7 heuristic action,v8 rank minus Random,2.821568386509358,0.36389544548154257,30
+Auction costs +35%,0.2,v7 heuristic action,v8 rank minus Fewest clicks,2.7188803146814555,0.3249602766101873,30
+Auction costs +35%,0.2,v7 heuristic action,v8 rank minus Profitability uncertainty,2.584036240286865,0.37396119150829493,30
+Auction costs +35%,0.2,v7 heuristic action,v8 rank minus v5 VOI rank,2.78008758170734,0.34567518661872076,30
+Auction costs +35%,0.2,v8 budget action,v8 rank minus Random,2.8762638926329305,0.3646763236532352,30
+Auction costs +35%,0.2,v8 budget action,v8 rank minus Fewest clicks,2.685623926068122,0.39371515850081445,30
+Auction costs +35%,0.2,v8 budget action,v8 rank minus Profitability uncertainty,2.6089545349901586,0.42191048175551255,30
+Auction costs +35%,0.2,v8 budget action,v8 rank minus v5 VOI rank,2.799385455165135,0.42718513426396243,30
+Conversions 50% visible,0.05,v7 heuristic action,v8 rank minus Random,1.1208059681496736,0.21448413933745894,30
+Conversions 50% visible,0.05,v7 heuristic action,v8 rank minus Fewest clicks,0.9596077328756643,0.19326216446495117,30
+Conversions 50% visible,0.05,v7 heuristic action,v8 rank minus Profitability uncertainty,0.8317843997768191,0.2109431561256062,30
+Conversions 50% visible,0.05,v7 heuristic action,v8 rank minus v5 VOI rank,0.7668806374780066,0.2061821081075772,30
+Conversions 50% visible,0.05,v8 budget action,v8 rank minus Random,1.1735393312430262,0.22719888577505948,30
+Conversions 50% visible,0.05,v8 budget action,v8 rank minus Fewest clicks,1.1954750148750777,0.18402437106871505,30
+Conversions 50% visible,0.05,v8 budget action,v8 rank minus Profitability uncertainty,1.2062924192614097,0.2999846258624791,30
+Conversions 50% visible,0.05,v8 budget action,v8 rank minus v5 VOI rank,0.7176289529342533,0.35395773897408356,30
+Conversions 50% visible,0.1,v7 heuristic action,v8 rank minus Random,1.8194331349256307,0.28019286621571243,30
+Conversions 50% visible,0.1,v7 heuristic action,v8 rank minus Fewest clicks,1.3117804331263012,0.30293701844564364,30
+Conversions 50% visible,0.1,v7 heuristic action,v8 rank minus Profitability uncertainty,1.0767026792998815,0.30952587703571655,30
+Conversions 50% visible,0.1,v7 heuristic action,v8 rank minus v5 VOI rank,1.193968902303544,0.2703437858251224,30
+Conversions 50% visible,0.1,v8 budget action,v8 rank minus Random,1.7452497513189669,0.25288694468097966,30
+Conversions 50% visible,0.1,v8 budget action,v8 rank minus Fewest clicks,1.635395954558812,0.2447463087967651,30
+Conversions 50% visible,0.1,v8 budget action,v8 rank minus Profitability uncertainty,1.3112330840786959,0.43274613812635754,30
+Conversions 50% visible,0.1,v8 budget action,v8 rank minus v5 VOI rank,1.3059930551629855,0.4183873402177665,30
+Conversions 50% visible,0.2,v7 heuristic action,v8 rank minus Random,2.906284590530687,0.3574225386499165,30
+Conversions 50% visible,0.2,v7 heuristic action,v8 rank minus Fewest clicks,2.1111932314434854,0.3046999589130878,30
+Conversions 50% visible,0.2,v7 heuristic action,v8 rank minus Profitability uncertainty,1.5585741789811356,0.2852741832378212,30
+Conversions 50% visible,0.2,v7 heuristic action,v8 rank minus v5 VOI rank,1.5594141020760817,0.3515501928716266,30
+Conversions 50% visible,0.2,v8 budget action,v8 rank minus Random,2.4751738765966187,0.34529964777594907,30
+Conversions 50% visible,0.2,v8 budget action,v8 rank minus Fewest clicks,2.102432565878725,0.3020738976028104,30
+Conversions 50% visible,0.2,v8 budget action,v8 rank minus Profitability uncertainty,1.5343561159313333,0.41820711803591587,30
+Conversions 50% visible,0.2,v8 budget action,v8 rank minus v5 VOI rank,1.560773322149764,0.4186819150524956,30
+Campaign budgets halved,0.05,v7 heuristic action,v8 rank minus Random,1.1058820606656097,0.1624739234812797,30
+Campaign budgets halved,0.05,v7 heuristic action,v8 rank minus Fewest clicks,1.2141308129596495,0.21281982931507168,30
+Campaign budgets halved,0.05,v7 heuristic action,v8 rank minus Profitability uncertainty,1.1169040158143164,0.19480141425496691,30
+Campaign budgets halved,0.05,v7 heuristic action,v8 rank minus v5 VOI rank,1.2302549198979766,0.19243438383782377,30
+Campaign budgets halved,0.05,v8 budget action,v8 rank minus Random,1.1430812939612287,0.17626486600404384,30
+Campaign budgets halved,0.05,v8 budget action,v8 rank minus Fewest clicks,1.0984723847923825,0.21684093758787748,30
+Campaign budgets halved,0.05,v8 budget action,v8 rank minus Profitability uncertainty,1.1027282737133972,0.1479983333405459,30
+Campaign budgets halved,0.05,v8 budget action,v8 rank minus v5 VOI rank,1.132438455952418,0.19735994740823445,30
+Campaign budgets halved,0.1,v7 heuristic action,v8 rank minus Random,1.8983002956713995,0.3200453167526924,30
+Campaign budgets halved,0.1,v7 heuristic action,v8 rank minus Fewest clicks,1.7400210231411615,0.2711179143700268,30
+Campaign budgets halved,0.1,v7 heuristic action,v8 rank minus Profitability uncertainty,1.7833588343092406,0.3040398247199339,30
+Campaign budgets halved,0.1,v7 heuristic action,v8 rank minus v5 VOI rank,1.9814185888515718,0.3303929760634954,30
+Campaign budgets halved,0.1,v8 budget action,v8 rank minus Random,1.9420534668234246,0.3011887407014784,30
+Campaign budgets halved,0.1,v8 budget action,v8 rank minus Fewest clicks,1.7598179472245363,0.29330837812244664,30
+Campaign budgets halved,0.1,v8 budget action,v8 rank minus Profitability uncertainty,1.7791610291582773,0.2480358167470833,30
+Campaign budgets halved,0.1,v8 budget action,v8 rank minus v5 VOI rank,2.0118487286656017,0.28418265713179464,30
+Campaign budgets halved,0.2,v7 heuristic action,v8 rank minus Random,3.1207749223264796,0.45267313530405484,30
+Campaign budgets halved,0.2,v7 heuristic action,v8 rank minus Fewest clicks,2.8941985309919116,0.38492582982234647,30
+Campaign budgets halved,0.2,v7 heuristic action,v8 rank minus Profitability uncertainty,2.9397231266257,0.4313661331864235,30
+Campaign budgets halved,0.2,v7 heuristic action,v8 rank minus v5 VOI rank,3.022420895609779,0.40482602356643793,30
+Campaign budgets halved,0.2,v8 budget action,v8 rank minus Random,2.8897538780899223,0.40697812775809356,30
+Campaign budgets halved,0.2,v8 budget action,v8 rank minus Fewest clicks,2.761861540702313,0.3282478135234087,30
+Campaign budgets halved,0.2,v8 budget action,v8 rank minus Profitability uncertainty,2.544704069172342,0.40631364253746605,30
+Campaign budgets halved,0.2,v8 budget action,v8 rank minus v5 VOI rank,2.643854344376755,0.3825511964852926,30
+Future CVR -40%,0.05,v7 heuristic action,v8 rank minus Random,0.714863047822734,0.13217126146702868,30
+Future CVR -40%,0.05,v7 heuristic action,v8 rank minus Fewest clicks,0.7721336434192715,0.1777525618281757,30
+Future CVR -40%,0.05,v7 heuristic action,v8 rank minus Profitability uncertainty,0.8074422157194916,0.16900343186352274,30
+Future CVR -40%,0.05,v7 heuristic action,v8 rank minus v5 VOI rank,0.8163302131412641,0.17418921125138992,30
+Future CVR -40%,0.05,v8 budget action,v8 rank minus Random,0.708684209685037,0.11989468642128379,30
+Future CVR -40%,0.05,v8 budget action,v8 rank minus Fewest clicks,0.7051852898196732,0.1797736225886261,30
+Future CVR -40%,0.05,v8 budget action,v8 rank minus Profitability uncertainty,0.5402331547124362,0.16010203906193954,30
+Future CVR -40%,0.05,v8 budget action,v8 rank minus v5 VOI rank,0.7084898146254649,0.16821649818629394,30
+Future CVR -40%,0.1,v7 heuristic action,v8 rank minus Random,1.1353181485334758,0.21046278037524835,30
+Future CVR -40%,0.1,v7 heuristic action,v8 rank minus Fewest clicks,1.187905011268978,0.24940483383163106,30
+Future CVR -40%,0.1,v7 heuristic action,v8 rank minus Profitability uncertainty,1.1407266857241993,0.23889320505164302,30
+Future CVR -40%,0.1,v7 heuristic action,v8 rank minus v5 VOI rank,1.1978254339483492,0.25283955499680977,30
+Future CVR -40%,0.1,v8 budget action,v8 rank minus Random,1.1140937288794432,0.20450137226468082,30
+Future CVR -40%,0.1,v8 budget action,v8 rank minus Fewest clicks,1.1133328445871689,0.2263593991675737,30
+Future CVR -40%,0.1,v8 budget action,v8 rank minus Profitability uncertainty,0.9137534429665221,0.23652506977763943,30
+Future CVR -40%,0.1,v8 budget action,v8 rank minus v5 VOI rank,1.14046851733506,0.2414268488705843,30
+Future CVR -40%,0.2,v7 heuristic action,v8 rank minus Random,1.7082742573834042,0.24736054276690217,30
+Future CVR -40%,0.2,v7 heuristic action,v8 rank minus Fewest clicks,1.8191799013941177,0.23245364286140455,30
+Future CVR -40%,0.2,v7 heuristic action,v8 rank minus Profitability uncertainty,1.7026290316840182,0.3429316818053565,30
+Future CVR -40%,0.2,v7 heuristic action,v8 rank minus v5 VOI rank,1.7861052816652028,0.32460954405094605,30
+Future CVR -40%,0.2,v8 budget action,v8 rank minus Random,1.8171960734646906,0.24838402134233162,30
+Future CVR -40%,0.2,v8 budget action,v8 rank minus Fewest clicks,1.894514953431409,0.2630594769313644,30
+Future CVR -40%,0.2,v8 budget action,v8 rank minus Profitability uncertainty,1.6172331092926553,0.3208612532722345,30
+Future CVR -40%,0.2,v8 budget action,v8 rank minus v5 VOI rank,1.6745844136627537,0.3009346300354817,30
+Combined adverse,0.05,v7 heuristic action,v8 rank minus Random,0.7678695453213004,0.19863654789364746,30
+Combined adverse,0.05,v7 heuristic action,v8 rank minus Fewest clicks,0.6708717965119964,0.1772885373127319,30
+Combined adverse,0.05,v7 heuristic action,v8 rank minus Profitability uncertainty,0.5607778816331571,0.15343382375630316,30
+Combined adverse,0.05,v7 heuristic action,v8 rank minus v5 VOI rank,0.6246786774102446,0.20176006801643198,30
+Combined adverse,0.05,v8 budget action,v8 rank minus Random,0.8362025785519631,0.21409199597737466,30
+Combined adverse,0.05,v8 budget action,v8 rank minus Fewest clicks,0.7246394270939204,0.1775220323781884,30
+Combined adverse,0.05,v8 budget action,v8 rank minus Profitability uncertainty,0.39245755125441684,0.18116317544903932,30
+Combined adverse,0.05,v8 budget action,v8 rank minus v5 VOI rank,0.5565047081342426,0.18327336415606166,30
+Combined adverse,0.1,v7 heuristic action,v8 rank minus Random,1.1169061016064368,0.1838718202193967,30
+Combined adverse,0.1,v7 heuristic action,v8 rank minus Fewest clicks,0.9487190790959973,0.14951228512903278,30
+Combined adverse,0.1,v7 heuristic action,v8 rank minus Profitability uncertainty,0.5458598972828096,0.2861579705517541,30
+Combined adverse,0.1,v7 heuristic action,v8 rank minus v5 VOI rank,0.8724009412378247,0.21329352755856407,30
+Combined adverse,0.1,v8 budget action,v8 rank minus Random,1.2733678260301666,0.22683459648275092,30
+Combined adverse,0.1,v8 budget action,v8 rank minus Fewest clicks,0.972978323826408,0.22286125495707024,30
+Combined adverse,0.1,v8 budget action,v8 rank minus Profitability uncertainty,0.452512867480537,0.23803111862525722,30
+Combined adverse,0.1,v8 budget action,v8 rank minus v5 VOI rank,0.7934732589909423,0.25299691339382213,30
+Combined adverse,0.2,v7 heuristic action,v8 rank minus Random,2.010414607784678,0.2716974567372379,30
+Combined adverse,0.2,v7 heuristic action,v8 rank minus Fewest clicks,1.6919773691508557,0.14586985843661698,30
+Combined adverse,0.2,v7 heuristic action,v8 rank minus Profitability uncertainty,1.066901709629389,0.2689536574340766,30
+Combined adverse,0.2,v7 heuristic action,v8 rank minus v5 VOI rank,1.191742154506986,0.24270404366869427,30
+Combined adverse,0.2,v8 budget action,v8 rank minus Random,2.0567932532734483,0.3139719161491373,30
+Combined adverse,0.2,v8 budget action,v8 rank minus Fewest clicks,1.6366348491944598,0.21561527129463168,30
+Combined adverse,0.2,v8 budget action,v8 rank minus Profitability uncertainty,0.8566736464887433,0.26116591341170475,30
+Combined adverse,0.2,v8 budget action,v8 rank minus v5 VOI rank,0.9163901965653856,0.2712186235597188,30
+Mixture reference,0.05,action ablation,Random: v8 action minus v7 action,1.2590816176554749,0.4810235100144233,30
+Mixture reference,0.05,action ablation,Fewest clicks: v8 action minus v7 action,1.2749167600507472,0.5354110165882785,30
+Mixture reference,0.05,action ablation,Profitability uncertainty: v8 action minus v7 action,1.3424604311379582,0.51111153812835,30
+Mixture reference,0.05,action ablation,v5 VOI rank: v8 action minus v7 action,1.2981973935725333,0.5141391179285735,30
+Mixture reference,0.05,action ablation,v8 budget VOI: v8 action minus v7 action,1.2112804264031454,0.4762148037260816,30
+Mixture reference,0.1,action ablation,Random: v8 action minus v7 action,1.356129574650064,0.5088588205968189,30
+Mixture reference,0.1,action ablation,Fewest clicks: v8 action minus v7 action,1.2513685208643432,0.5094933304345423,30
+Mixture reference,0.1,action ablation,Profitability uncertainty: v8 action minus v7 action,1.3502281616414886,0.5105510515060424,30
+Mixture reference,0.1,action ablation,v5 VOI rank: v8 action minus v7 action,1.2517197429343272,0.5075839340534871,30
+Mixture reference,0.1,action ablation,v8 budget VOI: v8 action minus v7 action,1.323733731932084,0.5072557920630205,30
+Mixture reference,0.2,action ablation,Random: v8 action minus v7 action,1.2882467382760865,0.5113835784386903,30
+Mixture reference,0.2,action ablation,Fewest clicks: v8 action minus v7 action,1.353461004470828,0.5008345375134325,30
+Mixture reference,0.2,action ablation,Profitability uncertainty: v8 action minus v7 action,1.4303310223179957,0.5001052850721036,30
+Mixture reference,0.2,action ablation,v5 VOI rank: v8 action minus v7 action,1.4164385659597627,0.4745663307923418,30
+Mixture reference,0.2,action ablation,v8 budget VOI: v8 action minus v7 action,1.3891887503247655,0.4785042641325619,30
+Auction costs +35%,0.05,action ablation,Random: v8 action minus v7 action,2.8845095000213954,0.4391126527076607,30
+Auction costs +35%,0.05,action ablation,Fewest clicks: v8 action minus v7 action,2.8640341857154286,0.40190791593541647,30
+Auction costs +35%,0.05,action ablation,Profitability uncertainty: v8 action minus v7 action,2.9997347100837666,0.43038455998336056,30
+Auction costs +35%,0.05,action ablation,v5 VOI rank: v8 action minus v7 action,2.8919813017817275,0.4551583084414896,30
+Auction costs +35%,0.05,action ablation,v8 budget VOI: v8 action minus v7 action,2.8527138937957526,0.4075084922693102,30
+Auction costs +35%,0.1,action ablation,Random: v8 action minus v7 action,2.8085141011316823,0.4702724603157324,30
+Auction costs +35%,0.1,action ablation,Fewest clicks: v8 action minus v7 action,2.788300042312698,0.4281818227809328,30
+Auction costs +35%,0.1,action ablation,Profitability uncertainty: v8 action minus v7 action,2.88643420944592,0.4679824002111987,30
+Auction costs +35%,0.1,action ablation,v5 VOI rank: v8 action minus v7 action,2.8803324210466,0.45806785577776,30
+Auction costs +35%,0.1,action ablation,v8 budget VOI: v8 action minus v7 action,2.837888986753996,0.42636463460257845,30
+Auction costs +35%,0.2,action ablation,Random: v8 action minus v7 action,2.6711694966255646,0.49576017546314377,30
+Auction costs +35%,0.2,action ablation,Fewest clicks: v8 action minus v7 action,2.7591213913624713,0.4319233029011496,30
+Auction costs +35%,0.2,action ablation,Profitability uncertainty: v8 action minus v7 action,2.700946708045844,0.46088788056924945,30
+Auction costs +35%,0.2,action ablation,v5 VOI rank: v8 action minus v7 action,2.706567129291342,0.4733193753302661,30
+Auction costs +35%,0.2,action ablation,v8 budget VOI: v8 action minus v7 action,2.725865002749137,0.4510350130435838,30
+Conversions 50% visible,0.05,action ablation,Random: v8 action minus v7 action,-1.2347432831999334,0.41651739775005175,30
+Conversions 50% visible,0.05,action ablation,Fewest clicks: v8 action minus v7 action,-1.4178772021059947,0.42632601198348924,30
+Conversions 50% visible,0.05,action ablation,Profitability uncertainty: v8 action minus v7 action,-1.5565179395911721,0.4232103176678492,30
+Conversions 50% visible,0.05,action ablation,v5 VOI rank: v8 action minus v7 action,-1.1327582355628285,0.37534150283148515,30
+Conversions 50% visible,0.05,action ablation,v8 budget VOI: v8 action minus v7 action,-1.1820099201065812,0.4257756374385082,30
+Conversions 50% visible,0.1,action ablation,Random: v8 action minus v7 action,-1.1213650526818701,0.40886845091929913,30
+Conversions 50% visible,0.1,action ablation,Fewest clicks: v8 action minus v7 action,-1.5191639577210436,0.4036773410628939,30
+Conversions 50% visible,0.1,action ablation,Profitability uncertainty: v8 action minus v7 action,-1.4300788410673475,0.3427872062632012,30
+Conversions 50% visible,0.1,action ablation,v5 VOI rank: v8 action minus v7 action,-1.3075725891479748,0.36339066329628644,30
+Conversions 50% visible,0.1,action ablation,v8 budget VOI: v8 action minus v7 action,-1.1955484362885334,0.4168274477759584,30
+Conversions 50% visible,0.2,action ablation,Random: v8 action minus v7 action,-0.8179926552387359,0.38534823624949793,30
+Conversions 50% visible,0.2,action ablation,Fewest clicks: v8 action minus v7 action,-1.2403427036080439,0.394055498137464,30
+Conversions 50% visible,0.2,action ablation,Profitability uncertainty: v8 action minus v7 action,-1.224885306123002,0.3457550983981378,30
+Conversions 50% visible,0.2,action ablation,v5 VOI rank: v8 action minus v7 action,-1.2504625892464871,0.3935469214809268,30
+Conversions 50% visible,0.2,action ablation,v8 budget VOI: v8 action minus v7 action,-1.2491033691728048,0.4271456816095375,30
+Campaign budgets halved,0.05,action ablation,Random: v8 action minus v7 action,1.5234123415003473,0.40015213741138334,30
+Campaign budgets halved,0.05,action ablation,Fewest clicks: v8 action minus v7 action,1.6762700029632336,0.4499238882772387,30
+Campaign budgets halved,0.05,action ablation,Profitability uncertainty: v8 action minus v7 action,1.574787316896885,0.4416970471251472,30
+Campaign budgets halved,0.05,action ablation,v5 VOI rank: v8 action minus v7 action,1.6584280387415251,0.451194427226622,30
+Campaign budgets halved,0.05,action ablation,v8 budget VOI: v8 action minus v7 action,1.5606115747959661,0.44436433930737135,30
+Campaign budgets halved,0.1,action ablation,Random: v8 action minus v7 action,1.569683091280951,0.37918475343094027,30
+Campaign budgets halved,0.1,action ablation,Fewest clicks: v8 action minus v7 action,1.5936393383496015,0.350550102940881,30
+Campaign budgets halved,0.1,action ablation,Profitability uncertainty: v8 action minus v7 action,1.6176340675839394,0.42450892892719694,30
+Campaign budgets halved,0.1,action ablation,v5 VOI rank: v8 action minus v7 action,1.5830061226189465,0.40945161239497374,30
+Campaign budgets halved,0.1,action ablation,v8 budget VOI: v8 action minus v7 action,1.6134362624329763,0.4263149631634428,30
+Campaign budgets halved,0.2,action ablation,Random: v8 action minus v7 action,1.6082347799372267,0.4085249603636741,30
+Campaign budgets halved,0.2,action ablation,Fewest clicks: v8 action minus v7 action,1.5095507259902674,0.362196524329089,30
+Campaign budgets halved,0.2,action ablation,Profitability uncertainty: v8 action minus v7 action,1.7722327931540265,0.369798211273814,30
+Campaign budgets halved,0.2,action ablation,v5 VOI rank: v8 action minus v7 action,1.7557802869336934,0.34931817953657185,30
+Campaign budgets halved,0.2,action ablation,v8 budget VOI: v8 action minus v7 action,1.377213735700669,0.3466819108981016,30
+Future CVR -40%,0.05,action ablation,Random: v8 action minus v7 action,1.5373275158205677,0.32317286870432865,30
+Future CVR -40%,0.05,action ablation,Fewest clicks: v8 action minus v7 action,1.5980970312824687,0.33577021149056235,30
+Future CVR -40%,0.05,action ablation,Profitability uncertainty: v8 action minus v7 action,1.798357738689926,0.3657076536349279,30
+Future CVR -40%,0.05,action ablation,v5 VOI rank: v8 action minus v7 action,1.6389890761986694,0.3213140068415002,30
+Future CVR -40%,0.05,action ablation,v8 budget VOI: v8 action minus v7 action,1.5311486776828709,0.3265565895574692,30
+Future CVR -40%,0.1,action ablation,Random: v8 action minus v7 action,1.5333958500576024,0.32449364256493174,30
+Future CVR -40%,0.1,action ablation,Fewest clicks: v8 action minus v7 action,1.5867435970853785,0.3225260625850053,30
+Future CVR -40%,0.1,action ablation,Profitability uncertainty: v8 action minus v7 action,1.739144673161247,0.3185461850327825,30
+Future CVR -40%,0.1,action ablation,v5 VOI rank: v8 action minus v7 action,1.5695283470168588,0.3286365349762848,30
+Future CVR -40%,0.1,action ablation,v8 budget VOI: v8 action minus v7 action,1.5121714304035698,0.3246910670194822,30
+Future CVR -40%,0.2,action ablation,Random: v8 action minus v7 action,1.4019989032400242,0.35251067303457057,30
+Future CVR -40%,0.2,action ablation,Fewest clicks: v8 action minus v7 action,1.4355856672840195,0.3065519418545342,30
+Future CVR -40%,0.2,action ablation,Profitability uncertainty: v8 action minus v7 action,1.5963166417126737,0.3263047780324488,30
+Future CVR -40%,0.2,action ablation,v5 VOI rank: v8 action minus v7 action,1.6224415873237596,0.3120493501501437,30
+Future CVR -40%,0.2,action ablation,v8 budget VOI: v8 action minus v7 action,1.5109207193213108,0.29681019933787467,30
+Combined adverse,0.05,action ablation,Random: v8 action minus v7 action,1.6293116503079155,0.27391551320963026,30
+Combined adverse,0.05,action ablation,Fewest clicks: v8 action minus v7 action,1.6438770529566544,0.2837655514530898,30
+Combined adverse,0.05,action ablation,Profitability uncertainty: v8 action minus v7 action,1.8659650139173183,0.2744787500501077,30
+Combined adverse,0.05,action ablation,v5 VOI rank: v8 action minus v7 action,1.7658186528145805,0.26336053589593283,30
+Combined adverse,0.05,action ablation,v8 budget VOI: v8 action minus v7 action,1.6976446835385781,0.29611642623971507,30
+Combined adverse,0.1,action ablation,Random: v8 action minus v7 action,1.406952485688887,0.2759820826310668,30
+Combined adverse,0.1,action ablation,Fewest clicks: v8 action minus v7 action,1.5391549653822063,0.2741332323500964,30
+Combined adverse,0.1,action ablation,Profitability uncertainty: v8 action minus v7 action,1.6567612399148892,0.2713574045609812,30
+Combined adverse,0.1,action ablation,v5 VOI rank: v8 action minus v7 action,1.6423418923594997,0.2546483611249963,30
+Combined adverse,0.1,action ablation,v8 budget VOI: v8 action minus v7 action,1.5634142101126167,0.32103117114472995,30
+Combined adverse,0.2,action ablation,Random: v8 action minus v7 action,1.2359242417953817,0.2614407590212269,30
+Combined adverse,0.2,action ablation,Fewest clicks: v8 action minus v7 action,1.3376454072405475,0.27827233412706565,30
+Combined adverse,0.2,action ablation,Profitability uncertainty: v8 action minus v7 action,1.492530950424797,0.2836578517063897,30
+Combined adverse,0.2,action ablation,v5 VOI rank: v8 action minus v7 action,1.5576548452257524,0.2952855412507461,30
+Combined adverse,0.2,action ablation,v8 budget VOI: v8 action minus v7 action,1.2823028872841518,0.31575082843222013,30

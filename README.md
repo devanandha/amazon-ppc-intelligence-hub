@@ -8,6 +8,18 @@ An explainable decision-support application for Amazon Sponsored Products advert
 
 Try the live application: [Amazon PPC Intelligence Hub](https://devanandha-amazon-ppc-intelligence-hb.streamlit.app)
 
+## Research manuscript and reproducibility
+
+**Separating Profitability from Information Value in Sponsored Search Evidence Collection**
+
+Submitted to *Operations Research Forum* on **29 October 2026**. Status at submission: **technical check**; not yet accepted or confirmed as externally peer reviewed.
+
+The computational study separates the immediate profitability of exploratory traffic from the downstream value of using its observations. In the studied synthetic setting, positive net-probing returns do not establish an additional information-use benefit. The research materials include the original comparisons, post-hoc profitability controls, a fresh-seed information-use intervention, adverse findings and limitations.
+
+[Read the research summary and reproduction instructions](research/bayesian_voi/README.md) · [Protocol](research/bayesian_voi/INFORMATION_USE_PROTOCOL.md) · [Results](research/bayesian_voi/INFORMATION_USE_RESULTS.md)
+
+All research data are synthetic. These experiments are separate from the live application and do not demonstrate real advertising uplift or general algorithmic superiority.
+
 ## Key capabilities
 
 * Calculates ACOS, ROAS, CTR, CPC, CVR and AOV from aggregated totals.

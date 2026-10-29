@@ -1,0 +1,69 @@
+{
+  "commit": "6e55061294278bd0adcb37cce24d8fb4d6ff4e6d",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.17.0"
+  },
+  "selected_gamma": 0.0,
+  "csv_comparisons": [
+    {
+      "file": "v8_paired.csv",
+      "rows": 234,
+      "comparison": "MATCH within rtol=atol=1e-10"
+    },
+    {
+      "file": "v8_per_seed.csv",
+      "comparison": "NOT COMPARED: connector did not return the published file body; rerun output retained"
+    },
+    {
+      "file": "v8_posthoc_paired.csv",
+      "rows": 48,
+      "comparison": "MATCH within rtol=atol=1e-10"
+    },
+    {
+      "file": "v8_posthoc_per_seed.csv",
+      "rows": 1800,
+      "comparison": "MATCH within rtol=atol=1e-10"
+    },
+    {
+      "file": "v8_posthoc_summary.csv",
+      "rows": 60,
+      "comparison": "MATCH within rtol=atol=1e-10"
+    },
+    {
+      "file": "v8_summary.csv",
+      "rows": 180,
+      "comparison": "MATCH within rtol=atol=1e-10"
+    },
+    {
+      "file": "v8_training.csv",
+      "rows": 3,
+      "comparison": "MATCH within rtol=atol=1e-10"
+    }
+  ],
+  "selection_checks": [
+    {
+      "quota": 0.05,
+      "cohorts": 180,
+      "identical_sets": 180,
+      "mean_term_agreement": 1.0,
+      "mean_selected_overlap": 1.0
+    },
+    {
+      "quota": 0.1,
+      "cohorts": 180,
+      "identical_sets": 180,
+      "mean_term_agreement": 1.0,
+      "mean_selected_overlap": 1.0
+    },
+    {
+      "quota": 0.2,
+      "cohorts": 180,
+      "identical_sets": 142,
+      "mean_term_agreement": 0.9964814814814815,
+      "mean_selected_overlap": 0.9912037037037037
+    }
+  ]
+}

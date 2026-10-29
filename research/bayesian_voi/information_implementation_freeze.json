@@ -1,0 +1,11 @@
+{
+  "recorded_at_utc": "2026-10-29T15:35:43.975138+00:00",
+  "stage": "79 tests passed; before 52000-series evaluation",
+  "sha256": {
+    "INFORMATION_USE_PROTOCOL.md": "b2524d8e3617984a2762b1ddb124d6a502beee99af2ca039f3dc3133128bc00c",
+    "information_use.py": "1fd25536be3ceccb1891aca1257298a22817de76dcebee325d97b8021eac374d",
+    "tests/test_information_use.py": "511c49f5bf63087cfac576c9c98c1196ff5fc4bc375817490bec6a8c5523e66b",
+    "v8_budget_aware.py": "e9c289e721dbac2b3d57585de798fc9b6c164e99e6b69334fc6e5aae451e8766",
+    "independent_outcomes.py": "16edb01be736d8a9fc1c1871fbf2de94739d392908374a4d936460bb612b117d"
+  }
+}

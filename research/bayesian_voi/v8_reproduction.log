@@ -1,0 +1,95 @@
+gamma selected only on train: 0.0
+ gamma  train_mean_profit  train_sd  training_scenario_count  training_seeds
+   0.0            13.4905    2.5002                        3              12
+   0.2            13.3911    2.4951                        3              12
+   0.5            13.1453    2.3054                        3              12
+
+PRIMARY 10% held-out summary:
+               scenario         action_mode                    method  mean_profit  descriptive_ci95_halfwidth
+      Mixture reference v7 heuristic action                    Random      12.2278                      1.6177
+      Mixture reference v7 heuristic action             Fewest clicks      12.4490                      1.5702
+      Mixture reference v7 heuristic action Profitability uncertainty      12.3141                      1.5650
+      Mixture reference v7 heuristic action               v5 VOI rank      12.2268                      1.5481
+      Mixture reference v7 heuristic action             v8 budget VOI      14.2223                      1.7111
+      Mixture reference    v8 budget action                    Random      13.5839                      1.5652
+      Mixture reference    v8 budget action             Fewest clicks      13.7004                      1.5737
+      Mixture reference    v8 budget action Profitability uncertainty      13.6643                      1.5663
+      Mixture reference    v8 budget action               v5 VOI rank      13.4785                      1.5579
+      Mixture reference    v8 budget action             v8 budget VOI      15.5461                      1.6975
+     Auction costs +35% v7 heuristic action                    Random       6.4258                      1.3061
+     Auction costs +35% v7 heuristic action             Fewest clicks       6.5282                      1.3358
+     Auction costs +35% v7 heuristic action Profitability uncertainty       6.4150                      1.2935
+     Auction costs +35% v7 heuristic action               v5 VOI rank       6.2631                      1.3032
+     Auction costs +35% v7 heuristic action             v8 budget VOI       8.2762                      1.4142
+     Auction costs +35%    v8 budget action                    Random       9.2343                      1.3531
+     Auction costs +35%    v8 budget action             Fewest clicks       9.3165                      1.3401
+     Auction costs +35%    v8 budget action Profitability uncertainty       9.3014                      1.3200
+     Auction costs +35%    v8 budget action               v5 VOI rank       9.1434                      1.3154
+     Auction costs +35%    v8 budget action             v8 budget VOI      11.1141                      1.4769
+Conversions 50% visible v7 heuristic action                    Random      12.8437                      1.3290
+Conversions 50% visible v7 heuristic action             Fewest clicks      13.3513                      1.3987
+Conversions 50% visible v7 heuristic action Profitability uncertainty      13.5864                      1.3381
+Conversions 50% visible v7 heuristic action               v5 VOI rank      13.4692                      1.3668
+Conversions 50% visible v7 heuristic action             v8 budget VOI      14.6631                      1.4738
+Conversions 50% visible    v8 budget action                    Random      11.7223                      1.3623
+Conversions 50% visible    v8 budget action             Fewest clicks      11.8322                      1.4025
+Conversions 50% visible    v8 budget action Profitability uncertainty      12.1563                      1.2913
+Conversions 50% visible    v8 budget action               v5 VOI rank      12.1616                      1.3330
+Conversions 50% visible    v8 budget action             v8 budget VOI      13.4676                      1.4965
+Campaign budgets halved v7 heuristic action                    Random       9.5616                      1.0600
+Campaign budgets halved v7 heuristic action             Fewest clicks       9.7199                      1.1025
+Campaign budgets halved v7 heuristic action Profitability uncertainty       9.6765                      1.0270
+Campaign budgets halved v7 heuristic action               v5 VOI rank       9.4785                      1.0140
+Campaign budgets halved v7 heuristic action             v8 budget VOI      11.4599                      1.2013
+Campaign budgets halved    v8 budget action                    Random      11.1313                      1.1461
+Campaign budgets halved    v8 budget action             Fewest clicks      11.3135                      1.1737
+Campaign budgets halved    v8 budget action Profitability uncertainty      11.2942                      1.1493
+Campaign budgets halved    v8 budget action               v5 VOI rank      11.0615                      1.1486
+Campaign budgets halved    v8 budget action             v8 budget VOI      13.0733                      1.2885
+        Future CVR -40% v7 heuristic action                    Random       1.4621                      0.9991
+        Future CVR -40% v7 heuristic action             Fewest clicks       1.4095                      0.9798
+        Future CVR -40% v7 heuristic action Profitability uncertainty       1.4567                      0.9647
+        Future CVR -40% v7 heuristic action               v5 VOI rank       1.3996                      0.9635
+        Future CVR -40% v7 heuristic action             v8 budget VOI       2.5974                      1.0930
+        Future CVR -40%    v8 budget action                    Random       2.9955                      0.9013
+        Future CVR -40%    v8 budget action             Fewest clicks       2.9963                      0.8954
+        Future CVR -40%    v8 budget action Profitability uncertainty       3.1959                      0.8827
+        Future CVR -40%    v8 budget action               v5 VOI rank       2.9691                      0.8856
+        Future CVR -40%    v8 budget action             v8 budget VOI       4.1096                      0.9928
+       Combined adverse v7 heuristic action                    Random      -0.3198                      0.6327
+       Combined adverse v7 heuristic action             Fewest clicks      -0.1516                      0.6615
+       Combined adverse v7 heuristic action Profitability uncertainty       0.2513                      0.6155
+       Combined adverse v7 heuristic action               v5 VOI rank      -0.0753                      0.6485
+       Combined adverse v7 heuristic action             v8 budget VOI       0.7971                      0.7172
+       Combined adverse    v8 budget action                    Random       1.0872                      0.6919
+       Combined adverse    v8 budget action             Fewest clicks       1.3876                      0.6559
+       Combined adverse    v8 budget action Profitability uncertainty       1.9080                      0.6292
+       Combined adverse    v8 budget action               v5 VOI rank       1.5671                      0.6486
+       Combined adverse    v8 budget action             v8 budget VOI       2.3606                      0.7545
+
+PRIMARY 10% paired rankings:
+               scenario         action_mode                                contrast  mean_diff  halfwidth_95
+      Mixture reference v7 heuristic action v8 rank minus Profitability uncertainty     1.9082        0.2976
+      Mixture reference v7 heuristic action               v8 rank minus v5 VOI rank     1.9956        0.3368
+      Mixture reference    v8 budget action v8 rank minus Profitability uncertainty     1.8817        0.2625
+      Mixture reference    v8 budget action               v8 rank minus v5 VOI rank     2.0676        0.2732
+     Auction costs +35% v7 heuristic action v8 rank minus Profitability uncertainty     1.8612        0.2544
+     Auction costs +35% v7 heuristic action               v8 rank minus v5 VOI rank     2.0131        0.2649
+     Auction costs +35%    v8 budget action v8 rank minus Profitability uncertainty     1.8127        0.2688
+     Auction costs +35%    v8 budget action               v8 rank minus v5 VOI rank     1.9707        0.2820
+Conversions 50% visible v7 heuristic action v8 rank minus Profitability uncertainty     1.0767        0.3095
+Conversions 50% visible v7 heuristic action               v8 rank minus v5 VOI rank     1.1940        0.2703
+Conversions 50% visible    v8 budget action v8 rank minus Profitability uncertainty     1.3112        0.4327
+Conversions 50% visible    v8 budget action               v8 rank minus v5 VOI rank     1.3060        0.4184
+Campaign budgets halved v7 heuristic action v8 rank minus Profitability uncertainty     1.7834        0.3040
+Campaign budgets halved v7 heuristic action               v8 rank minus v5 VOI rank     1.9814        0.3304
+Campaign budgets halved    v8 budget action v8 rank minus Profitability uncertainty     1.7792        0.2480
+Campaign budgets halved    v8 budget action               v8 rank minus v5 VOI rank     2.0118        0.2842
+        Future CVR -40% v7 heuristic action v8 rank minus Profitability uncertainty     1.1407        0.2389
+        Future CVR -40% v7 heuristic action               v8 rank minus v5 VOI rank     1.1978        0.2528
+        Future CVR -40%    v8 budget action v8 rank minus Profitability uncertainty     0.9138        0.2365
+        Future CVR -40%    v8 budget action               v8 rank minus v5 VOI rank     1.1405        0.2414
+       Combined adverse v7 heuristic action v8 rank minus Profitability uncertainty     0.5459        0.2862
+       Combined adverse v7 heuristic action               v8 rank minus v5 VOI rank     0.8724        0.2133
+       Combined adverse    v8 budget action v8 rank minus Profitability uncertainty     0.4525        0.2380
+       Combined adverse    v8 budget action               v8 rank minus v5 VOI rank     0.7935        0.2530

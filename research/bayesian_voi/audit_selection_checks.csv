@@ -1,0 +1,541 @@
+quota,scenario,seed,equal_set,term_agreement,selected_overlap
+0.05,Mixture reference,42000,True,1.0,1.0
+0.05,Mixture reference,42001,True,1.0,1.0
+0.05,Mixture reference,42002,True,1.0,1.0
+0.05,Mixture reference,42003,True,1.0,1.0
+0.05,Mixture reference,42004,True,1.0,1.0
+0.05,Mixture reference,42005,True,1.0,1.0
+0.05,Mixture reference,42006,True,1.0,1.0
+0.05,Mixture reference,42007,True,1.0,1.0
+0.05,Mixture reference,42008,True,1.0,1.0
+0.05,Mixture reference,42009,True,1.0,1.0
+0.05,Mixture reference,42010,True,1.0,1.0
+0.05,Mixture reference,42011,True,1.0,1.0
+0.05,Mixture reference,42012,True,1.0,1.0
+0.05,Mixture reference,42013,True,1.0,1.0
+0.05,Mixture reference,42014,True,1.0,1.0
+0.05,Mixture reference,42015,True,1.0,1.0
+0.05,Mixture reference,42016,True,1.0,1.0
+0.05,Mixture reference,42017,True,1.0,1.0
+0.05,Mixture reference,42018,True,1.0,1.0
+0.05,Mixture reference,42019,True,1.0,1.0
+0.05,Mixture reference,42020,True,1.0,1.0
+0.05,Mixture reference,42021,True,1.0,1.0
+0.05,Mixture reference,42022,True,1.0,1.0
+0.05,Mixture reference,42023,True,1.0,1.0
+0.05,Mixture reference,42024,True,1.0,1.0
+0.05,Mixture reference,42025,True,1.0,1.0
+0.05,Mixture reference,42026,True,1.0,1.0
+0.05,Mixture reference,42027,True,1.0,1.0
+0.05,Mixture reference,42028,True,1.0,1.0
+0.05,Mixture reference,42029,True,1.0,1.0
+0.05,Auction costs +35%,42000,True,1.0,1.0
+0.05,Auction costs +35%,42001,True,1.0,1.0
+0.05,Auction costs +35%,42002,True,1.0,1.0
+0.05,Auction costs +35%,42003,True,1.0,1.0
+0.05,Auction costs +35%,42004,True,1.0,1.0
+0.05,Auction costs +35%,42005,True,1.0,1.0
+0.05,Auction costs +35%,42006,True,1.0,1.0
+0.05,Auction costs +35%,42007,True,1.0,1.0
+0.05,Auction costs +35%,42008,True,1.0,1.0
+0.05,Auction costs +35%,42009,True,1.0,1.0
+0.05,Auction costs +35%,42010,True,1.0,1.0
+0.05,Auction costs +35%,42011,True,1.0,1.0
+0.05,Auction costs +35%,42012,True,1.0,1.0
+0.05,Auction costs +35%,42013,True,1.0,1.0
+0.05,Auction costs +35%,42014,True,1.0,1.0
+0.05,Auction costs +35%,42015,True,1.0,1.0
+0.05,Auction costs +35%,42016,True,1.0,1.0
+0.05,Auction costs +35%,42017,True,1.0,1.0
+0.05,Auction costs +35%,42018,True,1.0,1.0
+0.05,Auction costs +35%,42019,True,1.0,1.0
+0.05,Auction costs +35%,42020,True,1.0,1.0
+0.05,Auction costs +35%,42021,True,1.0,1.0
+0.05,Auction costs +35%,42022,True,1.0,1.0
+0.05,Auction costs +35%,42023,True,1.0,1.0
+0.05,Auction costs +35%,42024,True,1.0,1.0
+0.05,Auction costs +35%,42025,True,1.0,1.0
+0.05,Auction costs +35%,42026,True,1.0,1.0
+0.05,Auction costs +35%,42027,True,1.0,1.0
+0.05,Auction costs +35%,42028,True,1.0,1.0
+0.05,Auction costs +35%,42029,True,1.0,1.0
+0.05,Conversions 50% visible,42000,True,1.0,1.0
+0.05,Conversions 50% visible,42001,True,1.0,1.0
+0.05,Conversions 50% visible,42002,True,1.0,1.0
+0.05,Conversions 50% visible,42003,True,1.0,1.0
+0.05,Conversions 50% visible,42004,True,1.0,1.0
+0.05,Conversions 50% visible,42005,True,1.0,1.0
+0.05,Conversions 50% visible,42006,True,1.0,1.0
+0.05,Conversions 50% visible,42007,True,1.0,1.0
+0.05,Conversions 50% visible,42008,True,1.0,1.0
+0.05,Conversions 50% visible,42009,True,1.0,1.0
+0.05,Conversions 50% visible,42010,True,1.0,1.0
+0.05,Conversions 50% visible,42011,True,1.0,1.0
+0.05,Conversions 50% visible,42012,True,1.0,1.0
+0.05,Conversions 50% visible,42013,True,1.0,1.0
+0.05,Conversions 50% visible,42014,True,1.0,1.0
+0.05,Conversions 50% visible,42015,True,1.0,1.0
+0.05,Conversions 50% visible,42016,True,1.0,1.0
+0.05,Conversions 50% visible,42017,True,1.0,1.0
+0.05,Conversions 50% visible,42018,True,1.0,1.0
+0.05,Conversions 50% visible,42019,True,1.0,1.0
+0.05,Conversions 50% visible,42020,True,1.0,1.0
+0.05,Conversions 50% visible,42021,True,1.0,1.0
+0.05,Conversions 50% visible,42022,True,1.0,1.0
+0.05,Conversions 50% visible,42023,True,1.0,1.0
+0.05,Conversions 50% visible,42024,True,1.0,1.0
+0.05,Conversions 50% visible,42025,True,1.0,1.0
+0.05,Conversions 50% visible,42026,True,1.0,1.0
+0.05,Conversions 50% visible,42027,True,1.0,1.0
+0.05,Conversions 50% visible,42028,True,1.0,1.0
+0.05,Conversions 50% visible,42029,True,1.0,1.0
+0.05,Campaign budgets halved,42000,True,1.0,1.0
+0.05,Campaign budgets halved,42001,True,1.0,1.0
+0.05,Campaign budgets halved,42002,True,1.0,1.0
+0.05,Campaign budgets halved,42003,True,1.0,1.0
+0.05,Campaign budgets halved,42004,True,1.0,1.0
+0.05,Campaign budgets halved,42005,True,1.0,1.0
+0.05,Campaign budgets halved,42006,True,1.0,1.0
+0.05,Campaign budgets halved,42007,True,1.0,1.0
+0.05,Campaign budgets halved,42008,True,1.0,1.0
+0.05,Campaign budgets halved,42009,True,1.0,1.0
+0.05,Campaign budgets halved,42010,True,1.0,1.0
+0.05,Campaign budgets halved,42011,True,1.0,1.0
+0.05,Campaign budgets halved,42012,True,1.0,1.0
+0.05,Campaign budgets halved,42013,True,1.0,1.0
+0.05,Campaign budgets halved,42014,True,1.0,1.0
+0.05,Campaign budgets halved,42015,True,1.0,1.0
+0.05,Campaign budgets halved,42016,True,1.0,1.0
+0.05,Campaign budgets halved,42017,True,1.0,1.0
+0.05,Campaign budgets halved,42018,True,1.0,1.0
+0.05,Campaign budgets halved,42019,True,1.0,1.0
+0.05,Campaign budgets halved,42020,True,1.0,1.0
+0.05,Campaign budgets halved,42021,True,1.0,1.0
+0.05,Campaign budgets halved,42022,True,1.0,1.0
+0.05,Campaign budgets halved,42023,True,1.0,1.0
+0.05,Campaign budgets halved,42024,True,1.0,1.0
+0.05,Campaign budgets halved,42025,True,1.0,1.0
+0.05,Campaign budgets halved,42026,True,1.0,1.0
+0.05,Campaign budgets halved,42027,True,1.0,1.0
+0.05,Campaign budgets halved,42028,True,1.0,1.0
+0.05,Campaign budgets halved,42029,True,1.0,1.0
+0.05,Future CVR -40%,42000,True,1.0,1.0
+0.05,Future CVR -40%,42001,True,1.0,1.0
+0.05,Future CVR -40%,42002,True,1.0,1.0
+0.05,Future CVR -40%,42003,True,1.0,1.0
+0.05,Future CVR -40%,42004,True,1.0,1.0
+0.05,Future CVR -40%,42005,True,1.0,1.0
+0.05,Future CVR -40%,42006,True,1.0,1.0
+0.05,Future CVR -40%,42007,True,1.0,1.0
+0.05,Future CVR -40%,42008,True,1.0,1.0
+0.05,Future CVR -40%,42009,True,1.0,1.0
+0.05,Future CVR -40%,42010,True,1.0,1.0
+0.05,Future CVR -40%,42011,True,1.0,1.0
+0.05,Future CVR -40%,42012,True,1.0,1.0
+0.05,Future CVR -40%,42013,True,1.0,1.0
+0.05,Future CVR -40%,42014,True,1.0,1.0
+0.05,Future CVR -40%,42015,True,1.0,1.0
+0.05,Future CVR -40%,42016,True,1.0,1.0
+0.05,Future CVR -40%,42017,True,1.0,1.0
+0.05,Future CVR -40%,42018,True,1.0,1.0
+0.05,Future CVR -40%,42019,True,1.0,1.0
+0.05,Future CVR -40%,42020,True,1.0,1.0
+0.05,Future CVR -40%,42021,True,1.0,1.0
+0.05,Future CVR -40%,42022,True,1.0,1.0
+0.05,Future CVR -40%,42023,True,1.0,1.0
+0.05,Future CVR -40%,42024,True,1.0,1.0
+0.05,Future CVR -40%,42025,True,1.0,1.0
+0.05,Future CVR -40%,42026,True,1.0,1.0
+0.05,Future CVR -40%,42027,True,1.0,1.0
+0.05,Future CVR -40%,42028,True,1.0,1.0
+0.05,Future CVR -40%,42029,True,1.0,1.0
+0.05,Combined adverse,42000,True,1.0,1.0
+0.05,Combined adverse,42001,True,1.0,1.0
+0.05,Combined adverse,42002,True,1.0,1.0
+0.05,Combined adverse,42003,True,1.0,1.0
+0.05,Combined adverse,42004,True,1.0,1.0
+0.05,Combined adverse,42005,True,1.0,1.0
+0.05,Combined adverse,42006,True,1.0,1.0
+0.05,Combined adverse,42007,True,1.0,1.0
+0.05,Combined adverse,42008,True,1.0,1.0
+0.05,Combined adverse,42009,True,1.0,1.0
+0.05,Combined adverse,42010,True,1.0,1.0
+0.05,Combined adverse,42011,True,1.0,1.0
+0.05,Combined adverse,42012,True,1.0,1.0
+0.05,Combined adverse,42013,True,1.0,1.0
+0.05,Combined adverse,42014,True,1.0,1.0
+0.05,Combined adverse,42015,True,1.0,1.0
+0.05,Combined adverse,42016,True,1.0,1.0
+0.05,Combined adverse,42017,True,1.0,1.0
+0.05,Combined adverse,42018,True,1.0,1.0
+0.05,Combined adverse,42019,True,1.0,1.0
+0.05,Combined adverse,42020,True,1.0,1.0
+0.05,Combined adverse,42021,True,1.0,1.0
+0.05,Combined adverse,42022,True,1.0,1.0
+0.05,Combined adverse,42023,True,1.0,1.0
+0.05,Combined adverse,42024,True,1.0,1.0
+0.05,Combined adverse,42025,True,1.0,1.0
+0.05,Combined adverse,42026,True,1.0,1.0
+0.05,Combined adverse,42027,True,1.0,1.0
+0.05,Combined adverse,42028,True,1.0,1.0
+0.05,Combined adverse,42029,True,1.0,1.0
+0.1,Mixture reference,42000,True,1.0,1.0
+0.1,Mixture reference,42001,True,1.0,1.0
+0.1,Mixture reference,42002,True,1.0,1.0
+0.1,Mixture reference,42003,True,1.0,1.0
+0.1,Mixture reference,42004,True,1.0,1.0
+0.1,Mixture reference,42005,True,1.0,1.0
+0.1,Mixture reference,42006,True,1.0,1.0
+0.1,Mixture reference,42007,True,1.0,1.0
+0.1,Mixture reference,42008,True,1.0,1.0
+0.1,Mixture reference,42009,True,1.0,1.0
+0.1,Mixture reference,42010,True,1.0,1.0
+0.1,Mixture reference,42011,True,1.0,1.0
+0.1,Mixture reference,42012,True,1.0,1.0
+0.1,Mixture reference,42013,True,1.0,1.0
+0.1,Mixture reference,42014,True,1.0,1.0
+0.1,Mixture reference,42015,True,1.0,1.0
+0.1,Mixture reference,42016,True,1.0,1.0
+0.1,Mixture reference,42017,True,1.0,1.0
+0.1,Mixture reference,42018,True,1.0,1.0
+0.1,Mixture reference,42019,True,1.0,1.0
+0.1,Mixture reference,42020,True,1.0,1.0
+0.1,Mixture reference,42021,True,1.0,1.0
+0.1,Mixture reference,42022,True,1.0,1.0
+0.1,Mixture reference,42023,True,1.0,1.0
+0.1,Mixture reference,42024,True,1.0,1.0
+0.1,Mixture reference,42025,True,1.0,1.0
+0.1,Mixture reference,42026,True,1.0,1.0
+0.1,Mixture reference,42027,True,1.0,1.0
+0.1,Mixture reference,42028,True,1.0,1.0
+0.1,Mixture reference,42029,True,1.0,1.0
+0.1,Auction costs +35%,42000,True,1.0,1.0
+0.1,Auction costs +35%,42001,True,1.0,1.0
+0.1,Auction costs +35%,42002,True,1.0,1.0
+0.1,Auction costs +35%,42003,True,1.0,1.0
+0.1,Auction costs +35%,42004,True,1.0,1.0
+0.1,Auction costs +35%,42005,True,1.0,1.0
+0.1,Auction costs +35%,42006,True,1.0,1.0
+0.1,Auction costs +35%,42007,True,1.0,1.0
+0.1,Auction costs +35%,42008,True,1.0,1.0
+0.1,Auction costs +35%,42009,True,1.0,1.0
+0.1,Auction costs +35%,42010,True,1.0,1.0
+0.1,Auction costs +35%,42011,True,1.0,1.0
+0.1,Auction costs +35%,42012,True,1.0,1.0
+0.1,Auction costs +35%,42013,True,1.0,1.0
+0.1,Auction costs +35%,42014,True,1.0,1.0
+0.1,Auction costs +35%,42015,True,1.0,1.0
+0.1,Auction costs +35%,42016,True,1.0,1.0
+0.1,Auction costs +35%,42017,True,1.0,1.0
+0.1,Auction costs +35%,42018,True,1.0,1.0
+0.1,Auction costs +35%,42019,True,1.0,1.0
+0.1,Auction costs +35%,42020,True,1.0,1.0
+0.1,Auction costs +35%,42021,True,1.0,1.0
+0.1,Auction costs +35%,42022,True,1.0,1.0
+0.1,Auction costs +35%,42023,True,1.0,1.0
+0.1,Auction costs +35%,42024,True,1.0,1.0
+0.1,Auction costs +35%,42025,True,1.0,1.0
+0.1,Auction costs +35%,42026,True,1.0,1.0
+0.1,Auction costs +35%,42027,True,1.0,1.0
+0.1,Auction costs +35%,42028,True,1.0,1.0
+0.1,Auction costs +35%,42029,True,1.0,1.0
+0.1,Conversions 50% visible,42000,True,1.0,1.0
+0.1,Conversions 50% visible,42001,True,1.0,1.0
+0.1,Conversions 50% visible,42002,True,1.0,1.0
+0.1,Conversions 50% visible,42003,True,1.0,1.0
+0.1,Conversions 50% visible,42004,True,1.0,1.0
+0.1,Conversions 50% visible,42005,True,1.0,1.0
+0.1,Conversions 50% visible,42006,True,1.0,1.0
+0.1,Conversions 50% visible,42007,True,1.0,1.0
+0.1,Conversions 50% visible,42008,True,1.0,1.0
+0.1,Conversions 50% visible,42009,True,1.0,1.0
+0.1,Conversions 50% visible,42010,True,1.0,1.0
+0.1,Conversions 50% visible,42011,True,1.0,1.0
+0.1,Conversions 50% visible,42012,True,1.0,1.0
+0.1,Conversions 50% visible,42013,True,1.0,1.0
+0.1,Conversions 50% visible,42014,True,1.0,1.0
+0.1,Conversions 50% visible,42015,True,1.0,1.0
+0.1,Conversions 50% visible,42016,True,1.0,1.0
+0.1,Conversions 50% visible,42017,True,1.0,1.0
+0.1,Conversions 50% visible,42018,True,1.0,1.0
+0.1,Conversions 50% visible,42019,True,1.0,1.0
+0.1,Conversions 50% visible,42020,True,1.0,1.0
+0.1,Conversions 50% visible,42021,True,1.0,1.0
+0.1,Conversions 50% visible,42022,True,1.0,1.0
+0.1,Conversions 50% visible,42023,True,1.0,1.0
+0.1,Conversions 50% visible,42024,True,1.0,1.0
+0.1,Conversions 50% visible,42025,True,1.0,1.0
+0.1,Conversions 50% visible,42026,True,1.0,1.0
+0.1,Conversions 50% visible,42027,True,1.0,1.0
+0.1,Conversions 50% visible,42028,True,1.0,1.0
+0.1,Conversions 50% visible,42029,True,1.0,1.0
+0.1,Campaign budgets halved,42000,True,1.0,1.0
+0.1,Campaign budgets halved,42001,True,1.0,1.0
+0.1,Campaign budgets halved,42002,True,1.0,1.0
+0.1,Campaign budgets halved,42003,True,1.0,1.0
+0.1,Campaign budgets halved,42004,True,1.0,1.0
+0.1,Campaign budgets halved,42005,True,1.0,1.0
+0.1,Campaign budgets halved,42006,True,1.0,1.0
+0.1,Campaign budgets halved,42007,True,1.0,1.0
+0.1,Campaign budgets halved,42008,True,1.0,1.0
+0.1,Campaign budgets halved,42009,True,1.0,1.0
+0.1,Campaign budgets halved,42010,True,1.0,1.0
+0.1,Campaign budgets halved,42011,True,1.0,1.0
+0.1,Campaign budgets halved,42012,True,1.0,1.0
+0.1,Campaign budgets halved,42013,True,1.0,1.0
+0.1,Campaign budgets halved,42014,True,1.0,1.0
+0.1,Campaign budgets halved,42015,True,1.0,1.0
+0.1,Campaign budgets halved,42016,True,1.0,1.0
+0.1,Campaign budgets halved,42017,True,1.0,1.0
+0.1,Campaign budgets halved,42018,True,1.0,1.0
+0.1,Campaign budgets halved,42019,True,1.0,1.0
+0.1,Campaign budgets halved,42020,True,1.0,1.0
+0.1,Campaign budgets halved,42021,True,1.0,1.0
+0.1,Campaign budgets halved,42022,True,1.0,1.0
+0.1,Campaign budgets halved,42023,True,1.0,1.0
+0.1,Campaign budgets halved,42024,True,1.0,1.0
+0.1,Campaign budgets halved,42025,True,1.0,1.0
+0.1,Campaign budgets halved,42026,True,1.0,1.0
+0.1,Campaign budgets halved,42027,True,1.0,1.0
+0.1,Campaign budgets halved,42028,True,1.0,1.0
+0.1,Campaign budgets halved,42029,True,1.0,1.0
+0.1,Future CVR -40%,42000,True,1.0,1.0
+0.1,Future CVR -40%,42001,True,1.0,1.0
+0.1,Future CVR -40%,42002,True,1.0,1.0
+0.1,Future CVR -40%,42003,True,1.0,1.0
+0.1,Future CVR -40%,42004,True,1.0,1.0
+0.1,Future CVR -40%,42005,True,1.0,1.0
+0.1,Future CVR -40%,42006,True,1.0,1.0
+0.1,Future CVR -40%,42007,True,1.0,1.0
+0.1,Future CVR -40%,42008,True,1.0,1.0
+0.1,Future CVR -40%,42009,True,1.0,1.0
+0.1,Future CVR -40%,42010,True,1.0,1.0
+0.1,Future CVR -40%,42011,True,1.0,1.0
+0.1,Future CVR -40%,42012,True,1.0,1.0
+0.1,Future CVR -40%,42013,True,1.0,1.0
+0.1,Future CVR -40%,42014,True,1.0,1.0
+0.1,Future CVR -40%,42015,True,1.0,1.0
+0.1,Future CVR -40%,42016,True,1.0,1.0
+0.1,Future CVR -40%,42017,True,1.0,1.0
+0.1,Future CVR -40%,42018,True,1.0,1.0
+0.1,Future CVR -40%,42019,True,1.0,1.0
+0.1,Future CVR -40%,42020,True,1.0,1.0
+0.1,Future CVR -40%,42021,True,1.0,1.0
+0.1,Future CVR -40%,42022,True,1.0,1.0
+0.1,Future CVR -40%,42023,True,1.0,1.0
+0.1,Future CVR -40%,42024,True,1.0,1.0
+0.1,Future CVR -40%,42025,True,1.0,1.0
+0.1,Future CVR -40%,42026,True,1.0,1.0
+0.1,Future CVR -40%,42027,True,1.0,1.0
+0.1,Future CVR -40%,42028,True,1.0,1.0
+0.1,Future CVR -40%,42029,True,1.0,1.0
+0.1,Combined adverse,42000,True,1.0,1.0
+0.1,Combined adverse,42001,True,1.0,1.0
+0.1,Combined adverse,42002,True,1.0,1.0
+0.1,Combined adverse,42003,True,1.0,1.0
+0.1,Combined adverse,42004,True,1.0,1.0
+0.1,Combined adverse,42005,True,1.0,1.0
+0.1,Combined adverse,42006,True,1.0,1.0
+0.1,Combined adverse,42007,True,1.0,1.0
+0.1,Combined adverse,42008,True,1.0,1.0
+0.1,Combined adverse,42009,True,1.0,1.0
+0.1,Combined adverse,42010,True,1.0,1.0
+0.1,Combined adverse,42011,True,1.0,1.0
+0.1,Combined adverse,42012,True,1.0,1.0
+0.1,Combined adverse,42013,True,1.0,1.0
+0.1,Combined adverse,42014,True,1.0,1.0
+0.1,Combined adverse,42015,True,1.0,1.0
+0.1,Combined adverse,42016,True,1.0,1.0
+0.1,Combined adverse,42017,True,1.0,1.0
+0.1,Combined adverse,42018,True,1.0,1.0
+0.1,Combined adverse,42019,True,1.0,1.0
+0.1,Combined adverse,42020,True,1.0,1.0
+0.1,Combined adverse,42021,True,1.0,1.0
+0.1,Combined adverse,42022,True,1.0,1.0
+0.1,Combined adverse,42023,True,1.0,1.0
+0.1,Combined adverse,42024,True,1.0,1.0
+0.1,Combined adverse,42025,True,1.0,1.0
+0.1,Combined adverse,42026,True,1.0,1.0
+0.1,Combined adverse,42027,True,1.0,1.0
+0.1,Combined adverse,42028,True,1.0,1.0
+0.1,Combined adverse,42029,True,1.0,1.0
+0.2,Mixture reference,42000,True,1.0,1.0
+0.2,Mixture reference,42001,True,1.0,1.0
+0.2,Mixture reference,42002,True,1.0,1.0
+0.2,Mixture reference,42003,True,1.0,1.0
+0.2,Mixture reference,42004,True,1.0,1.0
+0.2,Mixture reference,42005,True,1.0,1.0
+0.2,Mixture reference,42006,True,1.0,1.0
+0.2,Mixture reference,42007,True,1.0,1.0
+0.2,Mixture reference,42008,True,1.0,1.0
+0.2,Mixture reference,42009,True,1.0,1.0
+0.2,Mixture reference,42010,True,1.0,1.0
+0.2,Mixture reference,42011,True,1.0,1.0
+0.2,Mixture reference,42012,True,1.0,1.0
+0.2,Mixture reference,42013,True,1.0,1.0
+0.2,Mixture reference,42014,True,1.0,1.0
+0.2,Mixture reference,42015,True,1.0,1.0
+0.2,Mixture reference,42016,True,1.0,1.0
+0.2,Mixture reference,42017,True,1.0,1.0
+0.2,Mixture reference,42018,True,1.0,1.0
+0.2,Mixture reference,42019,True,1.0,1.0
+0.2,Mixture reference,42020,True,1.0,1.0
+0.2,Mixture reference,42021,True,1.0,1.0
+0.2,Mixture reference,42022,True,1.0,1.0
+0.2,Mixture reference,42023,True,1.0,1.0
+0.2,Mixture reference,42024,True,1.0,1.0
+0.2,Mixture reference,42025,True,1.0,1.0
+0.2,Mixture reference,42026,True,1.0,1.0
+0.2,Mixture reference,42027,True,1.0,1.0
+0.2,Mixture reference,42028,True,1.0,1.0
+0.2,Mixture reference,42029,True,1.0,1.0
+0.2,Auction costs +35%,42000,True,1.0,1.0
+0.2,Auction costs +35%,42001,True,1.0,1.0
+0.2,Auction costs +35%,42002,True,1.0,1.0
+0.2,Auction costs +35%,42003,True,1.0,1.0
+0.2,Auction costs +35%,42004,True,1.0,1.0
+0.2,Auction costs +35%,42005,True,1.0,1.0
+0.2,Auction costs +35%,42006,True,1.0,1.0
+0.2,Auction costs +35%,42007,True,1.0,1.0
+0.2,Auction costs +35%,42008,True,1.0,1.0
+0.2,Auction costs +35%,42009,True,1.0,1.0
+0.2,Auction costs +35%,42010,True,1.0,1.0
+0.2,Auction costs +35%,42011,True,1.0,1.0
+0.2,Auction costs +35%,42012,True,1.0,1.0
+0.2,Auction costs +35%,42013,True,1.0,1.0
+0.2,Auction costs +35%,42014,True,1.0,1.0
+0.2,Auction costs +35%,42015,True,1.0,1.0
+0.2,Auction costs +35%,42016,True,1.0,1.0
+0.2,Auction costs +35%,42017,True,1.0,1.0
+0.2,Auction costs +35%,42018,True,1.0,1.0
+0.2,Auction costs +35%,42019,True,1.0,1.0
+0.2,Auction costs +35%,42020,True,1.0,1.0
+0.2,Auction costs +35%,42021,True,1.0,1.0
+0.2,Auction costs +35%,42022,True,1.0,1.0
+0.2,Auction costs +35%,42023,True,1.0,1.0
+0.2,Auction costs +35%,42024,True,1.0,1.0
+0.2,Auction costs +35%,42025,True,1.0,1.0
+0.2,Auction costs +35%,42026,True,1.0,1.0
+0.2,Auction costs +35%,42027,True,1.0,1.0
+0.2,Auction costs +35%,42028,True,1.0,1.0
+0.2,Auction costs +35%,42029,True,1.0,1.0
+0.2,Conversions 50% visible,42000,False,0.9888888888888889,0.9722222222222222
+0.2,Conversions 50% visible,42001,False,0.9666666666666667,0.9166666666666666
+0.2,Conversions 50% visible,42002,False,0.9888888888888889,0.9722222222222222
+0.2,Conversions 50% visible,42003,False,0.9777777777777777,0.9444444444444444
+0.2,Conversions 50% visible,42004,False,0.9777777777777777,0.9444444444444444
+0.2,Conversions 50% visible,42005,True,1.0,1.0
+0.2,Conversions 50% visible,42006,False,0.9777777777777777,0.9444444444444444
+0.2,Conversions 50% visible,42007,False,0.9888888888888889,0.9722222222222222
+0.2,Conversions 50% visible,42008,False,0.9888888888888889,0.9722222222222222
+0.2,Conversions 50% visible,42009,True,1.0,1.0
+0.2,Conversions 50% visible,42010,False,0.9888888888888889,0.9722222222222222
+0.2,Conversions 50% visible,42011,True,1.0,1.0
+0.2,Conversions 50% visible,42012,False,0.9888888888888889,0.9722222222222222
+0.2,Conversions 50% visible,42013,False,0.9777777777777777,0.9444444444444444
+0.2,Conversions 50% visible,42014,False,0.9888888888888889,0.9722222222222222
+0.2,Conversions 50% visible,42015,False,0.9888888888888889,0.9722222222222222
+0.2,Conversions 50% visible,42016,True,1.0,1.0
+0.2,Conversions 50% visible,42017,False,0.9666666666666667,0.9166666666666666
+0.2,Conversions 50% visible,42018,False,0.9888888888888889,0.9722222222222222
+0.2,Conversions 50% visible,42019,True,1.0,1.0
+0.2,Conversions 50% visible,42020,True,1.0,1.0
+0.2,Conversions 50% visible,42021,False,0.9888888888888889,0.9722222222222222
+0.2,Conversions 50% visible,42022,False,0.9666666666666667,0.9166666666666666
+0.2,Conversions 50% visible,42023,False,0.9777777777777777,0.9444444444444444
+0.2,Conversions 50% visible,42024,False,0.9666666666666667,0.9166666666666666
+0.2,Conversions 50% visible,42025,False,0.9888888888888889,0.9722222222222222
+0.2,Conversions 50% visible,42026,False,0.9666666666666667,0.9166666666666666
+0.2,Conversions 50% visible,42027,True,1.0,1.0
+0.2,Conversions 50% visible,42028,True,1.0,1.0
+0.2,Conversions 50% visible,42029,False,0.9888888888888889,0.9722222222222222
+0.2,Campaign budgets halved,42000,True,1.0,1.0
+0.2,Campaign budgets halved,42001,True,1.0,1.0
+0.2,Campaign budgets halved,42002,True,1.0,1.0
+0.2,Campaign budgets halved,42003,True,1.0,1.0
+0.2,Campaign budgets halved,42004,True,1.0,1.0
+0.2,Campaign budgets halved,42005,True,1.0,1.0
+0.2,Campaign budgets halved,42006,True,1.0,1.0
+0.2,Campaign budgets halved,42007,True,1.0,1.0
+0.2,Campaign budgets halved,42008,True,1.0,1.0
+0.2,Campaign budgets halved,42009,True,1.0,1.0
+0.2,Campaign budgets halved,42010,True,1.0,1.0
+0.2,Campaign budgets halved,42011,True,1.0,1.0
+0.2,Campaign budgets halved,42012,True,1.0,1.0
+0.2,Campaign budgets halved,42013,True,1.0,1.0
+0.2,Campaign budgets halved,42014,True,1.0,1.0
+0.2,Campaign budgets halved,42015,True,1.0,1.0
+0.2,Campaign budgets halved,42016,True,1.0,1.0
+0.2,Campaign budgets halved,42017,True,1.0,1.0
+0.2,Campaign budgets halved,42018,True,1.0,1.0
+0.2,Campaign budgets halved,42019,True,1.0,1.0
+0.2,Campaign budgets halved,42020,True,1.0,1.0
+0.2,Campaign budgets halved,42021,True,1.0,1.0
+0.2,Campaign budgets halved,42022,True,1.0,1.0
+0.2,Campaign budgets halved,42023,True,1.0,1.0
+0.2,Campaign budgets halved,42024,True,1.0,1.0
+0.2,Campaign budgets halved,42025,True,1.0,1.0
+0.2,Campaign budgets halved,42026,True,1.0,1.0
+0.2,Campaign budgets halved,42027,True,1.0,1.0
+0.2,Campaign budgets halved,42028,True,1.0,1.0
+0.2,Campaign budgets halved,42029,True,1.0,1.0
+0.2,Future CVR -40%,42000,True,1.0,1.0
+0.2,Future CVR -40%,42001,True,1.0,1.0
+0.2,Future CVR -40%,42002,True,1.0,1.0
+0.2,Future CVR -40%,42003,True,1.0,1.0
+0.2,Future CVR -40%,42004,True,1.0,1.0
+0.2,Future CVR -40%,42005,True,1.0,1.0
+0.2,Future CVR -40%,42006,True,1.0,1.0
+0.2,Future CVR -40%,42007,True,1.0,1.0
+0.2,Future CVR -40%,42008,True,1.0,1.0
+0.2,Future CVR -40%,42009,True,1.0,1.0
+0.2,Future CVR -40%,42010,True,1.0,1.0
+0.2,Future CVR -40%,42011,True,1.0,1.0
+0.2,Future CVR -40%,42012,True,1.0,1.0
+0.2,Future CVR -40%,42013,True,1.0,1.0
+0.2,Future CVR -40%,42014,True,1.0,1.0
+0.2,Future CVR -40%,42015,True,1.0,1.0
+0.2,Future CVR -40%,42016,True,1.0,1.0
+0.2,Future CVR -40%,42017,True,1.0,1.0
+0.2,Future CVR -40%,42018,True,1.0,1.0
+0.2,Future CVR -40%,42019,True,1.0,1.0
+0.2,Future CVR -40%,42020,True,1.0,1.0
+0.2,Future CVR -40%,42021,True,1.0,1.0
+0.2,Future CVR -40%,42022,True,1.0,1.0
+0.2,Future CVR -40%,42023,True,1.0,1.0
+0.2,Future CVR -40%,42024,True,1.0,1.0
+0.2,Future CVR -40%,42025,True,1.0,1.0
+0.2,Future CVR -40%,42026,True,1.0,1.0
+0.2,Future CVR -40%,42027,True,1.0,1.0
+0.2,Future CVR -40%,42028,True,1.0,1.0
+0.2,Future CVR -40%,42029,True,1.0,1.0
+0.2,Combined adverse,42000,True,1.0,1.0
+0.2,Combined adverse,42001,False,0.9888888888888889,0.9722222222222222
+0.2,Combined adverse,42002,True,1.0,1.0
+0.2,Combined adverse,42003,True,1.0,1.0
+0.2,Combined adverse,42004,False,0.9777777777777777,0.9444444444444444
+0.2,Combined adverse,42005,True,1.0,1.0
+0.2,Combined adverse,42006,False,0.9777777777777777,0.9444444444444444
+0.2,Combined adverse,42007,False,0.9888888888888889,0.9722222222222222
+0.2,Combined adverse,42008,False,0.9888888888888889,0.9722222222222222
+0.2,Combined adverse,42009,True,1.0,1.0
+0.2,Combined adverse,42010,False,0.9888888888888889,0.9722222222222222
+0.2,Combined adverse,42011,True,1.0,1.0
+0.2,Combined adverse,42012,False,0.9888888888888889,0.9722222222222222
+0.2,Combined adverse,42013,False,0.9777777777777777,0.9444444444444444
+0.2,Combined adverse,42014,False,0.9888888888888889,0.9722222222222222
+0.2,Combined adverse,42015,True,1.0,1.0
+0.2,Combined adverse,42016,True,1.0,1.0
+0.2,Combined adverse,42017,False,0.9888888888888889,0.9722222222222222
+0.2,Combined adverse,42018,True,1.0,1.0
+0.2,Combined adverse,42019,True,1.0,1.0
+0.2,Combined adverse,42020,True,1.0,1.0
+0.2,Combined adverse,42021,True,1.0,1.0
+0.2,Combined adverse,42022,False,0.9888888888888889,0.9722222222222222
+0.2,Combined adverse,42023,False,0.9888888888888889,0.9722222222222222
+0.2,Combined adverse,42024,False,0.9777777777777777,0.9444444444444444
+0.2,Combined adverse,42025,False,0.9888888888888889,0.9722222222222222
+0.2,Combined adverse,42026,False,0.9888888888888889,0.9722222222222222
+0.2,Combined adverse,42027,True,1.0,1.0
+0.2,Combined adverse,42028,True,1.0,1.0
+0.2,Combined adverse,42029,False,0.9888888888888889,0.9722222222222222

@@ -1,0 +1,50 @@
+scenario,action_mode,comparator,mean_diff,halfwidth_95
+Mixture reference,v7 heuristic action,Highest expected unit contribution,0.0,0.0
+Mixture reference,v7 heuristic action,Highest expected contribution per CPC,0.002130692305705306,0.16228597232776992
+Mixture reference,v7 heuristic action,Highest historical estimated CVR,0.3596721248199938,0.16179296453640735
+Mixture reference,v7 heuristic action,Pure modeled information value,2.040013704394031,0.3450086062211245
+Mixture reference,v8 budget action,Highest expected unit contribution,0.0,0.0
+Mixture reference,v8 budget action,Highest expected contribution per CPC,0.12464734790293139,0.14909137116580645
+Mixture reference,v8 budget action,Highest historical estimated CVR,0.3817347263405001,0.15728409176893635
+Mixture reference,v8 budget action,Pure modeled information value,2.117260131960835,0.2949024152132496
+Auction costs +35%,v7 heuristic action,Highest expected unit contribution,0.0,0.0
+Auction costs +35%,v7 heuristic action,Highest expected contribution per CPC,0.045897048910417085,0.15551894710183717
+Auction costs +35%,v7 heuristic action,Highest historical estimated CVR,0.29665159645810085,0.1615703408829372
+Auction costs +35%,v7 heuristic action,Pure modeled information value,2.042905769528001,0.2592204804229612
+Auction costs +35%,v8 budget action,Highest expected unit contribution,0.0,0.0
+Auction costs +35%,v8 budget action,Highest expected contribution per CPC,0.029907425589337677,0.14704804291791412
+Auction costs +35%,v8 budget action,Highest historical estimated CVR,0.3355540992643261,0.15099025921945636
+Auction costs +35%,v8 budget action,Pure modeled information value,2.0330170166172077,0.29759572266216344
+Conversions 50% visible,v7 heuristic action,Highest expected unit contribution,0.0,0.0
+Conversions 50% visible,v7 heuristic action,Highest expected contribution per CPC,0.13696810347138044,0.11185304319302862
+Conversions 50% visible,v7 heuristic action,Highest historical estimated CVR,0.41640066941130827,0.19143380022234602
+Conversions 50% visible,v7 heuristic action,Pure modeled information value,1.168640548499892,0.2744965244079222
+Conversions 50% visible,v8 budget action,Highest expected unit contribution,0.0,0.0
+Conversions 50% visible,v8 budget action,Highest expected contribution per CPC,0.09464195360110586,0.10124506062026258
+Conversions 50% visible,v8 budget action,Highest historical estimated CVR,0.31770545501503034,0.1972612967121873
+Conversions 50% visible,v8 budget action,Pure modeled information value,1.2970037406357342,0.38887182809667864
+Campaign budgets halved,v7 heuristic action,Highest expected unit contribution,0.0,0.0
+Campaign budgets halved,v7 heuristic action,Highest expected contribution per CPC,-0.0861204471133055,0.24347608821805916
+Campaign budgets halved,v7 heuristic action,Highest historical estimated CVR,0.24265689395435722,0.20763598141095502
+Campaign budgets halved,v7 heuristic action,Pure modeled information value,1.961194759866428,0.33166468693053774
+Campaign budgets halved,v8 budget action,Highest expected unit contribution,0.0,0.0
+Campaign budgets halved,v8 budget action,Highest expected contribution per CPC,-0.017768611691897924,0.1488206153744531
+Campaign budgets halved,v8 budget action,Highest historical estimated CVR,0.42936369802987695,0.16997627642017915
+Campaign budgets halved,v8 budget action,Pure modeled information value,2.094819383882842,0.2768063319244826
+Future CVR -40%,v7 heuristic action,Highest expected unit contribution,0.0,0.0
+Future CVR -40%,v7 heuristic action,Highest expected contribution per CPC,-0.024207235229813266,0.1287883947104313
+Future CVR -40%,v7 heuristic action,Highest historical estimated CVR,0.2344928657104003,0.12356152904239724
+Future CVR -40%,v7 heuristic action,Pure modeled information value,1.2576520297016809,0.2577877691563442
+Future CVR -40%,v8 budget action,Highest expected unit contribution,0.0,0.0
+Future CVR -40%,v8 budget action,Highest expected contribution per CPC,0.019824053768438397,0.11876881528733939
+Future CVR -40%,v8 budget action,Highest historical estimated CVR,0.26892944764785276,0.10327470786879529
+Future CVR -40%,v8 budget action,Pure modeled information value,1.1824021234097633,0.2363204881809629
+Combined adverse,v7 heuristic action,Highest expected unit contribution,0.0,0.0
+Combined adverse,v7 heuristic action,Highest expected contribution per CPC,0.050539430782109526,0.12291028017139598
+Combined adverse,v7 heuristic action,Highest historical estimated CVR,0.23532680849378823,0.16793358638069864
+Combined adverse,v7 heuristic action,Pure modeled information value,0.8978216031521421,0.208545883385742
+Combined adverse,v8 budget action,Highest expected unit contribution,0.0,0.0
+Combined adverse,v8 budget action,Highest expected contribution per CPC,0.008998173116232201,0.10758065985196023
+Combined adverse,v8 budget action,Highest historical estimated CVR,0.35606480649178246,0.15959144851196738
+Combined adverse,v8 budget action,Pure modeled information value,0.795899149245391,0.2475212123471756
+

@@ -1,0 +1,60 @@
+{
+  "seeds": [
+    52000,
+    52001,
+    52002,
+    52003,
+    52004,
+    52005,
+    52006,
+    52007,
+    52008,
+    52009,
+    52010,
+    52011,
+    52012,
+    52013,
+    52014,
+    52015,
+    52016,
+    52017,
+    52018,
+    52019,
+    52020,
+    52021,
+    52022,
+    52023,
+    52024,
+    52025,
+    52026,
+    52027,
+    52028,
+    52029
+  ],
+  "scenarios": [
+    "Mixture reference",
+    "Auction costs +35%",
+    "Conversions 50% visible",
+    "Campaign budgets halved",
+    "Future CVR -40%",
+    "Combined adverse"
+  ],
+  "quotas": [
+    0.05,
+    0.1,
+    0.2
+  ],
+  "primary_quota": 0.1,
+  "gamma": 0.0,
+  "methods": [
+    "Random",
+    "Fewest clicks",
+    "Profitability uncertainty",
+    "v5 VOI rank",
+    "v8 budget VOI",
+    "Unit profit",
+    "Profit per CPC"
+  ],
+  "data": "synthetic only; fresh seeds within unchanged simulator; not independent external data",
+  "protocol_sha256": "b2524d8e3617984a2762b1ddb124d6a502beee99af2ca039f3dc3133128bc00c"
+}
