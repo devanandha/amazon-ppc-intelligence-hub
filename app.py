@@ -17,6 +17,7 @@ import plotly.express as px
 import streamlit as st
 
 from ui_theme import inject_styles, render_hero, render_empty_state
+from create_synthetic_demo import make_synthetic_dataframe
 
 COL = {
     "date": "Start Date",
@@ -339,23 +340,44 @@ with st.sidebar:
     st.caption(
         "Recommendations are decision support. Review relevance, profitability, placement and campaign strategy before applying changes.")
 
-uploaded = st.file_uploader("Upload an Amazon Sponsored Products Search Term report", type=["xlsx", "xls"])
-business_uploaded = st.file_uploader("Upload Business Report (Sales & Traffic By Date)", type=["csv"]
-                                     )
-if uploaded is None:
+st.markdown("### Choose how to explore")
+demo_mode = st.toggle(
+    "Explore the built-in fictional demo",
+    value=False,
+    help="Loads reproducible synthetic search-term data. No real Amazon account or client data is used.",
+)
+if demo_mode:
+    st.success("Demo mode: all advertising activity shown is fictional and for illustration only.")
+uploaded = st.file_uploader(
+    "Upload an Amazon Sponsored Products Search Term report",
+    type=["xlsx", "xls"],
+    disabled=demo_mode,
+)
+business_uploaded = st.file_uploader(
+    "Upload Business Report (Sales & Traffic By Date)",
+    type=["csv"],
+    disabled=demo_mode,
+)
+if not demo_mode and uploaded is None:
     render_empty_state()
-    st.caption("Reports are analysed within your application session. Do not upload confidential employer or client data to a public demo.")
+    st.caption(
+        "Reports are analysed within this application session. Do not upload "
+        "confidential employer or client data to a public demo."
+    )
     st.stop()
 
-try:
-    raw = load_report(uploaded.getvalue())
-except Exception as exc:
-    st.error(f"The workbook could not be read: {exc}")
-    st.stop()
+if demo_mode:
+    raw = make_synthetic_dataframe()
+else:
+    try:
+        raw = load_report(uploaded.getvalue())
+    except Exception as exc:
+        st.error(f"The workbook could not be read: {exc}")
+        st.stop()
 
 df, missing = clean_report(raw)
 business_kpi = None
-if business_uploaded is not None:
+if business_uploaded is not None and not demo_mode:
     business_df = load_business_report(
         business_uploaded.getvalue()
     )
