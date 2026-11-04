@@ -12,7 +12,8 @@
 4. Open **Decision Studio**. Change evidence thresholds and observe how the human-review queue responds; these are review safeguards, not automated bid changes.
 5. Select a search term and inspect the original rule, uncertainty, unusual-pattern flag and the evidence reason.
 6. Review the ACOS sensitivity map. It shows changes in rule labels, **not** a sales forecast.
-7. Download the branded offline HTML evidence report using fictional demo data.
+7. Record an independent judgement in **Practitioner review workspace** and export the feedback CSV. Entries are stored in the current app session only.
+8. Download the branded offline HTML evidence report using fictional demo data.
 
 ## Independent reviewer questions
 
