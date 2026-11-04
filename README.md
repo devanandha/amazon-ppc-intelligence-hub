@@ -24,6 +24,12 @@ All research data are synthetic. These experiments are separate from the live ap
 
 Experienced Amazon Ads practitioners are welcome to review the prototype using fictional data. See the [independent evaluation guide](docs/EXTERNAL_PPC_EVALUATION.md) for a suggested 20–30 minute review and feedback questions.
 
+## Developer branding and AI-assisted review
+
+This independently developed product is branded **Devanandha VS · Applied AI & E-commerce Analytics** and includes a custom HTML/CSS presentation, an author profile and transparent model limitations. The new **AI Review** tab fits an exploratory scikit-learn Isolation Forest to aggregated search-term patterns and reports a 90% Bayesian interval for conversion-rate uncertainty where the binomial approximation is applicable. It compares model flags with existing rule-based actions for *human review*, not automatic changes.
+
+**Important:** The unsupervised outlier flags are not validated predictions of profit, fraud, advertising uplift or future performance. The model is fitted to the currently uploaded dataset. Its peer comparisons are descriptive rather than exact model explanations. The public demo uses fictional data. See [AI method and limitations](docs/ML_REVIEW_METHOD.md).
+
 ## Professional dashboard and safe demo
 
 The app includes a polished responsive interface with a built-in **fictional-data demo**. Turn on **Explore the built-in fictional demo** to evaluate campaign and search-term workflows without uploading a file. A **Scenario Lab** compares how proposed decisions change when the target ACOS changes, while keeping the observed data and other thresholds constant.
