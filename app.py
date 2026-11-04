@@ -26,6 +26,7 @@ from ml_insights import analyse_search_terms
 from decision_assurance import build_decision_ledger, acossensitivity
 from evidence_report import create_evidence_report
 from create_synthetic_demo import make_synthetic_dataframe
+from ppc_buddy_component import render_buddy
 
 COL = {
     "date": "Start Date",
@@ -454,6 +455,18 @@ else:
     ad_contribution = 0
 wasted_total = wasted[COL["spend"]].sum()
 waste_rate = safe_divide(wasted_total, kpi["Spend"], 100)
+
+# Visible immediately after the data source and before the metrics / tabs.
+# The iframe supplies its own height and is not affected by st.html filtering.
+render_buddy(
+    account_acos=kpi["ACOS"],
+    target_acos=target_acos,
+    ad_sales=kpi["Sales"],
+    harvest_count=len(harvest),
+    negative_count=len(negatives),
+    demo_mode=bool(demo_mode),
+)
+
 if business_kpi:
     st.subheader("Account Performance")
     account_cols = st.columns(7)
@@ -560,14 +573,6 @@ overview_tab, campaigns_tab, terms_tab, actions_tab, scenario_tab, ai_tab, studi
 ])
 
 with overview_tab:
-    render_ppc_buddy(
-        account_acos=kpi["ACOS"],
-        target_acos=target_acos,
-        ad_sales=kpi["Sales"],
-        harvest_count=len(harvest),
-        negative_count=len(negatives),
-        demo_mode=bool(demo_mode),
-    )
     left, right = st.columns(2)
     with left:
         st.markdown("#### Campaign spend vs attributed sales")
