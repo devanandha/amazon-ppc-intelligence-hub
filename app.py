@@ -17,7 +17,11 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-from ui_theme import inject_styles, render_hero, render_empty_state, render_sidebar_brand, render_footer
+from ui_theme import inject_styles, render_empty_state, render_sidebar_brand, render_footer
+from landing_experience import (
+    inject_experience_styles, render_landing, render_data_context,
+    render_section, render_action_pulse,
+)
 from ml_insights import analyse_search_terms
 from decision_assurance import build_decision_ledger, acossensitivity
 from evidence_report import create_evidence_report
@@ -334,7 +338,8 @@ def display_table(frame: pd.DataFrame, currency_symbol: str):
 
 st.set_page_config(page_title="Amazon PPC Intelligence Hub | Decision Intelligence", page_icon="📈", layout="wide")
 inject_styles()
-render_hero()
+inject_experience_styles()
+render_landing()
 
 with st.sidebar:
     render_sidebar_brand()
@@ -345,24 +350,26 @@ with st.sidebar:
     st.caption(
         "Recommendations are decision support. Review relevance, profitability, placement and campaign strategy before applying changes.")
 
-st.markdown("### Choose how to explore")
-demo_mode = st.toggle(
-    "Explore the built-in fictional demo",
-    value=False,
-    help="Loads reproducible synthetic search-term data. No real Amazon account or client data is used.",
-)
-if demo_mode:
-    st.success("Demo mode: all advertising activity shown is fictional and for illustration only.")
-uploaded = st.file_uploader(
-    "Upload an Amazon Sponsored Products Search Term report",
-    type=["xlsx", "xls"],
-    disabled=demo_mode,
-)
-business_uploaded = st.file_uploader(
-    "Upload Business Report (Sales & Traffic By Date)",
-    type=["csv"],
-    disabled=demo_mode,
-)
+with st.expander("Data source · Try the demo or upload your own report", expanded=False):
+    demo_mode = st.toggle(
+        "Explore the built-in fictional demo",
+        value=True,
+        help="Starts with generated data so external reviewers can explore instantly. Switch OFF to upload your own report.",
+    )
+    uploaded = st.file_uploader(
+        "Sponsored Products Search Term report",
+        type=["xlsx", "xls"],
+        disabled=demo_mode,
+    )
+    business_uploaded = st.file_uploader(
+        "Optional Business Report (Sales & Traffic by Date)",
+        type=["csv"],
+        disabled=demo_mode,
+    )
+    st.caption("Use only fictional data on a public demonstration. Never upload confidential employer or client reports.")
+
+render_data_context(demo_mode=demo_mode)
+
 if not demo_mode and uploaded is None:
     render_empty_state()
     render_footer()
@@ -486,23 +493,65 @@ if business_kpi:
         f"{business_kpi['Conversion Rate']:.2f}%"
     )
 
-st.subheader("Executive KPIs")
+render_section(
+    "Executive overview",
+    "A clear view of advertising performance, opportunity signals and decision evidence.",
+    "INTELLIGENCE / PERFORMANCE",
+)
 
-top = st.columns(6)
-for box, label, value in zip(top, ["Ad Spend", "Ad Sales", "Orders", "ACOS", "ROAS", "Wasted Spend"],
-                             [f"{symbol}{kpi['Spend']:,.2f}", f"{symbol}{kpi['Sales']:,.2f}", f"{int(kpi['Orders']):,}",
-                              f"{kpi['ACOS']:.2f}%", f"{kpi['ROAS']:.2f}x", f"{symbol}{wasted_total:,.2f}"]):
-    box.metric(label, value)
-bottom = st.columns(6)
-for box, label, value in zip(bottom, ["Impressions", "Clicks", "CTR", "CPC", "CVR", "AOV"],
-                             [f"{int(kpi['Impressions']):,}", f"{int(kpi['Clicks']):,}", f"{kpi['CTR']:.2f}%",
-                              f"{symbol}{kpi['CPC']:.2f}", f"{kpi['CVR']:.2f}%", f"{symbol}{kpi['AOV']:.2f}"]):
+top = st.columns(4)
+for box, label, value in zip(
+    top,
+    ["Ad Spend", "Ad Sales", "ACOS", "ROAS"],
+    [
+        f"{symbol}{kpi['Spend']:,.2f}",
+        f"{symbol}{kpi['Sales']:,.2f}",
+        f"{kpi['ACOS']:.2f}%",
+        f"{kpi['ROAS']:.2f}x",
+    ],
+):
     box.metric(label, value)
 
-st.info(
-    f"The analysis found **{len(harvest):,}** profitable keyword-harvesting opportunities, "
-    f"**{len(negatives):,}** negative candidates and **{len(asins):,}** winning ASIN targets. "
-    f"Zero-order search terms account for **{waste_rate:.1f}%** of selected spend."
+secondary = st.columns(4)
+for box, label, value in zip(
+    secondary,
+    ["Orders", "Wasted Spend", "CTR", "CVR"],
+    [
+        f"{int(kpi['Orders']):,}",
+        f"{symbol}{wasted_total:,.2f}",
+        f"{kpi['CTR']:.2f}%",
+        f"{kpi['CVR']:.2f}%",
+    ],
+):
+    box.metric(label, value)
+
+render_section(
+    "Opportunity radar",
+    "Potential actions flagged by the current rules. Human review is required.",
+    "EVIDENCE / DISCOVERY",
+)
+render_action_pulse(len(harvest), len(negatives), waste_rate)
+st.caption("*Zero-order spend share is a screening metric, not verified wasted advertising spend.")
+
+with st.expander("See additional operational metrics"):
+    details = st.columns(4)
+    for box, label, value in zip(
+        details,
+        ["Impressions", "Clicks", "CPC", "Average order value"],
+        [
+            f"{int(kpi['Impressions']):,}",
+            f"{int(kpi['Clicks']):,}",
+            f"{symbol}{kpi['CPC']:.2f}",
+            f"{symbol}{kpi['AOV']:.2f}",
+        ],
+    ):
+        box.metric(label, value)
+
+st.caption(
+    f"Evidence-aware screening: {len(harvest):,} potential harvest terms · "
+    f"{len(negatives):,} negative-review candidates · "
+    f"{len(asins):,} possible ASIN targeting opportunities. "
+    "These are NOT independently validated or authorised ad changes."
 )
 
 overview_tab, campaigns_tab, terms_tab, actions_tab, scenario_tab, ai_tab, studio_tab, quality_tab = st.tabs([
@@ -515,13 +564,22 @@ with overview_tab:
     with left:
         chart_data = campaign.sort_values(COL["spend"], ascending=False).head(15)
         fig = px.bar(chart_data, x=COL["campaign"], y=[COL["spend"], COL["sales"]], barmode="group",
-                     title="Top campaigns: spend vs sales", labels={"value": currency_code})
+                     title="Campaign spend vs attributed sales", labels={"value": currency_code},
+                     color_discrete_sequence=["#746aff", "#17bac8"])
+        fig.update_layout(template="plotly_white", plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
+                          font=dict(color="#243552", family="Arial"),
+                          title_font=dict(size=17), margin=dict(l=18,r=18,t=65,b=20),
+                          legend=dict(orientation="h",yanchor="bottom",y=1.02,x=0))
         st.plotly_chart(fig, use_container_width=True)
     with right:
         scatter = campaign[campaign[COL["clicks"]] > 0].copy()
         fig = px.scatter(scatter, x="ACOS %", y=COL["sales"], size=COL["spend"], color="Priority",
-                         hover_name=COL["campaign"], title="Campaign efficiency map")
+                         hover_name=COL["campaign"], title="Campaign efficiency map",
+                         color_discrete_map={"High":"#ec8b69","Medium":"#6c73ff","Low":"#23bcb3"})
         fig.add_vline(x=target_acos, line_dash="dash", line_color="red", annotation_text="Target ACOS")
+        fig.update_layout(template="plotly_white", plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
+                          font=dict(color="#243552",family="Arial"),
+                          title_font=dict(size=17),margin=dict(l=20,r=20,t=65,b=20))
         st.plotly_chart(fig, use_container_width=True)
 
     if COL["date"] in filtered.columns and filtered[COL["date"]].notna().any():
