@@ -15,6 +15,12 @@
 
 These recommendations are **rules- and thresholds-based decision support**. Do not describe the current application as an independently validated AI prediction engine.
 
+## Quick start for reviewers
+
+Open the public demonstration and enable **Explore the built-in fictional demo**. This loads reproducible fictional data in one step; there is no need to upload any files. You can then open **Scenario Lab** and compare how recommended actions change under an alternative target ACOS.
+
+The scenario comparison only reruns transparent decision rules on the same data; it does not forecast causal advertising uplift.
+
 ## A 20–30 minute independent evaluation
 1. Review the public repository, methodology and limitations.
 2. Generate fictional demonstration data with `python create_synthetic_demo.py`, or use your own fully synthetic example.
