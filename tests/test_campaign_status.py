@@ -46,6 +46,9 @@ class CampaignStatusTests(unittest.TestCase):
         beta = joined.loc[joined["Campaign"] == "Demo Beta"].iloc[0]
         self.assertEqual(beta["Report coverage"], "Missing from selected report")
         self.assertEqual(beta["Strategy status"], "Coverage gap")
+        self.assertTrue(pd.isna(beta["Spend"]))
+        self.assertTrue(pd.isna(beta["Sales"]))
+        self.assertTrue(pd.isna(beta["ACOS %"]))
         gamma = joined.loc[joined["Campaign"] == "Demo Gamma"].iloc[0]
         self.assertEqual(gamma["Strategy status"], "Paused review")
         delta = joined.loc[joined["Campaign"] == "Demo Delta"].iloc[0]
