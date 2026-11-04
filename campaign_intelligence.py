@@ -10,14 +10,41 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import streamlit as st
+from html import escape
 from sklearn.ensemble import IsolationForest
 from sklearn.preprocessing import RobustScaler
+
+from ppc_buddy_component import render_buddy
 
 FIELDS = (
     "Week", "Campaign", "Campaign_Type", "Product",
     "Impressions", "Clicks", "Spend", "Orders", "Sales",
 )
 NUMERIC = ("Impressions", "Clicks", "Spend", "Orders", "Sales")
+
+
+def weekly_section(title: str, description: str, eyebrow: str) -> None:
+    """Reuse the visual language of the main search-term dashboard."""
+    st.html(
+        '<div class="dvs-headerline"><div>'
+        f'<span class="dvs-eyebrow">{escape(eyebrow)}</span>'
+        f'<h2>{escape(title)}</h2><p>{escape(description)}</p>'
+        '</div></div>'
+    )
+
+
+def weekly_chart(fig, height: int = 385) -> None:
+    fig.update_layout(
+        template="plotly_white", title=None, height=height,
+        margin=dict(l=30, r=32, t=30, b=76),
+        paper_bgcolor="white", plot_bgcolor="white",
+        font=dict(family="Arial", color="#33435f", size=12),
+        legend=dict(
+            orientation="h", x=0, y=1.13, yanchor="bottom",
+            bgcolor="rgba(255,255,255,0)", font=dict(size=11),
+        ),
+    )
+    st.plotly_chart(fig, use_container_width=True)
 
 
 def parse_campaign_csv(content: bytes) -> pd.DataFrame:
@@ -77,11 +104,12 @@ def sum_campaigns(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def render_campaign_intelligence(uploaded, target_acos: float) -> None:
-    st.markdown("### Weekly Campaign Intelligence")
-    st.caption(
-        "Experimental campaign-level analysis for Sponsored Products data. "
-        "No customer search terms are present, so keyword harvesting and "
-        "negative-keyword recommendations are deliberately unavailable."
+    weekly_section(
+        "Weekly Campaign Intelligence",
+        "Experimental Sponsored Products campaign analysis. The weekly CSV does not "
+        "contain search terms, so keyword harvesting and negative-keyword "
+        "recommendations are deliberately unavailable.",
+        "CAMPAIGN-LEVEL ANALYSIS",
     )
     if uploaded is None:
         st.info("Choose your ppc_weekly_2025.csv file using the CSV uploader in the sidebar.")
@@ -112,7 +140,27 @@ def render_campaign_intelligence(uploaded, target_acos: float) -> None:
     acos = 100 * spend / sales if sales > 0 else np.nan
     roas = sales / spend if spend > 0 else np.nan
     ctr = 100 * clicks / float(totals["Impressions"]) if totals["Impressions"] > 0 else np.nan
-    st.markdown("#### Observed performance")
+    # Compute anomaly flags only once. Reuse these evidence counts in Buddy
+    # and the AI review; model flags remain exploratory, not action labels.
+    reviewed = flag_weekly_outliers(df)
+    anomaly_count = int((reviewed["ML pattern flag"] == "Review unusual pattern").sum())
+
+    render_buddy(
+        account_acos=float(acos),
+        target_acos=float(target_acos),
+        ad_sales=sales,
+        harvest_count=0,
+        negative_count=0,
+        demo_mode=False,
+        weekly_campaign_mode=True,
+        campaign_count=int(df["Campaign"].nunique()),
+        anomaly_count=anomaly_count,
+    )
+    weekly_section(
+        "Campaign performance at a glance",
+        "Observed historical campaign metrics, not predictions or live account state.",
+        "01 / EXECUTIVE OVERVIEW",
+    )
     metric_labels = [
         ("Ad spend", f"{spend:,.2f}"),
         ("Attributed sales", f"{sales:,.2f}"),
@@ -121,11 +169,18 @@ def render_campaign_intelligence(uploaded, target_acos: float) -> None:
     ]
     for col, (label, value) in zip(st.columns(4), metric_labels):
         col.metric(label, value)
+    supplementary = [
+        ("Attributed orders", f"{int(totals['Orders']):,}"),
+        ("Observed CTR", f"{ctr:.2f}%"),
+        ("Weekly campaign records", f"{len(df):,}"),
+        ("Unusual weekly patterns", f"{anomaly_count:,}"),
+    ]
+    for col, (label, value) in zip(st.columns(4), supplementary):
+        col.metric(label, value)
     st.caption(
-        f"{len(df):,} weekly campaign rows · {df['Campaign'].nunique()} campaigns · "
-        f"{df['Week'].nunique()} observed weeks · CTR {ctr:.2f}% · "
-        f"{int(totals['Orders']):,} attributed orders. "
-        "Currency is not supplied by this CSV: values use the dataset's unspecified currency."
+        f"{df['Campaign'].nunique()} campaigns · {df['Week'].nunique()} observed weeks · "
+        "Currency is not supplied by this CSV: spend and sales use unspecified currency units. "
+        "These are historical, simulated campaign records, not live Amazon account statuses."
     )
 
     from campaign_status import render_status_panel
@@ -134,18 +189,36 @@ def render_campaign_intelligence(uploaded, target_acos: float) -> None:
     )
     render_status_panel(snapshot_performance, float(target_acos), key="weekly_campaign")
 
+    weekly_section(
+        "Explore campaign intelligence",
+        "Review weekly history, unusual behaviour, campaign status evidence and exports.",
+        "02 / INTERACTIVE WORKSPACE",
+    )
     overview, assurance, export = st.tabs(
         ["📊 Campaign trends", "🧠 Weekly anomaly review", "📥 Evidence & export"]
     )
     with overview:
+        st.markdown("#### Observed weekly spend and attributed sales")
+        st.caption("Historical weekly sums; not a forward-looking model.")
         weekly = df.groupby("Week", as_index=False)[["Spend", "Sales"]].sum().sort_values("Week")
-        chart = px.line(weekly, x="Week", y=["Spend", "Sales"], markers=True,
-                        title="Observed weekly spend and attributed sales",
-                        labels={"value": "Reported currency units", "variable": "Metric"})
-        st.plotly_chart(chart, use_container_width=True)
+        chart = px.line(
+            weekly, x="Week", y=["Spend", "Sales"], markers=True,
+            labels={"value": "Reported currency units", "variable": "Metric"},
+            color_discrete_sequence=["#7369f3", "#19b9c8"],
+        )
+        weekly_chart(chart)
         st.markdown("#### Campaign comparison")
+        st.caption("Campaign-level aggregates across the selected weeks.")
         campaigns_table = sum_campaigns(df).sort_values("Spend", ascending=False)
-        st.dataframe(campaigns_table.round(3), hide_index=True, use_container_width=True)
+        compact = ["Campaign", "Campaign_Type", "Product", "Spend", "Sales",
+                   "Orders", "ACOS %", "ROAS"]
+        st.dataframe(
+            campaigns_table[compact].round(3), hide_index=True, use_container_width=True
+        )
+        with st.expander("All campaign metrics"):
+            st.dataframe(
+                campaigns_table.round(3), hide_index=True, use_container_width=True
+            )
 
     with assurance:
         st.markdown("#### Unsupervised review — weekly observations")
@@ -154,8 +227,7 @@ def render_campaign_intelligence(uploaded, target_acos: float) -> None:
             "spend, orders and attributed sales relative to this uploaded dataset. "
             "Flags are not predictions, proof of poor performance, or automatic bid actions."
         )
-        reviewed = flag_weekly_outliers(df)
-        count = int((reviewed["ML pattern flag"] == "Review unusual pattern").sum())
+        count = anomaly_count
         c1, c2, c3 = st.columns(3)
         c1.metric("Eligible weekly observations", len(reviewed) if len(reviewed) >= 20 else 0)
         c2.metric("Relative anomaly flags", count)
@@ -191,7 +263,7 @@ def render_campaign_intelligence(uploaded, target_acos: float) -> None:
             summary[["Campaign", "Spend", "Sales", "ACOS %", "ROAS", "Review status"]].round(3),
             hide_index=True, use_container_width=True,
         )
-        evaluated = flag_weekly_outliers(df)
+        evaluated = reviewed
         st.download_button(
             "Download campaign evidence CSV",
             data=evaluated.to_csv(index=False).encode("utf-8"),
