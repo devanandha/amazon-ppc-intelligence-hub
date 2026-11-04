@@ -1,6 +1,8 @@
 name: Validate PPC app
 
 on:
+  push:
+    branches: [feature/premium-dashboard-scenario-lab]
   pull_request:
   workflow_dispatch:
 
