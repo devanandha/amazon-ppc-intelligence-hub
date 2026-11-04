@@ -45,6 +45,29 @@ class MovingBuddyTests(unittest.TestCase):
         self.assertIn("YOUR UPLOADED REPORT", html)
         self.assertNotIn("FICTIONAL DEMO", html)
 
+    def test_weekly_campaign_buddy_uses_campaign_specific_guidance(self):
+        html = self.sample(
+            account_acos=28.30, target_acos=25.0,
+            weekly_campaign_mode=True, campaign_count=8, anomaly_count=42,
+            demo_mode=False,
+        )
+        self.assertIn("Observed campaign ACOS is 3.3 percentage points above", html)
+        self.assertIn("8 campaigns", html)
+        self.assertIn("42 unusual weekly patterns", html)
+        self.assertIn("YOUR UPLOADED WEEKLY CAMPAIGN DATA", html)
+        self.assertIn("no keyword or automatic bid recommendations", html)
+        self.assertIn("@keyframes floatBot", html)
+        self.assertNotIn("harvest candidates", html)
+        self.assertNotIn("negative-review candidates", html)
+
+    def test_weekly_campaign_buddy_does_not_claim_success_without_sales(self):
+        html = self.sample(
+            account_acos=float("nan"), ad_sales=0,
+            weekly_campaign_mode=True, campaign_count=8, anomaly_count=0,
+        )
+        self.assertIn("No attributed sales", html)
+        self.assertNotIn("percentage points below", html)
+
     def test_component_has_explicit_height(self):
         with patch("ppc_buddy_component.components.html") as embed:
             render_buddy(
