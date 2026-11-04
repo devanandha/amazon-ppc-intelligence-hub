@@ -675,6 +675,24 @@ with ai_tab:
     ml_data, ml_meta = analyse_search_terms(
         search, min_clicks=int(ml_min_clicks)
     )
+    # Triangulate the original transparent action with an independent
+    # exploratory outlier signal. This is a review queue, not auto-optimisation.
+    ml_data["Existing rule action"] = search["Recommended Action"].to_numpy()
+    favourable = ml_data["Existing rule action"].isin(
+        ["Scale carefully", "Maintain / harvest"]
+    )
+    unusual = ml_data["ML review flag"].eq("Unusual pattern — review")
+    ml_data["Hybrid review note"] = np.select(
+        [
+            unusual & favourable,
+            unusual,
+        ],
+        [
+            "Check unusual evidence before scaling or harvesting",
+            "Unusual pattern: inspect the underlying observations",
+        ],
+        default="Use normal human review; no unusual ML signal",
+    )
     c1, c2, c3 = st.columns(3)
     c1.metric("Search terms with usable evidence", f"{ml_meta['eligible_terms']:,}")
     c2.metric("Flagged for human review", f"{ml_meta['flagged_terms']:,}")
@@ -689,7 +707,7 @@ with ai_tab:
         st.warning(ml_meta["reason"])
     else:
         flagged = ml_data[ml_data["ML review flag"] == "Unusual pattern — review"]
-        st.markdown("#### Unusual patterns needing attention")
+        st.markdown("#### Human-review queue: statistical signals + existing actions")
         if flagged.empty:
             st.success("No unusual patterns met the model's review threshold.")
         else:
@@ -699,7 +717,9 @@ with ai_tab:
                 hide_index=True,
             )
         st.caption(
-            "The peer differences shown above are descriptive comparisons, "
+            "The hybrid review note pairs an existing rule action with an "
+            "unsupervised flag; it is not a trained action recommender. "
+            "The peer differences are descriptive comparisons, "
             "not exact feature attributions explaining the model's output."
         )
     with st.expander("Conversion-rate uncertainty and evidence notes"):
