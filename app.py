@@ -175,13 +175,25 @@ with st.sidebar:
     st.caption("Independent analytics workspace — built by Devanandha VS.")
     source_choice = st.radio(
         "Data source",
-        ["Explore fictional demo", "Upload my own report"],
+        [
+            "Explore fictional demo",
+            "Upload my own report",
+            "Upload weekly campaign CSV",
+        ],
         index=0,
-        help="All figures in the demo are synthetic. Do not share private account reports publicly.",
+        help="Search-term reports and weekly campaign CSVs are separate data types. "
+             "Do not upload confidential account reports without permission.",
     )
     demo_mode = source_choice == "Explore fictional demo"
+    campaign_mode = source_choice == "Upload weekly campaign CSV"
     uploaded = None
-    if not demo_mode:
+    if campaign_mode:
+        uploaded = st.file_uploader(
+            "Weekly Sponsored Products campaign CSV",
+            type=["csv"],
+            key="weekly_campaign_csv_upload",
+        )
+    elif not demo_mode:
         uploaded = st.file_uploader(
             "Sponsored Products Search Term report", type=["xlsx", "xls"]
         )
@@ -193,6 +205,12 @@ with st.sidebar:
     st.caption("AI anomaly signals are exploratory. No automatic changes are made to Amazon Ads.")
     st.markdown("[GitHub source](https://github.com/devanandha/amazon-ppc-intelligence-hub)")
     st.markdown("[Developer LinkedIn](https://www.linkedin.com/in/devanandhavs21)")
+
+
+if campaign_mode:
+    from campaign_intelligence import render_campaign_intelligence
+    render_campaign_intelligence(uploaded, float(target_acos))
+    st.stop()
 
 
 if demo_mode:
