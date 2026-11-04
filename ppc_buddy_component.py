@@ -42,18 +42,48 @@ def buddy_html(
     *, account_acos: float, target_acos: float, ad_sales: float,
     harvest_count: int, negative_count: int,
     demo_mode: bool, animated: bool = True,
+    weekly_campaign_mode: bool = False, campaign_count: int = 0,
+    anomaly_count: int = 0,
 ) -> str:
     """Build a standalone, responsive robot display; output does not include user text."""
-    message = escape(
-        buddy_message(
-            account_acos=account_acos,
-            target_acos=target_acos,
-            ad_sales=ad_sales,
+    if weekly_campaign_mode:
+        if ad_sales <= 0 or not math.isfinite(float(account_acos)):
+            guidance = (
+                "No attributed sales are available for a meaningful campaign ACOS "
+                "comparison. Check the underlying weekly observations first."
+            )
+        else:
+            difference = abs(float(account_acos) - float(target_acos))
+            direction = "above" if account_acos > target_acos else "below"
+            guidance = (
+                f"Observed campaign ACOS is {difference:.1f} percentage points "
+                f"{direction} your target. These are historical weekly results, "
+                "not a live campaign-status feed. Review evidence and anomalies "
+                "before changing any campaigns."
+            )
+        message = escape(guidance)
+        source = "YOUR UPLOADED WEEKLY CAMPAIGN DATA"
+        pill_one = f"↗ {max(0, int(campaign_count)):,} campaigns"
+        pill_two = f"◎ {max(0, int(anomaly_count)):,} unusual weekly patterns"
+        note = (
+            "Animated rule-based companion. No search terms are available in this "
+            "report; no keyword or automatic bid recommendations are generated."
         )
-    )
-    source = "FICTIONAL DEMO" if demo_mode else "YOUR UPLOADED REPORT"
-    harvest = max(0, int(harvest_count))
-    negative = max(0, int(negative_count))
+    else:
+        message = escape(
+            buddy_message(
+                account_acos=account_acos,
+                target_acos=target_acos,
+                ad_sales=ad_sales,
+            )
+        )
+        source = "FICTIONAL DEMO" if demo_mode else "YOUR UPLOADED REPORT"
+        pill_one = f"↗ {max(0, int(harvest_count)):,} harvest candidates"
+        pill_two = f"◎ {max(0, int(negative_count)):,} negative-review candidates"
+        note = (
+            "Animated demo companion. Summaries are rule-based, not a "
+            "generative AI chatbot or automatic bidding advice."
+        )
     motion = "motion-on" if animated else "motion-off"
     return f"""<!doctype html>
 <html lang="en">
@@ -169,11 +199,11 @@ p{{margin:0;color:#4b6182;font-size:14px;line-height:1.65;max-width:740px}}
     <h2><span>Hi! 👋</span> I'm PPC Buddy.</h2>
     <p>{message}</p>
     <div class="pills">
-      <span class="pill">↗ {harvest:,} harvest candidates</span>
-      <span class="pill">◎ {negative:,} negative-review candidates</span>
+      <span class="pill">{pill_one}</span>
+      <span class="pill">{pill_two}</span>
     </div>
     <div class="source">{source}</div>
-    <div class="foot">Animated demo companion. Summaries are rule-based, not a generative AI chatbot or automatic bidding advice.</div>
+    <div class="foot">{note}</div>
   </div>
 </section>
 </body></html>"""
@@ -183,6 +213,8 @@ def render_buddy(
     *, account_acos: float, target_acos: float, ad_sales: float,
     harvest_count: int, negative_count: int,
     demo_mode: bool, animated: bool = True,
+    weekly_campaign_mode: bool = False, campaign_count: int = 0,
+    anomaly_count: int = 0,
 ) -> None:
     """Render in an isolated HTML iframe with guaranteed widget height."""
     components.html(
@@ -194,6 +226,9 @@ def render_buddy(
             negative_count=negative_count,
             demo_mode=demo_mode,
             animated=animated,
+            weekly_campaign_mode=weekly_campaign_mode,
+            campaign_count=campaign_count,
+            anomaly_count=anomaly_count,
         ),
         height=293,
         scrolling=False,
