@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import io
 import re
+import hashlib
 from typing import Iterable
 
 import numpy as np
@@ -852,6 +853,69 @@ with studio_tab:
             "No valid conversion-rate interval is available for this term. "
             "Do not substitute missing statistical evidence with an AI score."
         )
+
+    st.markdown("#### Practitioner review workspace")
+    st.caption(
+        "Record an independent practitioner's assessment of this case. "
+        "Feedback stays only in this Streamlit session until you export it. "
+        "These labels do not train or validate the ML model automatically."
+    )
+    dataset_fingerprint = hashlib.sha256(
+        search[[COL["search_term"], COL["clicks"], COL["orders"],
+                COL["spend"], COL["sales"]]].to_csv(index=False).encode("utf-8")
+    ).hexdigest()[:16]
+    if (
+        "ppc_practitioner_reviews" not in st.session_state
+        or st.session_state["ppc_practitioner_reviews"].get("fingerprint")
+            != dataset_fingerprint
+    ):
+        st.session_state["ppc_practitioner_reviews"] = {
+            "fingerprint": dataset_fingerprint, "assessments": {}
+        }
+    with st.form("practitioner_review_form", clear_on_submit=True):
+        judgement = st.selectbox(
+            "Your independent assessment of the original suggested action",
+            [
+                "Needs more evidence",
+                "Potentially useful after manual checks",
+                "Not appropriate for this case",
+                "Cannot assess from available data",
+            ],
+        )
+        practitioner_note = st.text_area(
+            "Specific technical feedback or missing business context (optional)",
+            max_chars=1800,
+            placeholder="For example: attribution, relevance, margin, seasonality, data quality...",
+        )
+        save_assessment = st.form_submit_button("Save case assessment")
+    if save_assessment:
+        st.session_state["ppc_practitioner_reviews"]["assessments"][selected_term] = {
+            "Search Term": selected_term,
+            "Dataset Fingerprint": dataset_fingerprint,
+            "Original Rule Action": str(case["Recommended Action"]),
+            "Evidence Status": str(case["Evidence status"]),
+            "Practitioner Assessment": judgement,
+            "Feedback": practitioner_note.strip(),
+        }
+        st.success("Assessment stored in this session. Download the feedback CSV to retain it.")
+    stored = st.session_state["ppc_practitioner_reviews"]["assessments"]
+    if stored:
+        review_table = pd.DataFrame(list(stored.values()))
+        st.write(f"**Recorded assessments:** {len(review_table):,}")
+        st.dataframe(review_table, use_container_width=True, hide_index=True)
+        st.download_button(
+            "Download practitioner feedback (CSV)",
+            review_table.to_csv(index=False).encode("utf-8"),
+            "DevanandhaVS_Independent_PPC_Review_Feedback.csv",
+            mime="text/csv",
+            key="download_external_feedback",
+        )
+        st.caption(
+            "This file is feedback from reviewers, not an independent award "
+            "or endorsement. Share attributed feedback only with reviewer permission."
+        )
+    else:
+        st.caption("No reviewer assessments recorded in this session yet.")
 
     st.markdown("#### Decision sensitivity map")
     stability = acossensitivity(
