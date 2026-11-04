@@ -253,10 +253,30 @@ def render_empty_state() -> None:
 
 
 def render_sidebar_brand() -> None:
-    st.html("""<div style="padding:13px 14px;border-radius:13px;background:white;border:1px solid #dfe7f2;color:#526484;margin-bottom:14px">
-    <strong style="color:#17253d">Devanandha VS</strong><br>
-    <span style="font-size:.82rem">Applied AI &amp; Amazon Advertising Analytics</span>
-    </div>""")
+    st.html(
+        """
+        <section aria-label="Developer identity" style="
+          border-radius:17px;padding:19px 17px 18px;margin-bottom:23px;
+          color:white;background:linear-gradient(135deg,#121d3b,#2a3478);
+          box-shadow:0 15px 30px rgba(15,30,66,.11);">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:13px">
+            <span style="display:flex;align-items:center;justify-content:center;
+                         width:36px;height:36px;border-radius:11px;
+                         font-size:.72rem;font-weight:900;background:#6b6afa;color:white">DVS</span>
+            <div>
+              <div style="font-weight:850;font-size:.83rem;letter-spacing:.025em">DEVANANDHA VS</div>
+              <div style="color:#a2b6e7;font-size:.68rem;letter-spacing:.06em">PPC INTELLIGENCE / V2</div>
+            </div>
+          </div>
+          <div style="font-size:1.12rem;line-height:1.25;font-weight:790;letter-spacing:-.04em">
+            Your decision<br>intelligence workspace.
+          </div>
+          <div style="margin-top:12px;color:#b9d0f2;font-size:.76rem;line-height:1.5">
+            Transparent analytics, experimental AI and human-reviewed recommendations.
+          </div>
+        </section>
+        """
+    )
 
 
 def render_footer() -> None:
