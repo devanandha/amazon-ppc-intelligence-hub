@@ -16,7 +16,8 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-from ui_theme import inject_styles, render_hero, render_empty_state
+from ui_theme import inject_styles, render_hero, render_empty_state, render_sidebar_brand, render_footer
+from ml_insights import analyse_search_terms
 from create_synthetic_demo import make_synthetic_dataframe
 
 COL = {
@@ -333,6 +334,7 @@ inject_styles()
 render_hero()
 
 with st.sidebar:
+    render_sidebar_brand()
     st.header("Analysis settings")
     target_acos = st.number_input("Target ACOS (%)", min_value=1.0, max_value=200.0, value=25.0, step=1.0)
     negative_clicks = st.number_input("Clicks before negative review", min_value=1, max_value=200, value=15)
@@ -360,6 +362,7 @@ business_uploaded = st.file_uploader(
 )
 if not demo_mode and uploaded is None:
     render_empty_state()
+    render_footer()
     st.caption(
         "Reports are analysed within this application session. Do not upload "
         "confidential employer or client data to a public demo."
@@ -499,8 +502,8 @@ st.info(
     f"Zero-order search terms account for **{waste_rate:.1f}%** of selected spend."
 )
 
-overview_tab, campaigns_tab, terms_tab, actions_tab, scenario_tab, quality_tab = st.tabs([
-    "Overview", "Sponsored Products", "Search Terms", "Action Centre", "Scenario Lab", "Data Quality"
+overview_tab, campaigns_tab, terms_tab, actions_tab, scenario_tab, ai_tab, quality_tab = st.tabs([
+    "Overview", "Sponsored Products", "Search Terms", "Action Centre", "Scenario Lab", "AI Review", "Data Quality"
 ])
 
 with overview_tab:
@@ -658,6 +661,82 @@ with scenario_tab:
         )
 
 
+with ai_tab:
+    st.subheader("AI-assisted search-term review")
+    st.caption(
+        "An exploratory unsupervised machine-learning model flags unusual "
+        "patterns within the uploaded data. It does not forecast sales, "
+        "determine wasted spend, or automatically change bids."
+    )
+    ml_min_clicks = st.slider(
+        "Minimum clicks for ML comparison", 1, 40, 5,
+        help="Search terms with fewer clicks are withheld from ML scoring.",
+    )
+    ml_data, ml_meta = analyse_search_terms(
+        search, min_clicks=int(ml_min_clicks)
+    )
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Search terms with usable evidence", f"{ml_meta['eligible_terms']:,}")
+    c2.metric("Flagged for human review", f"{ml_meta['flagged_terms']:,}")
+    c3.metric("Model status", "Analysed" if ml_meta["trained"] else "Not fitted")
+    st.info(
+        "An Isolation Forest detects unusual combinations of click volume, "
+        "spend, attributed orders, sales and efficiency rates. It is fitted "
+        "only to this uploaded dataset. Its scores are **not** validated "
+        "probabilities or measures of profitability."
+    )
+    if not ml_meta["trained"]:
+        st.warning(ml_meta["reason"])
+    else:
+        flagged = ml_data[ml_data["ML review flag"] == "Unusual pattern — review"]
+        st.markdown("#### Unusual patterns needing attention")
+        if flagged.empty:
+            st.success("No unusual patterns met the model's review threshold.")
+        else:
+            st.dataframe(
+                flagged.sort_values("Anomaly score", ascending=False),
+                use_container_width=True,
+                hide_index=True,
+            )
+        st.caption(
+            "The peer differences shown above are descriptive comparisons, "
+            "not exact feature attributions explaining the model's output."
+        )
+    with st.expander("Conversion-rate uncertainty and evidence notes"):
+        st.write(
+            "90% Bayesian credible intervals estimate uncertainty in the "
+            "observed orders-per-click rate using a Jeffreys prior. They "
+            "assume a binomial model; some Ads attribution patterns violate "
+            "this assumption, so intervals are withheld where orders exceed clicks."
+        )
+        st.dataframe(
+            ml_data[
+                [
+                    "Customer Search Term",
+                    "Clicks",
+                    "7 Day Total Orders (#)",
+                    "CVR 90% lower",
+                    "CVR 90% upper",
+                    "Evidence note",
+                    "ML review flag",
+                ]
+            ],
+            use_container_width=True,
+            hide_index=True,
+        )
+    st.download_button(
+        "Download AI review audit (CSV)",
+        data=ml_data.to_csv(index=False).encode("utf-8"),
+        file_name="PPC_Exploratory_ML_Review.csv",
+        mime="text/csv",
+        key="download_ml_review",
+    )
+    st.caption(
+        "This is an experimental model-driven screening feature. Every "
+        "suggestion requires human validation before any real-world action."
+    )
+
+
 with quality_tab:
     duplicate_rows = int(raw.duplicated().sum())
     zero_click_rows = int((df[COL["clicks"]] == 0).sum())
@@ -718,3 +797,5 @@ with st.expander("Methodology and limitations"):
 
             - Attribution windows, organic sales, contribution margin, placement performance, budget constraints and seasonality are not available within the Search Term Report and should be considered before making changes.
     """)
+
+render_footer()
