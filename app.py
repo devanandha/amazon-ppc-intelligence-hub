@@ -389,11 +389,34 @@ with assurance_tab:
         "An unsupervised Isolation Forest identifies unusual patterns within this "
         "report. It does not predict sales, profit or the effect of bid changes."
     )
+    observed_clicks = search[COL["clicks"]].fillna(0)
+    min_observed_clicks = int(observed_clicks.min()) if not search.empty else 0
+    max_observed_clicks = int(observed_clicks.max()) if not search.empty else 0
+    # Adjust the control to the scale of each report. Synthetic demo terms
+    # contain many clicks; the old 1..40 slider could never change eligibility.
+    slider_limit = max(
+        100,
+        min(1000, int(np.ceil(max_observed_clicks / 25.0) * 25)),
+    )
     minimum_ml_clicks = st.slider(
-        "Minimum clicks for model comparison", 1, 40, 5,
+        "Minimum clicks for model comparison",
+        min_value=5, max_value=slider_limit, value=5, step=5,
         key="v3_minimum_ml_clicks",
+        help="Search-term clicks are aggregated across the selected report. "
+             "Raise the threshold to withhold low-evidence terms from the ML review.",
     )
     ml, meta = analyse_search_terms(search, min_clicks=int(minimum_ml_clicks))
+    st.caption(
+        f"Search terms in this report have between **{min_observed_clicks:,}** "
+        f"and **{max_observed_clicks:,}** aggregated clicks. "
+        "Only terms above the chosen threshold are considered by the model."
+    )
+    if int(meta["eligible_terms"]) == len(search):
+        st.info(
+            "Every search term currently meets this click threshold. "
+            "Increase it above the lowest observed click count to see the "
+            "ML review population change."
+        )
     ledger = build_decision_ledger(
         search, ml,
         review_clicks=30, review_orders=5, max_interval_width_pp=15.0,
