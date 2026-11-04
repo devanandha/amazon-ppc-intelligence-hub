@@ -122,6 +122,29 @@ _PREMIUM_CSS = """
 .dv-visual-title{color:#e9f1ff;font-weight:780;font-size:.86rem;letter-spacing:.02em;}
 .dv-visual-label{font-size:.64rem;font-weight:800;letter-spacing:.05em;color:#a9eadf;background:rgba(35,200,179,.13);padding:5px 9px;border:1px solid rgba(140,226,215,.21);border-radius:20px;}
 .dv-visual svg{display:block;width:100%;height:auto;margin:5px 0 6px;}
+
+.dv-signal-chart{margin:10px 0 13px;min-height:160px}
+.dv-chart-guide{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#b7c8e8;font-size:.65rem;font-weight:650;margin:12px 1px 8px}
+.dv-chart-guide span:last-child{color:#859ecb;font-size:.6rem}
+.dv-chart-area{
+  height:112px;display:flex;gap:8px;align-items:flex-end;justify-content:space-between;
+  position:relative;padding:8px 3px 1px;border-bottom:1px solid rgba(201,229,255,.18)
+}
+.dv-chart-grid{
+  position:absolute;inset:8px 0 1px;pointer-events:none;
+  background:repeating-linear-gradient(to bottom,
+    transparent,transparent 24%,rgba(202,224,255,.11) 24.5%,transparent 25%);
+}
+.dv-bar-pair{display:flex;align-items:flex-end;gap:2px;height:100%;flex:1;position:relative;z-index:1}
+.dv-bar{display:block;flex:1;min-width:3px;border-radius:4px 4px 0 0;opacity:.92}
+.dv-bar-a{background:linear-gradient(to top,#4d68da,#a1a3ff)}
+.dv-bar-b{background:linear-gradient(to top,#118da9,#53e4d1)}
+.dv-chart-legend{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:17px;margin:10px 3px 0}
+.dv-chart-legend span{display:flex;align-items:center;gap:6px;color:#b9cbe9;font-size:.66rem}
+.dv-chart-legend i{width:8px;height:8px;display:inline-block;border-radius:3px}
+.dv-dot-a{background:#9195ff}
+.dv-dot-b{background:#52e1cf}
+
 .dv-visual-bottom{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
 .dv-mini{background:rgba(2,13,41,.3);padding:9px 11px;border:1px solid rgba(218,238,255,.11);border-radius:12px;}
 .dv-mini small{display:block;color:#afc2db;font-size:.63rem;letter-spacing:.03em;}
@@ -206,27 +229,25 @@ _HERO = """
         <span class="dv-visual-title">DECISION INTELLIGENCE</span>
         <span class="dv-visual-label">HUMAN IN CONTROL</span>
       </div>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 178" role="img" aria-label="Decorative trend lines and decision workflow illustration; not real report data">
-        <defs>
-          <linearGradient id="dvs-blue-f" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stop-color="#7f8aff" stop-opacity=".3"/>
-            <stop offset="100%" stop-color="#7f8aff" stop-opacity="0"/>
-          </linearGradient>
-          <linearGradient id="dvs-cyan-s" x1="0" x2="1">
-            <stop offset="0%" stop-color="#3aeac8"/>
-            <stop offset="100%" stop-color="#63bcff"/>
-          </linearGradient>
-        </defs>
-        <g stroke="#bcd1ff" stroke-opacity=".12" stroke-width="1">
-          <path d="M10 36H340M10 72H340M10 108H340M10 144H340"/>
-          <path d="M65 22V160M135 22V160M205 22V160M275 22V160"/>
-        </g>
-        <path d="M10 144 L48 133 L84 139 L119 114 L151 122 L184 100 L217 108 L245 71 L277 81 L310 43 L340 50 L340 160 L10 160Z" fill="url(#dvs-blue-f)"/>
-        <path d="M10 144 L48 133 L84 139 L119 114 L151 122 L184 100 L217 108 L245 71 L277 81 L310 43 L340 50" fill="none" stroke="#98a8ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M10 153 L48 150 L84 136 L119 140 L151 118 L184 128 L217 93 L245 108 L277 82 L310 91 L340 59" fill="none" stroke="url(#dvs-cyan-s)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="310" cy="43" r="5" fill="#a6adff" stroke="#202f5c" stroke-width="3"/>
-        <circle cx="340" cy="59" r="5" fill="#51efd2" stroke="#202f5c" stroke-width="3"/>
-      </svg>
+      <div class="dv-signal-chart" role="img" aria-label="Decorative chart of fictional advertising signals. Not actual account measurements.">
+        <div class="dv-chart-guide"><span>Illustrative signals</span><span>Relative patterns · not real data</span></div>
+        <div class="dv-chart-area">
+          <div class="dv-chart-grid"></div>
+          <span class="dv-bar-pair" aria-hidden="true"><i class="dv-bar dv-bar-a" style="height:24%"></i><i class="dv-bar dv-bar-b" style="height:45%"></i></span>
+          <span class="dv-bar-pair" aria-hidden="true"><i class="dv-bar dv-bar-a" style="height:36%"></i><i class="dv-bar dv-bar-b" style="height:40%"></i></span>
+          <span class="dv-bar-pair" aria-hidden="true"><i class="dv-bar dv-bar-a" style="height:30%"></i><i class="dv-bar dv-bar-b" style="height:54%"></i></span>
+          <span class="dv-bar-pair" aria-hidden="true"><i class="dv-bar dv-bar-a" style="height:48%"></i><i class="dv-bar dv-bar-b" style="height:58%"></i></span>
+          <span class="dv-bar-pair" aria-hidden="true"><i class="dv-bar dv-bar-a" style="height:43%"></i><i class="dv-bar dv-bar-b" style="height:49%"></i></span>
+          <span class="dv-bar-pair" aria-hidden="true"><i class="dv-bar dv-bar-a" style="height:64%"></i><i class="dv-bar dv-bar-b" style="height:72%"></i></span>
+          <span class="dv-bar-pair" aria-hidden="true"><i class="dv-bar dv-bar-a" style="height:55%"></i><i class="dv-bar dv-bar-b" style="height:70%"></i></span>
+          <span class="dv-bar-pair" aria-hidden="true"><i class="dv-bar dv-bar-a" style="height:70%"></i><i class="dv-bar dv-bar-b" style="height:64%"></i></span>
+          <span class="dv-bar-pair" aria-hidden="true"><i class="dv-bar dv-bar-a" style="height:66%"></i><i class="dv-bar dv-bar-b" style="height:80%"></i></span>
+          <span class="dv-bar-pair" aria-hidden="true"><i class="dv-bar dv-bar-a" style="height:82%"></i><i class="dv-bar dv-bar-b" style="height:74%"></i></span>
+          <span class="dv-bar-pair" aria-hidden="true"><i class="dv-bar dv-bar-a" style="height:76%"></i><i class="dv-bar dv-bar-b" style="height:95%"></i></span>
+          <span class="dv-bar-pair" aria-hidden="true"><i class="dv-bar dv-bar-a" style="height:96%"></i><i class="dv-bar dv-bar-b" style="height:87%"></i></span>
+        </div>
+        <div class="dv-chart-legend"><span><i class="dv-dot-a"></i>Observed pattern</span><span><i class="dv-dot-b"></i>Review signal</span></div>
+      </div>
       <div class="dv-visual-bottom">
         <div class="dv-mini"><small>01 / OBSERVE</small><strong>Campaign signals</strong></div>
         <div class="dv-mini"><small>02 / VERIFY</small><strong>Evidence gates</strong></div>
