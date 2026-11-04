@@ -255,7 +255,7 @@ def render_status_panel(performance: pd.DataFrame, target_acos: float, key: str)
                 (~result["Seen in performance report"]) & result["From status roster"]
             ).sum()))
             c4.metric("Report campaigns not in roster", int((
-                result["Seen in performance report"]) & (~result["From status roster"])
+                result["Seen in performance report"] & (~result["From status roster"])
             ).sum()))
             st.warning(
                 "Statuses are captured only as of your uploaded export, NOT a live sync. "
