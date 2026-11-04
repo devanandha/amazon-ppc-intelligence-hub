@@ -24,6 +24,12 @@ All research data are synthetic. These experiments are separate from the live ap
 
 Experienced Amazon Ads practitioners are welcome to review the prototype using fictional data. See the [independent evaluation guide](docs/EXTERNAL_PPC_EVALUATION.md) for a suggested 20–30 minute review and feedback questions.
 
+## Professional dashboard and safe demo
+
+The app includes a polished responsive interface with a built-in **fictional-data demo**. Turn on **Explore the built-in fictional demo** to evaluate campaign and search-term workflows without uploading a file. A **Scenario Lab** compares how proposed decisions change when the target ACOS changes, while keeping the observed data and other thresholds constant.
+
+The scenario comparison is a deterministic rules sensitivity check — **not** a prediction of changes to sales, spend or profit. It is not evidence of a machine-learning model or validated real-world optimisation performance.
+
 ## Key capabilities
 
 * Calculates ACOS, ROAS, CTR, CPC, CVR and AOV from aggregated totals.
