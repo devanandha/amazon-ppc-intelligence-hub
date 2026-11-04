@@ -157,8 +157,11 @@ def reconcile_campaigns(performance: pd.DataFrame, status: pd.DataFrame | None,
         merged["Reported state"] = merged["Reported state"].fillna("")
         merged["Status classification"] = merged["Status classification"].fillna("Not verified")
         merged = merged.drop(columns=["Roster name"])
+    # An absent performance row does NOT prove zero spend or zero sales.
+    # Preserve missing values to avoid a misleading zero-activity claim.
     for n in ("Spend", "Sales", "Clicks"):
-        merged[n] = merged[n].fillna(0)
+        merged[n] = pd.to_numeric(merged[n], errors="coerce")
+        merged.loc[~merged["Seen in performance report"], n] = np.nan
     merged["ACOS %"] = np.where(
         merged["Sales"] > 0, 100.0 * merged["Spend"] / merged["Sales"], np.nan
     )
@@ -298,7 +301,9 @@ def render_status_panel(performance: pd.DataFrame, target_acos: float, key: str)
         st.markdown("#### Campaign strategy overview")
         st.caption(
             "A compact status summary. Select a campaign below to read the full "
-            "reasoning; download the audit for every explanation."
+            "reasoning; download the audit for every explanation. "
+            "Blank performance values mean the campaign is absent from the "
+            "selected report — not proven zero activity."
         )
         st.dataframe(result[compact].round(2), use_container_width=True, hide_index=True)
         if not result.empty:
