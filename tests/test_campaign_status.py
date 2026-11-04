@@ -60,8 +60,8 @@ class CampaignStatusTests(unittest.TestCase):
             {"Campaign": "Below Target", "Spend": 18, "Sales": 100, "Clicks": 20},
         ])
         roster = parse_campaign_status(
-            b"Campaign Name,Status\\nNear Target,Enabled\\nAbove Target,Enabled\\n"
-            b"High Gap,Enabled\\nBelow Target,Enabled\\n",
+            b"Campaign Name,Status\nNear Target,Enabled\nAbove Target,Enabled\n"
+            b"High Gap,Enabled\nBelow Target,Enabled\n",
             "status.csv",
         )
         result = reconcile_campaigns(perf, roster, 25).set_index("Campaign")
