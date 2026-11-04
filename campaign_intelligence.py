@@ -128,6 +128,12 @@ def render_campaign_intelligence(uploaded, target_acos: float) -> None:
         "Currency is not supplied by this CSV: values use the dataset's unspecified currency."
     )
 
+    from campaign_status import render_status_panel
+    snapshot_performance = (
+        df.groupby("Campaign", as_index=False)[["Spend", "Sales", "Clicks"]].sum()
+    )
+    render_status_panel(snapshot_performance, float(target_acos), key="weekly_campaign")
+
     overview, assurance, export = st.tabs(
         ["📊 Campaign trends", "🧠 Weekly anomaly review", "📥 Evidence & export"]
     )
