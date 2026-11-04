@@ -10,15 +10,19 @@ Try the live application: [Amazon PPC Intelligence Hub](https://devanandha-amazo
 
 ## Research manuscript and reproducibility
 
-**Separating Profitability from Information Value in Sponsored Search Evidence Collection**
+**Current related submission (3 November 2026):** *When Profitable Exploration Does Not Demonstrate Learning: Diagnostics from a Synthetic Sponsored-Search Study*, submitted to *Electronic Commerce Research* (manuscript ID ELEC-D-26-02630). Submission has been confirmed; no acceptance, publication or external peer review is claimed.
 
-Submitted to *Operations Research Forum* on **29 October 2026**. Status at submission: **technical check**; not yet accepted or confirmed as externally peer reviewed.
+**Earlier submission:** *Separating Profitability from Information Value in Sponsored Search Evidence Collection* was submitted to *Operations Research Forum* on 29 October 2026 and declined at editorial screening on 30 October 2026.
 
 The computational study separates the immediate profitability of exploratory traffic from the downstream value of using its observations. In the studied synthetic setting, positive net-probing returns do not establish an additional information-use benefit. The research materials include the original comparisons, post-hoc profitability controls, a fresh-seed information-use intervention, adverse findings and limitations.
 
 [Read the research summary and reproduction instructions](research/bayesian_voi/README.md) · [Protocol](research/bayesian_voi/INFORMATION_USE_PROTOCOL.md) · [Results](research/bayesian_voi/INFORMATION_USE_RESULTS.md)
 
 All research data are synthetic. These experiments are separate from the live application and do not demonstrate real advertising uplift or general algorithmic superiority.
+
+## Independent evaluation
+
+Experienced Amazon Ads practitioners are welcome to review the prototype using fictional data. See the [independent evaluation guide](docs/EXTERNAL_PPC_EVALUATION.md) for a suggested 20–30 minute review and feedback questions.
 
 ## Key capabilities
 
