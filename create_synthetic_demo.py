@@ -15,6 +15,11 @@ def make_synthetic_dataframe() -> pd.DataFrame:
         "vented styling brush", "travel hair brush", "B012DEMO34", "B056DEMO78",
         "unrelated accessory", "cheap plastic comb", "premium hair styling tool",
     ]
+    # Broader fictional vocabulary ensures the exploratory outlier model
+    # has enough independent aggregated terms to run in the public demo.
+    terms.extend(
+        [f"fictional styling search query {number:02d}" for number in range(1, 37)]
+    )
     for day in pd.date_range("2026-06-01", periods=30, freq="D"):
         for campaign in campaigns:
             for term in rng.choice(terms, size=5, replace=False):
