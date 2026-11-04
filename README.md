@@ -30,6 +30,14 @@ This independently developed product is branded **Devanandha VS · Applied AI & 
 
 **Important:** The unsupervised outlier flags are not validated predictions of profit, fraud, advertising uplift or future performance. The model is fitted to the currently uploaded dataset. Its peer comparisons are descriptive rather than exact model explanations. The public demo uses fictional data. See [AI method and limitations](docs/ML_REVIEW_METHOD.md).
 
+## Decision Assurance Studio (development feature)
+
+The draft release includes a human-centred **Decision Assurance Studio**: a transparent evidence gate that compares the existing PPC action, experimental Isolation Forest review signal, conversion-rate uncertainty and selected evidence thresholds. It flags high-impact suggestions for manual investigation or more data, without overriding the original action or approving live changes.
+
+An interactive **ACOS sensitivity map** shows how existing rule labels change when the target ACOS is varied; it does not predict campaign performance. Reviewers can also export a **branded, standalone HTML evidence report** or CSV audit. Both exports include search-term data from the active session: share real-account reports only with explicit permission.
+
+See the [reviewer walkthrough](docs/REVIEWER_SHOWCASE.md), [ML methodology](docs/ML_REVIEW_METHOD.md) and the [innovation roadmap](docs/INNOVATION_ROADMAP.md). These features have not been independently validated or demonstrated real advertising uplift.
+
 ## Professional dashboard and safe demo
 
 The app includes a polished responsive interface with a built-in **fictional-data demo**. Turn on **Explore the built-in fictional demo** to evaluate campaign and search-term workflows without uploading a file. A **Scenario Lab** compares how proposed decisions change when the target ACOS changes, while keeping the observed data and other thresholds constant.
