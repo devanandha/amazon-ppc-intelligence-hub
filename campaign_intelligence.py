@@ -194,8 +194,11 @@ def render_campaign_intelligence(uploaded, target_acos: float) -> None:
         "Review weekly history, unusual behaviour, campaign status evidence and exports.",
         "02 / INTERACTIVE WORKSPACE",
     )
-    overview, assurance, export = st.tabs(
-        ["📊 Campaign trends", "🧠 Weekly anomaly review", "📥 Evidence & export"]
+    overview, assurance, export, benchmark_tab = st.tabs(
+        [
+            "📊 Campaign trends", "🧠 Weekly anomaly review",
+            "📥 Evidence & export", "🧪 Benchmark & Evaluation",
+        ]
     )
     with overview:
         st.markdown("#### Observed weekly spend and attributed sales")
@@ -274,3 +277,11 @@ def render_campaign_intelligence(uploaded, target_acos: float) -> None:
             "Generated analysis is for exploratory reproducibility, not independent proof "
             "of sales uplift or production advertising improvements."
         )
+
+    with benchmark_tab:
+        from benchmark_ui import render_benchmark_panel
+        render_benchmark_panel(
+            df, float(target_acos),
+            min_clicks=15, min_orders=3,
+        )
+
