@@ -200,7 +200,7 @@ def render_hero() -> None:
     st.html(
         """
         <section class="ppc-hero" aria-label="Amazon PPC Intelligence Hub">
-          <div class="eyebrow">◆  ANALYTICS / DECISION INTELLIGENCE</div>
+          <div class="eyebrow">◆  DEVANANDHA VS / APPLIED AI &amp; ECOMMERCE</div>
           <h1>Amazon PPC Intelligence Hub</h1>
           <p>Go beyond dashboard metrics. Inspect campaign health, find
              search-term opportunities and understand the evidence behind
@@ -208,8 +208,13 @@ def render_hero() -> None:
           <div class="ppc-tags">
             <span class="ppc-tag">Sponsored Products</span>
             <span class="ppc-tag">Explainable recommendations</span>
-            <span class="ppc-tag">Rule-based · Human-reviewed</span>
+            <span class="ppc-tag">Explainable rules + ML-assisted review</span>
             <span class="ppc-tag">Excel-ready insights</span>
+          </div>
+          <div style="position:relative;z-index:1;margin-top:20px;color:#d7e5ff;font-size:.87rem">
+            Independently developed by <strong>Devanandha Vellaramkuzhiyil Shaji</strong>
+            &nbsp;·&nbsp;
+            <a href="https://www.linkedin.com/in/devanandhavs21" style="color:#8ee4ff;text-decoration:none">Developer profile ↗</a>
           </div>
         </section>
         """
@@ -244,3 +249,19 @@ def render_empty_state() -> None:
         </section>
         """
     )
+
+
+
+def render_sidebar_brand() -> None:
+    st.html("""<div style="padding:13px 14px;border-radius:13px;background:white;border:1px solid #dfe7f2;color:#526484;margin-bottom:14px">
+    <strong style="color:#17253d">Devanandha VS</strong><br>
+    <span style="font-size:.82rem">Applied AI &amp; Amazon Advertising Analytics</span>
+    </div>""")
+
+
+def render_footer() -> None:
+    st.html("""<footer style="border-top:1px solid #dfe7f2;padding:22px 0 8px;margin-top:30px;font-size:.83rem;color:#63728a">
+    Amazon PPC Intelligence Hub · Independently developed by Devanandha Vellaramkuzhiyil Shaji ·
+    <a href="https://github.com/devanandha/amazon-ppc-intelligence-hub">Source code</a> ·
+    Not affiliated with or endorsed by Amazon. All recommendations require human review.
+    </footer>""")
