@@ -196,8 +196,34 @@ def reconcile_campaigns(performance: pd.DataFrame, status: pd.DataFrame | None,
         if sales <= 0:
             return "Conversion review", "Spend without attributed sales. Review sample size, listing conversion, queries and attribution."
         if np.isfinite(acos) and acos > target_acos:
-            return "Efficiency review", "Observed ACOS above chosen target. Review margin, attribution and targeting before any bid changes."
-        return "Maintain / investigate", "At or below target on historical observations. Check data sufficiency before scaling."
+            difference_pp = float(acos - target_acos)
+            if acos > target_acos * 1.5:
+                return (
+                    "High ACOS review",
+                    f"Observed ACOS {acos:.1f}% is {difference_pp:.1f} percentage points "
+                    f"above the {target_acos:.1f}% target. Prioritise an investigation of "
+                    "search-term relevance, targeting, listing conversion, contribution "
+                    "margin and attribution. No automatic bid adjustment is justified.",
+                )
+            if acos <= target_acos * 1.05:
+                return (
+                    "Near-target watch",
+                    f"Observed ACOS {acos:.1f}% is only {difference_pp:.1f} percentage "
+                    f"points above the {target_acos:.1f}% target. Monitor variation across "
+                    "weeks and business profitability before taking action.",
+                )
+            return (
+                "Efficiency review",
+                f"Observed ACOS {acos:.1f}% is {difference_pp:.1f} percentage points "
+                f"above the {target_acos:.1f}% target. Review weekly consistency, "
+                "query relevance, product conversion and margin before considering changes.",
+            )
+        return (
+            "Maintain / investigate",
+            f"Observed ACOS {acos:.1f}% is at or below the {target_acos:.1f}% target "
+            "on historical observations. Check stability, business margin and "
+            "inventory eligibility before considering scale.",
+        )
 
     recommendations = merged.apply(strategy, axis=1)
     merged["Strategy status"] = recommendations.map(lambda v: v[0])
@@ -265,7 +291,38 @@ def render_status_panel(performance: pd.DataFrame, target_acos: float, key: str)
             "Campaign", "Reported state", "Status classification", "Report coverage",
             "Spend", "Sales", "ACOS %", "Strategy status", "Human review suggestion",
         ]
-        st.dataframe(result[shown].round(2), use_container_width=True, hide_index=True)
+        compact = [
+            "Campaign", "Status classification", "Report coverage",
+            "Spend", "Sales", "ACOS %", "Strategy status",
+        ]
+        st.markdown("#### Campaign strategy overview")
+        st.caption(
+            "A compact status summary. Select a campaign below to read the full "
+            "reasoning; download the audit for every explanation."
+        )
+        st.dataframe(result[compact].round(2), use_container_width=True, hide_index=True)
+        if not result.empty:
+            campaign_names = result["Campaign"].astype(str).tolist()
+            selected_name = st.selectbox(
+                "Inspect campaign strategy",
+                options=campaign_names,
+                key=f"{key}_campaign_explanation",
+            )
+            selected = result.loc[result["Campaign"].astype(str) == selected_name].iloc[0]
+            st.markdown(f"**Strategy:** {selected['Strategy status']}")
+            st.caption(
+                f"Snapshot state: {selected['Status classification']} · "
+                f"Report coverage: {selected['Report coverage']} · "
+                f"ACOS: {selected['ACOS %']:.2f}%"
+                if pd.notna(selected["ACOS %"])
+                else (
+                    f"Snapshot state: {selected['Status classification']} · "
+                    f"Report coverage: {selected['Report coverage']} · ACOS: undefined"
+                )
+            )
+            st.info(str(selected["Human review suggestion"]))
+        with st.expander("Full campaign audit — all columns and explanations"):
+            st.dataframe(result[shown].round(2), use_container_width=True, hide_index=True)
         st.download_button(
             "Download campaign status & strategy audit CSV",
             data=result[shown].to_csv(index=False).encode("utf-8"),
