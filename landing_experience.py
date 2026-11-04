@@ -41,6 +41,46 @@ _PREMIUM_CSS = """
 [data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
   background:#ebeaff;color:#4339c8;box-shadow:none;
 }
+
+/* Tabs need independent clickable spacing and horizontal scrolling on narrower
+   screens; otherwise 8 long labels collide visually in Streamlit 1.66. */
+[data-testid="stTabs"] [data-baseweb="tab-list"],
+[data-testid="stTabs"] [role="tablist"] {
+  display:flex !important;
+  align-items:center !important;
+  flex-wrap:nowrap !important;
+  gap:9px !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  padding:8px 11px !important;
+  scrollbar-width:thin;
+  scroll-behavior:smooth;
+}
+[data-testid="stTabs"] button[data-baseweb="tab"],
+[data-testid="stTabs"] button[role="tab"] {
+  flex:0 0 auto !important;
+  min-width:max-content !important;
+  white-space:nowrap !important;
+  padding:10px 17px !important;
+  margin:0 2px 0 0 !important;
+  line-height:1.3 !important;
+  font-size:.84rem !important;
+  font-weight:650 !important;
+  border:0 !important;
+  border-radius:10px !important;
+}
+[data-testid="stTabs"] button[data-baseweb="tab"][aria-selected="true"],
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+  background:#e9e9ff !important;
+  color:#4037bf !important;
+}
+[data-testid="stTabs"] [role="tabpanel"] {padding-top:17px;}
+.dv-chart-title {
+  font-size:1rem;font-weight:760;color:#1e2c46;
+  letter-spacing:-.02em;margin:5px 0 3px;
+}
+.dv-chart-subtitle {font-size:.76rem;color:#8190a6;margin:0 0 8px;}
+
 [data-testid="stPlotlyChart"], [data-testid="stDataFrame"] {
   border:1px solid #e7ecf5;border-radius:16px;background:white;overflow:hidden;
 }
