@@ -1,8 +1,11 @@
 # Evidence-first product innovation roadmap
 
-**Current capability:** This application provides transparent, threshold-based Amazon PPC decision support, **not** trained predictive AI. The new Scenario Lab compares rules at alternative target ACOS settings, not causal uplift.
+**Current capability:** Transparent rules, an alternative-target Scenario Lab, **exploratory unsupervised Isolation Forest screening**, and Bayesian conversion-rate uncertainty intervals. The model flags unusual observed patterns for review; it is not supervised profit prediction or proven causal uplift.
 
-## Phase 1 — Decision audit and evidence sufficiency
+## Phase 1 — Decision audit and evidence sufficiency (partly implemented)
+- Added model-derived anomaly flags and descriptive peer differences; formal feature attribution and external validity are not established.
+- Added conversion-rate uncertainty intervals under explicit binomial assumptions.
+- Added a hybrid review note comparing existing rule action and unsupervised signal.
 - Display observations, thresholds and missing evidence beside every recommendation.
 - Flag sparse-data suggestions for human review.
 - Measure whether recommendations are stable under reasonable changes in input thresholds.
