@@ -18,6 +18,7 @@ import streamlit as st
 
 from ui_theme import inject_styles, render_hero, render_empty_state, render_sidebar_brand, render_footer
 from ml_insights import analyse_search_terms
+from decision_assurance import build_decision_ledger, acossensitivity
 from create_synthetic_demo import make_synthetic_dataframe
 
 COL = {
@@ -502,8 +503,9 @@ st.info(
     f"Zero-order search terms account for **{waste_rate:.1f}%** of selected spend."
 )
 
-overview_tab, campaigns_tab, terms_tab, actions_tab, scenario_tab, ai_tab, quality_tab = st.tabs([
-    "Overview", "Sponsored Products", "Search Terms", "Action Centre", "Scenario Lab", "AI Review", "Data Quality"
+overview_tab, campaigns_tab, terms_tab, actions_tab, scenario_tab, ai_tab, studio_tab, quality_tab = st.tabs([
+    "Overview", "Sponsored Products", "Search Terms", "Action Centre",
+    "Scenario Lab", "AI Review", "Decision Studio", "Data Quality"
 ])
 
 with overview_tab:
@@ -754,6 +756,156 @@ with ai_tab:
     st.caption(
         "This is an experimental model-driven screening feature. Every "
         "suggestion requires human validation before any real-world action."
+    )
+
+
+
+with studio_tab:
+    st.subheader("Decision Assurance Studio")
+    st.caption(
+        "A transparent human-review workflow: combine the existing "
+        "threshold rules with statistical uncertainty and exploratory "
+        "ML signals. An evidence gate never approves or executes a bid change."
+    )
+    st.markdown("#### Review policy")
+    policy1, policy2, policy3 = st.columns(3)
+    with policy1:
+        review_clicks = st.number_input(
+            "Minimum clicks for high-impact review", 5, 300, 30, 5,
+            key="assurance_review_clicks",
+        )
+    with policy2:
+        review_orders = st.number_input(
+            "Minimum attributed orders for high-impact review", 1, 50, 5, 1,
+            key="assurance_review_orders",
+        )
+    with policy3:
+        max_width = st.number_input(
+            "Maximum 90% CVR interval width (pp)", 1.0, 80.0, 15.0, 1.0,
+            key="assurance_width",
+        )
+
+    # The model is unsupervised and fitted only within the supplied report.
+    assurance_ml, assurance_meta = analyse_search_terms(search, min_clicks=5)
+    audit = build_decision_ledger(
+        search, assurance_ml,
+        review_clicks=int(review_clicks),
+        review_orders=int(review_orders),
+        max_interval_width_pp=float(max_width),
+    )
+    attention = audit[
+        (audit["High-impact baseline action"])
+        & (audit["Evidence status"] != "Manual review ready")
+    ]
+    conflicts = audit[
+        audit["Evidence status"] == "Investigate model-rule conflict"
+    ]
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Search terms audited", f"{len(audit):,}")
+    c2.metric("High-impact rule suggestions", f"{int(audit['High-impact baseline action'].sum()):,}")
+    c3.metric("High-impact actions needing review", f"{len(attention):,}")
+    c4.metric("ML–rule attention flags", f"{len(conflicts):,}")
+    st.caption(
+        "These numbers describe a review queue on the current report, "
+        "not real-world improvement, predictive accuracy or approval rates."
+    )
+    st.markdown("#### Review queue")
+    queue = audit[[
+        COL["search_term"], COL["clicks"], COL["orders"],
+        "Recommended Action", "High-impact baseline action",
+        "Evidence status", "Evidence justification",
+        "ML review flag", "CVR interval width (pp)",
+    ]].copy()
+    st.dataframe(
+        queue.sort_values(["High-impact baseline action", COL["clicks"]],
+                          ascending=[False, False]),
+        use_container_width=True, hide_index=True,
+    )
+    st.markdown("#### Inspect a decision")
+    terms_to_inspect = audit[COL["search_term"]].astype(str).tolist()
+    selected_term = st.selectbox(
+        "Select an aggregated search term",
+        terms_to_inspect, key="assurance_selected_term",
+    )
+    case = audit.loc[audit[COL["search_term"]].astype(str) == selected_term].iloc[0]
+    a, b, c = st.columns(3)
+    a.metric("Observed clicks", f"{int(case[COL['clicks']]):,}")
+    b.metric("Attributed orders", f"{int(case[COL['orders']]):,}")
+    c.metric("Observed ACOS", f"{case['ACOS %']:.2f}%" if pd.notna(case["ACOS %"]) else "Undefined")
+    st.markdown(f"**Existing rule:** {case['Recommended Action']}")
+    st.markdown(f"**Evidence gate:** {case['Evidence status']}")
+    st.write(case["Evidence justification"])
+    st.markdown(f"**ML review:** {case['ML review flag']}")
+    st.caption(
+        "A ML anomaly is a relative pattern difference, not an attribution "
+        "of profitability or proof a recommendation is wrong."
+    )
+    if pd.notna(case["CVR 90% lower"]):
+        st.info(
+            f"Observed orders-per-click model: 90% Bayesian interval "
+            f"{case['CVR 90% lower']:.1f}% to {case['CVR 90% upper']:.1f}%. "
+            "Assumes a simplified binomial attribution model."
+        )
+    else:
+        st.warning(
+            "No valid conversion-rate interval is available for this term. "
+            "Do not substitute missing statistical evidence with an AI score."
+        )
+
+    st.markdown("#### Decision sensitivity map")
+    stability = acossensitivity(
+        search, classify_actions, target_acos,
+        negative_clicks=negative_clicks, min_orders=min_orders,
+    )
+    scenario_columns = [
+        name for name in stability.columns
+        if name.startswith("Target ACOS ")
+    ]
+    top_names = (
+        search.sort_values(COL["spend"], ascending=False)
+        [COL["search_term"]].astype(str).head(15).tolist()
+    )
+    show_stability = stability[
+        stability[COL["search_term"]].astype(str).isin(top_names)
+    ].copy()
+    show_stability["_sort"] = show_stability[COL["search_term"]].astype(str).map(
+        {name: i for i, name in enumerate(top_names)}
+    )
+    show_stability = show_stability.sort_values("_sort")
+    if not show_stability.empty:
+        # 1 = same rule label as current setting, 0 = different label.
+        labels = show_stability[scenario_columns].eq(
+            show_stability["Target ACOS 100% of current"], axis=0
+        ).astype(int)
+        fig = px.imshow(
+            labels.to_numpy(),
+            x=["60%", "80%", "100%", "120%", "140%"],
+            y=show_stability[COL["search_term"]].astype(str).to_list(),
+            zmin=0, zmax=1,
+            labels={"x": "ACOS target relative to current", "y": "Search term",
+                    "color": "Same action"},
+            title="Does the rule recommendation change when the target changes?",
+            aspect="auto",
+            color_continuous_scale=[[0, "#f5ad97"], [0.49, "#f5ad97"],
+                                    [0.5, "#79d9dd"], [1, "#79d9dd"]],
+        )
+        fig.update_layout(height=max(350, 35 * len(show_stability) + 135))
+        st.plotly_chart(fig, use_container_width=True)
+    st.caption(
+        "Teal = original rule label stays the same; orange = rule label changes. "
+        "This checks sensitivity to five ACOS thresholds on unchanged historic "
+        "observations. It is not causal simulation or a sales forecast."
+    )
+    st.download_button(
+        "Download decision evidence ledger (CSV)",
+        audit.to_csv(index=False).encode("utf-8"),
+        "PPC_DevanandhaVS_Decision_Assurance_Audit.csv",
+        "text/csv",
+        key="download_assurance_ledger",
+    )
+    st.caption(
+        "Devanandha VS · Experimental decision assurance prototype. "
+        "All marketing and bid changes require qualified human judgement."
     )
 
 
