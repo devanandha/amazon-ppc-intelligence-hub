@@ -62,10 +62,12 @@ def baseline_labels(frame: pd.DataFrame, target_acos: float = 25.0,
         spend = float(row.Spend)
         sales = float(row.Sales)
         acos = (spend / sales * 100) if sales > 0 else float("nan")
-        if clicks < min_clicks or orders < min_orders:
+        if clicks < min_clicks:
             label = "Evidence insufficient"
         elif spend > 0 and sales <= 0:
             label = "No attributed sales review"
+        elif orders < min_orders:
+            label = "Evidence insufficient"
         elif np.isfinite(acos) and acos > target_acos * 1.5:
             label = "High ACOS review"
         elif np.isfinite(acos) and acos > target_acos:
