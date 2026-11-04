@@ -16,6 +16,8 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
+from ui_theme import inject_styles, render_hero, render_empty_state
+
 COL = {
     "date": "Start Date",
     "portfolio": "Portfolio name",
@@ -325,9 +327,9 @@ def display_table(frame: pd.DataFrame, currency_symbol: str):
     })
 
 
-st.set_page_config(page_title="Amazon PPC Intelligence Hub", page_icon="📈", layout="wide")
-st.title("Amazon PPC Intelligence Hub")
-st.caption("Explainable Sponsored Products analysis: performance, waste, opportunities and prioritised actions")
+st.set_page_config(page_title="Amazon PPC Intelligence Hub | Decision Intelligence", page_icon="📈", layout="wide")
+inject_styles()
+render_hero()
 
 with st.sidebar:
     st.header("Analysis settings")
@@ -341,8 +343,8 @@ uploaded = st.file_uploader("Upload an Amazon Sponsored Products Search Term rep
 business_uploaded = st.file_uploader("Upload Business Report (Sales & Traffic By Date)", type=["csv"]
                                      )
 if uploaded is None:
-    st.info(
-        "Upload the report to begin. Your workbook is processed within this app session and is not included in the project files.")
+    render_empty_state()
+    st.caption("Reports are analysed within your application session. Do not upload confidential employer or client data to a public demo.")
     st.stop()
 
 try:
@@ -475,8 +477,8 @@ st.info(
     f"Zero-order search terms account for **{waste_rate:.1f}%** of selected spend."
 )
 
-overview_tab, campaigns_tab, terms_tab, actions_tab, quality_tab = st.tabs([
-    "Overview", "Sponsored Products", "Search Terms", "Action Centre", "Data Quality"
+overview_tab, campaigns_tab, terms_tab, actions_tab, scenario_tab, quality_tab = st.tabs([
+    "Overview", "Sponsored Products", "Search Terms", "Action Centre", "Scenario Lab", "Data Quality"
 ])
 
 with overview_tab:
@@ -571,6 +573,68 @@ with actions_tab:
         display_table(asins, symbol)
     with d:
         display_table(wasted, symbol)
+
+with scenario_tab:
+    st.subheader("Scenario Lab: target ACOS sensitivity")
+    st.caption(
+        "Compare how the same observed search-term data would be classified "
+        "under another target ACOS. This is a sensitivity check, not a "
+        "forecast of sales or proof of improved performance."
+    )
+    scenario_target = st.slider(
+        "Alternative target ACOS (%)",
+        min_value=1,
+        max_value=200,
+        value=min(200, max(1, int(round(target_acos)) + 10)),
+        step=1,
+        help="Only the target ACOS changes. Click and order thresholds stay fixed.",
+    )
+    simulated_search = classify_actions(
+        search, float(scenario_target), negative_clicks, min_orders
+    )
+    comparison = pd.DataFrame({
+        "Search Term": search[COL["search_term"]],
+        "Clicks": search[COL["clicks"]],
+        "Orders": search[COL["orders"]],
+        "ACOS %": search["ACOS %"],
+        "Current action": search["Recommended Action"],
+        "Scenario action": simulated_search["Recommended Action"],
+        "Current bid adjustment %": search["Bid Adjustment %"],
+        "Scenario bid adjustment %": simulated_search["Bid Adjustment %"],
+    })
+    action_changed = comparison[
+        comparison["Current action"] != comparison["Scenario action"]
+    ].copy()
+    bid_changed = (
+        comparison["Current bid adjustment %"]
+        != comparison["Scenario bid adjustment %"]
+    ).sum()
+    stat_a, stat_b, stat_c = st.columns(3)
+    stat_a.metric("Search terms evaluated", f"{len(comparison):,}")
+    stat_b.metric("Actions changed", f"{len(action_changed):,}")
+    stat_c.metric("Bid suggestions changed", f"{int(bid_changed):,}")
+    st.markdown("#### Changed recommendations")
+    if action_changed.empty:
+        st.success(
+            "No action labels change under this target. Bid suggestions "
+            "may still differ, as indicated above."
+        )
+    else:
+        st.dataframe(
+            action_changed.sort_values(["Clicks", "Orders"], ascending=False),
+            use_container_width=True,
+            hide_index=True,
+        )
+    with st.expander("What this scenario does and does not show"):
+        st.markdown(
+            "- Reapplies the existing transparent rules to the same "
+            "observations under an alternative target ACOS.\n"
+            "- Does **not** predict changes in clicks, sales, demand or profit.\n"
+            "- Does **not** account for attribution lag, competition, "
+            "seasonality, placement, contribution margin or budget constraints.\n"
+            "- Suggestions must be reviewed before changing live bids."
+        )
+
 
 with quality_tab:
     duplicate_rows = int(raw.duplicated().sum())
