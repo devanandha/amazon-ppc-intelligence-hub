@@ -21,6 +21,10 @@ Open the public demonstration and enable **Explore the built-in fictional demo**
 
 The scenario comparison only reruns transparent decision rules on the same data; it does not forecast causal advertising uplift.
 
+## Reviewer feedback without confidential data
+
+The draft development version includes a **Decision Studio** with human-review policy thresholds, sensitivity visualisation, a locally downloaded HTML evidence report, and a session-only practitioner-feedback form. Reviewers can export their assessments as a CSV. The form is not proof of independent endorsement and does not automatically train an AI model.
+
 ## A 20–30 minute independent evaluation
 1. Review the public repository, methodology and limitations.
 2. Generate fictional demonstration data with `python create_synthetic_demo.py`, or use your own fully synthetic example.
