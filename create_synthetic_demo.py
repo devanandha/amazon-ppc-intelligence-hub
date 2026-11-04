@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 
-def main() -> None:
+def make_synthetic_dataframe() -> pd.DataFrame:
     rng = np.random.default_rng(42)
     rows = []
     campaigns = ["Demo | Core | Exact", "Demo | Discovery | Broad", "Demo | Product Targeting"]
@@ -15,6 +15,11 @@ def main() -> None:
         "vented styling brush", "travel hair brush", "B012DEMO34", "B056DEMO78",
         "unrelated accessory", "cheap plastic comb", "premium hair styling tool",
     ]
+    # Broader fictional vocabulary ensures the exploratory outlier model
+    # has enough independent aggregated terms to run in the public demo.
+    terms.extend(
+        [f"fictional styling search query {number:02d}" for number in range(1, 37)]
+    )
     for day in pd.date_range("2026-06-01", periods=30, freq="D"):
         for campaign in campaigns:
             for term in rng.choice(terms, size=5, replace=False):
@@ -39,8 +44,12 @@ def main() -> None:
                     "7 Day Total Orders (#)": orders, "7 Day Total Units (#)": orders,
                     "7 Day Conversion Rate": orders / clicks if clicks else 0,
                 })
+    return pd.DataFrame(rows)
+
+
+def main() -> None:
     output = Path(__file__).with_name("Synthetic_Sponsored_Products_Report.xlsx")
-    pd.DataFrame(rows).to_excel(output, index=False)
+    make_synthetic_dataframe().to_excel(output, index=False)
     print(f"Created {output.name} with fictional data.")
 
 

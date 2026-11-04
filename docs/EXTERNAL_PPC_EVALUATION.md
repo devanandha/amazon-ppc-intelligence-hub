@@ -1,6 +1,6 @@
 # Independent evaluation guide — Amazon PPC Intelligence Hub
 
-**Purpose:** Invite candid, independent technical and practitioner evaluation of an explainable Amazon Sponsored Products decision-support prototype. This is a research/portfolio project, not an Amazon-endorsed product, proven production optimisation system, or machine-learning model.
+**Purpose:** Invite candid, independent technical and practitioner evaluation of an explainable Amazon Sponsored Products decision-support prototype. This is a research/portfolio project, not an Amazon-endorsed product, or a proven production optimisation system. It includes an **experimental unsupervised ML review feature**, but not a trained advertising-ROI predictor.
 
 **Author:** Devanandha Vellaramkuzhiyil Shaji  
 **Project:** https://github.com/devanandha/amazon-ppc-intelligence-hub  
@@ -15,6 +15,16 @@
 
 These recommendations are **rules- and thresholds-based decision support**. Do not describe the current application as an independently validated AI prediction engine.
 
+## Quick start for reviewers
+
+Open the public demonstration and enable **Explore the built-in fictional demo**. This loads reproducible fictional data in one step; there is no need to upload any files. You can then open **Scenario Lab** and compare how recommended actions change under an alternative target ACOS. Open **AI Review** to inspect exploratory outlier flags, conversion-rate uncertainty and hybrid human-review notes. The ML feature does not automatically change bids.
+
+The scenario comparison only reruns transparent decision rules on the same data; it does not forecast causal advertising uplift.
+
+## Reviewer feedback without confidential data
+
+The draft development version includes a **Decision Studio** with human-review policy thresholds, sensitivity visualisation, a locally downloaded HTML evidence report, and a session-only practitioner-feedback form. Reviewers can export their assessments as a CSV. The form is not proof of independent endorsement and does not automatically train an AI model.
+
 ## A 20–30 minute independent evaluation
 1. Review the public repository, methodology and limitations.
 2. Generate fictional demonstration data with `python create_synthetic_demo.py`, or use your own fully synthetic example.
@@ -22,6 +32,7 @@ These recommendations are **rules- and thresholds-based decision support**. Do n
 4. Review a keyword-harvesting suggestion and a negative keyword candidate: does the explanation support the action, and what evidence is missing?
 5. Assess whether campaign-health categories and priorities make sense for differing target ACOS and evidence thresholds.
 6. Review the Excel export and identify limitations that would prevent safe real-world use.
+7. Examine AI Review: are the flagged patterns sensible? Could peer comparisons be misleading? Does the evidence-uncertainty display appropriately discourage overconfident actions?
 
 **Do not upload confidential client/employer advertising files, credentials or real customer information to the public demonstration.** Any separate testing on real advertising data would need appropriate consent and privacy/security controls.
 

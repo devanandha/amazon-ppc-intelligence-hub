@@ -24,6 +24,41 @@ All research data are synthetic. These experiments are separate from the live ap
 
 Experienced Amazon Ads practitioners are welcome to review the prototype using fictional data. See the [independent evaluation guide](docs/EXTERNAL_PPC_EVALUATION.md) for a suggested 20–30 minute review and feedback questions.
 
+## Developer branding and AI-assisted review
+
+This independently developed product is branded **Devanandha VS · Applied AI & E-commerce Analytics** and includes a custom HTML/CSS presentation, an author profile and transparent model limitations. The new **AI Review** tab fits an exploratory scikit-learn Isolation Forest to aggregated search-term patterns and reports a 90% Bayesian interval for conversion-rate uncertainty where the binomial approximation is applicable. It compares model flags with existing rule-based actions for *human review*, not automatic changes.
+
+**Important:** The unsupervised outlier flags are not validated predictions of profit, fraud, advertising uplift or future performance. The model is fitted to the currently uploaded dataset. Its peer comparisons are descriptive rather than exact model explanations. The public demo uses fictional data. See [AI method and limitations](docs/ML_REVIEW_METHOD.md).
+
+## Meet PPC Buddy — moving companion (development feature)
+
+The v2 app now places an **animated PPC Buddy** immediately after the fictional-data / uploaded-data banner and before the Executive Overview cards. The friendly robot floats, waves, blinks and pulses using CSS animation inside an isolated Streamlit `components.html` iframe. Its wording is based on observed ACOS, the configured target and the existing rule candidate counts — **it is not a chatbot, predictive AI or autonomous advertising agent**. It respects reduced-motion preferences.
+
+**If the full dashboard does not show the robot yet**, there is an independent demonstration entry point:
+
+- Repository: `devanandha/amazon-ppc-intelligence-hub`
+- Branch: `feature/premium-dashboard-scenario-lab`
+- Main file path: `ppc_buddy_preview.py`
+- Suggested new app slug: `devanandha-ppc-buddy-preview` (if available)
+
+Create this as **another app** in Streamlit Community Cloud; do not replace your existing `app.py` deployment. The standalone page contains only fictional adjustable settings and shows the animated robot immediately.
+
+## Decision Assurance Studio (development feature)
+
+The draft release includes a human-centred **Decision Assurance Studio**: a transparent evidence gate that compares the existing PPC action, experimental Isolation Forest review signal, conversion-rate uncertainty and selected evidence thresholds. It flags high-impact suggestions for manual investigation or more data, without overriding the original action or approving live changes.
+
+A **session-only practitioner review workspace** allows an independent evaluator to record whether an original rule is useful, inappropriate or insufficiently supported and download their responses as a CSV. No training or external validation is inferred from those labels, and they are not stored permanently by the app.
+
+An interactive **ACOS sensitivity map** shows how existing rule labels change when the target ACOS is varied; it does not predict campaign performance. Reviewers can also export a **branded, standalone HTML evidence report** or CSV audit. Both exports include search-term data from the active session: share real-account reports only with explicit permission.
+
+See the [reviewer walkthrough](docs/REVIEWER_SHOWCASE.md), [ML methodology](docs/ML_REVIEW_METHOD.md) and the [innovation roadmap](docs/INNOVATION_ROADMAP.md). These features have not been independently validated or demonstrated real advertising uplift.
+
+## Professional dashboard and safe demo
+
+The app includes a polished responsive interface with a built-in **fictional-data demo**. Turn on **Explore the built-in fictional demo** to evaluate campaign and search-term workflows without uploading a file. A **Scenario Lab** compares how proposed decisions change when the target ACOS changes, while keeping the observed data and other thresholds constant.
+
+The scenario comparison is a deterministic rules sensitivity check — **not** a prediction of changes to sales, spend or profit. It is not evidence of a machine-learning model or validated real-world optimisation performance.
+
 ## Key capabilities
 
 * Calculates ACOS, ROAS, CTR, CPC, CVR and AOV from aggregated totals.

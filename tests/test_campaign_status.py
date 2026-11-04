@@ -1,0 +1,87 @@
+"""Offline regression tests for campaign snapshot reconciliation.
+
+All samples are invented. No client or account data is committed.
+"""
+import unittest
+
+import pandas as pd
+
+from campaign_status import parse_campaign_status, reconcile_campaigns
+
+
+class CampaignStatusTests(unittest.TestCase):
+    def test_simple_status_csv(self):
+        data = b"Campaign Name,Status\nDemo Alpha,Enabled\nDemo Beta,Paused\n"
+        roster = parse_campaign_status(data, "status.csv")
+        self.assertEqual(roster.loc[0, "Status classification"], "Enabled")
+        self.assertEqual(roster.loc[1, "Status classification"], "Paused")
+
+    def test_bulksheet_ignores_ad_group_and_other_products(self):
+        data = (
+            "Product,Entity,Campaign Name,State\n"
+            "Sponsored Products,Campaign,Demo Alpha,enabled\n"
+            "Sponsored Products,Ad Group,Demo Alpha,paused\n"
+            "Sponsored Brands,Campaign,Demo Gamma,enabled\n"
+        ).encode()
+        roster = parse_campaign_status(data, "bulk.csv")
+        self.assertEqual(len(roster), 1)
+        self.assertEqual(roster.loc[0, "Campaign"], "Demo Alpha")
+        self.assertEqual(roster.loc[0, "Status classification"], "Enabled")
+
+    def test_conflicting_states_never_assumed_active(self):
+        data = b"Campaign Name,State\nDemo Alpha,enabled\nDemo Alpha,paused\n"
+        roster = parse_campaign_status(data, "status.csv")
+        self.assertEqual(roster.loc[0, "Status classification"], "Conflicting states")
+
+    def test_reconciliation_finds_missing_and_unverified_campaigns(self):
+        perf = pd.DataFrame([
+            {"Campaign": "Demo Alpha", "Spend": 30, "Sales": 120, "Clicks": 10},
+            {"Campaign": "Demo Delta", "Spend": 5, "Sales": 0, "Clicks": 2},
+        ])
+        roster = parse_campaign_status(
+            b"Campaign Name,Status\nDemo Alpha,Enabled\nDemo Beta,Enabled\nDemo Gamma,Paused\n",
+            "status.csv",
+        )
+        joined = reconcile_campaigns(perf, roster, 25)
+        beta = joined.loc[joined["Campaign"] == "Demo Beta"].iloc[0]
+        self.assertEqual(beta["Report coverage"], "Missing from selected report")
+        self.assertEqual(beta["Strategy status"], "Coverage gap")
+        self.assertTrue(pd.isna(beta["Spend"]))
+        self.assertTrue(pd.isna(beta["Sales"]))
+        self.assertTrue(pd.isna(beta["ACOS %"]))
+        gamma = joined.loc[joined["Campaign"] == "Demo Gamma"].iloc[0]
+        self.assertEqual(gamma["Strategy status"], "Paused review")
+        delta = joined.loc[joined["Campaign"] == "Demo Delta"].iloc[0]
+        self.assertEqual(delta["Status classification"], "Not verified")
+        self.assertEqual(delta["Strategy status"], "Status unknown")
+
+    def test_efficiency_review_has_severity_and_explanation(self):
+        perf = pd.DataFrame([
+            {"Campaign": "Near Target", "Spend": 26, "Sales": 100, "Clicks": 20},
+            {"Campaign": "Above Target", "Spend": 34, "Sales": 100, "Clicks": 20},
+            {"Campaign": "High Gap", "Spend": 58, "Sales": 100, "Clicks": 20},
+            {"Campaign": "Below Target", "Spend": 18, "Sales": 100, "Clicks": 20},
+        ])
+        roster = parse_campaign_status(
+            b"Campaign Name,Status\nNear Target,Enabled\nAbove Target,Enabled\n"
+            b"High Gap,Enabled\nBelow Target,Enabled\n",
+            "status.csv",
+        )
+        result = reconcile_campaigns(perf, roster, 25).set_index("Campaign")
+        self.assertEqual(result.loc["Near Target", "Strategy status"], "Near-target watch")
+        self.assertEqual(result.loc["Above Target", "Strategy status"], "Efficiency review")
+        self.assertEqual(result.loc["High Gap", "Strategy status"], "High ACOS review")
+        self.assertEqual(result.loc["Below Target", "Strategy status"], "Maintain / investigate")
+        self.assertIn("33.0 percentage points", result.loc["High Gap", "Human review suggestion"])
+        self.assertIn("26.0%", result.loc["Near Target", "Human review suggestion"])
+
+    def test_no_snapshot_does_not_invent_enabled_state(self):
+        perf = pd.DataFrame([
+            {"Campaign": "Demo Alpha", "Spend": 15, "Sales": 75, "Clicks": 10},
+        ])
+        result = reconcile_campaigns(perf, None, 25)
+        self.assertEqual(result.loc[0, "Status classification"], "Not verified")
+
+
+if __name__ == "__main__":
+    unittest.main()
