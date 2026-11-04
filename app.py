@@ -1,1148 +1,484 @@
-"""Amazon Sponsored Products PPC Intelligence Hub.
+"""PPC Intelligence Hub v3 — clean rebuild by Devanandha VS.
 
-Upload a Sponsored Products Search Term report exported from Amazon Ads.
-The application analyses performance locally in the Streamlit session and
-produces an explainable, downloadable action report.
+- Uses the preserved ppc_engine.py calculations (not imports from v2 app UI).
+- Starts with fictional data; uploads never leave the Streamlit session.
+- Uses the isolated animated robot (ppc_buddy_component.py).
+- ML output is exploratory and does not claim causal uplift or autonomous bidding.
 """
-
 from __future__ import annotations
 
+from html import escape
 import io
-import re
-import hashlib
-from typing import Iterable
 
 import numpy as np
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 
-from ui_theme import inject_styles, render_empty_state, render_sidebar_brand, render_footer
-from landing_experience import (
-    inject_experience_styles, render_landing, render_data_context,
-    render_section, render_action_pulse, render_ppc_buddy,
-)
-from ml_insights import analyse_search_terms
-from decision_assurance import build_decision_ledger, acossensitivity
-from evidence_report import create_evidence_report
 from create_synthetic_demo import make_synthetic_dataframe
 from ppc_buddy_component import render_buddy
+from ml_insights import analyse_search_terms
+from decision_assurance import build_decision_ledger, acossensitivity
+from ppc_engine import (
+    COL, CURRENCY_SYMBOLS, load_report, clean_report, aggregate,
+    add_metrics, build_action_tables, classify_actions, totals, make_export,
+)
 
-COL = {
-    "date": "Start Date",
-    "portfolio": "Portfolio name",
-    "currency": "Currency",
-    "campaign": "Campaign Name",
-    "ad_group": "Ad Group Name",
-    "targeting": "Targeting",
-    "match_type": "Match Type",
-    "search_term": "Customer Search Term",
-    "impressions": "Impressions",
-    "clicks": "Clicks",
-    "spend": "Spend",
-    "sales": "7 Day Total Sales",
-    "orders": "7 Day Total Orders (#)",
-    "units": "7 Day Total Units (#)",
+
+st.set_page_config(
+    page_title="Devanandha VS | PPC Intelligence Hub",
+    page_icon="🤖",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+st.html("""
+<style>
+/* Deliberately scoped v3 styling; avoid modifying the Plotly DOM. */
+:root { --dvs-ink:#182442; --dvs-purple:#7064f5; --dvs-blue:#478aff; }
+[data-testid="stAppViewContainer"] { background:#f5f7fc; }
+[data-testid="stSidebar"] > div:first-child {
+  background:#fff !important; border-right:1px solid #e6ebf4;
 }
-
-REQUIRED = [
-    COL["campaign"], COL["ad_group"], COL["targeting"], COL["match_type"],
-    COL["search_term"], COL["impressions"], COL["clicks"], COL["spend"],
-    COL["sales"], COL["orders"],
-]
-
-NUMERIC = [
-    COL["impressions"], COL["clicks"], COL["spend"], COL["sales"],
-    COL["orders"], COL["units"],
-]
-
-CURRENCY_SYMBOLS = {"GBP": "£", "USD": "$", "EUR": "€", "CAD": "C$", "AUD": "A$"}
-
-
-def safe_divide(numerator: pd.Series | float, denominator: pd.Series | float, multiplier: float = 1.0):
-    """Divide safely, returning zero where the denominator is zero."""
-    if isinstance(denominator, pd.Series):
-        return np.where(denominator > 0, numerator / denominator * multiplier, 0.0)
-    return numerator / denominator * multiplier if denominator > 0 else 0.0
-
-
-@st.cache_data(show_spinner=False)
-def load_report(file_bytes: bytes) -> pd.DataFrame:
-    df = pd.read_excel(io.BytesIO(file_bytes))
-    df.columns = df.columns.astype(str).str.replace("\u00a0", " ", regex=False).str.strip()
-    return df
-
-
-@st.cache_data(show_spinner=False)
-def load_business_report(file_bytes: bytes) -> pd.DataFrame:
-    return pd.read_csv(io.BytesIO(file_bytes))
-
-
-def clean_report(df: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
-    cleaned = df.copy()
-    cleaned.columns = cleaned.columns.astype(str).str.replace("\u00a0", " ", regex=False).str.strip()
-    missing = [column for column in REQUIRED if column not in cleaned.columns]
-    if missing:
-        return cleaned, missing
-
-    for column in NUMERIC:
-        if column not in cleaned.columns:
-            cleaned[column] = 0
-        cleaned[column] = pd.to_numeric(cleaned[column], errors="coerce").fillna(0).clip(lower=0)
-
-    for column in [COL["campaign"], COL["ad_group"], COL["targeting"], COL["match_type"], COL["search_term"]]:
-        cleaned[column] = cleaned[column].fillna("Unknown").astype(str).str.strip()
-
-    if COL["date"] in cleaned.columns:
-        cleaned[COL["date"]] = pd.to_datetime(cleaned[COL["date"]], errors="coerce")
-    return cleaned, []
-
-
-def add_metrics(frame: pd.DataFrame) -> pd.DataFrame:
-    result = frame.copy()
-    result["CTR %"] = safe_divide(result[COL["clicks"]], result[COL["impressions"]], 100)
-    result["CPC"] = safe_divide(result[COL["spend"]], result[COL["clicks"]])
-    result["CVR %"] = safe_divide(result[COL["orders"]], result[COL["clicks"]], 100)
-    result["ACOS %"] = np.where(
-        result[COL["sales"]] > 0,
-        result[COL["spend"]] / result[COL["sales"]] * 100,
-        np.nan,
-    )
-    result["ROAS"] = safe_divide(result[COL["sales"]], result[COL["spend"]])
-    result["AOV"] = safe_divide(result[COL["sales"]], result[COL["orders"]])
-    return result
-
-
-def aggregate(df: pd.DataFrame, dimensions: Iterable[str]) -> pd.DataFrame:
-    dimensions = list(dimensions)
-    grouped = (
-        df.groupby(dimensions, dropna=False)
-        .agg({
-            COL["impressions"]: "sum",
-            COL["clicks"]: "sum",
-            COL["spend"]: "sum",
-            COL["sales"]: "sum",
-            COL["orders"]: "sum",
-            COL["units"]: "sum",
-        })
-        .reset_index()
-    )
-    return add_metrics(grouped)
+[data-testid="stHeader"]{background:rgba(245,247,252,.92);}
+.block-container { max-width:1480px; padding-top:1.7rem;padding-bottom:4rem; }
+h1,h2,h3,h4{letter-spacing:-.03em;}
+[data-testid="stMetric"]{
+  border:1px solid #e6ebf5;border-radius:17px;padding:18px;
+  background:white;min-height:117px;
+  box-shadow:0 8px 25px rgba(26,44,86,.035);
+}
+[data-testid="stMetricLabel"]{color:#677791;font-size:.82rem;}
+[data-testid="stMetricValue"]{color:#172b4b;letter-spacing:-.06em;}
+[data-testid="stTabs"] [role="tablist"] {
+  display:flex !important;gap:10px !important;flex-wrap:nowrap !important;
+  overflow-x:auto !important;overflow-y:hidden !important;
+  padding:8px !important;border:1px solid #e6e9f3;
+  background:white;border-radius:14px;scrollbar-width:thin;
+}
+[data-testid="stTabs"] button[role="tab"]{
+  white-space:nowrap !important;flex:0 0 auto !important;
+  min-width:max-content !important;padding:10px 19px !important;
+  font-weight:650 !important;border-radius:9px;
+}
+[data-testid="stTabs"] button[role="tab"][aria-selected="true"]{
+  color:#5247d1 !important;background:#eeecff !important;
+}
+[data-testid="stTabs"] [role="tabpanel"]{padding-top:18px;}
+[data-testid="stDataFrame"], [data-testid="stPlotlyChart"] {
+  border:1px solid #e6ebf5;border-radius:16px;background:white;
+}
+.dvs-hero{
+  position:relative;overflow:hidden;border-radius:25px;
+  background:linear-gradient(115deg,#121c38 0%,#1b2c59 60%,#413d93 100%);
+  padding:33px 38px;color:#fff;box-shadow:0 24px 45px rgba(25,43,96,.14);
+  margin-bottom:16px;display:grid;grid-template-columns:minmax(0,1fr) 260px;
+  gap:26px;align-items:center;
+}
+.dvs-hero:after{content:"";position:absolute;right:-125px;top:-160px;
+  width:460px;height:460px;border-radius:50%;
+  background:radial-gradient(circle,rgba(100,220,243,.25),transparent 65%);pointer-events:none;}
+.dvs-left,.dvs-right{position:relative;z-index:1}
+.dvs-brand{display:flex;align-items:center;gap:11px;flex-wrap:wrap;
+  color:#b6d9fa;letter-spacing:.1em;font-size:.71rem;font-weight:850;}
+.dvs-logo{width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;letter-spacing:0;border-radius:12px;
+  background:linear-gradient(140deg,#798cff,#50d9ee);color:#fff;
+  box-shadow:0 10px 20px rgba(71,115,217,.3);}
+.dvs-hero h1{font-size:clamp(2.05rem,3.1vw,3.05rem);line-height:1.12;letter-spacing:-.055em;
+  margin:17px 0 12px;color:#fff;}
+.dvs-hero h1 strong{color:#a8c9ff;}
+.dvs-hero p{max-width:700px;color:#c7d6ee;line-height:1.65;font-size:.92rem;margin:0;}
+.dvs-badges{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px;}
+.dvs-badge{border:1px solid rgba(199,226,255,.22);background:rgba(255,255,255,.09);
+  border-radius:99px;padding:7px 11px;color:#dfeeff;font-size:.7rem;font-weight:700;}
+.dvs-right{background:rgba(255,255,255,.075);border:1px solid rgba(216,226,255,.18);
+  padding:16px;border-radius:17px;}
+.dvs-right small{display:block;color:#a7c5ed;font-size:.66rem;font-weight:850;
+  letter-spacing:.11em;margin-bottom:14px;}
+.dvs-flow{display:flex;flex-direction:column;gap:8px;}
+.dvs-flow div{padding:9px 11px;border-radius:10px;border:1px solid rgba(208,227,255,.15);
+  background:rgba(8,21,61,.27);font-size:.77rem;color:#e6edff;font-weight:700;}
+.dvs-flow i{font-style:normal;margin-right:8px;color:#71ecdb;font-weight:900;}
+.dvs-headerline{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
+  margin:21px 0 12px;flex-wrap:wrap;}
+.dvs-headerline h2{margin:0;font-size:1.35rem;color:#1b2947;letter-spacing:-.04em;}
+.dvs-headerline p{margin:5px 0 0;color:#6b7c94;font-size:.82rem;}
+.dvs-eyebrow{display:block;color:#625cce;font-size:.67rem;letter-spacing:.14em;font-weight:850;margin-bottom:5px;}
+.dvs-mode{background:#fff;border:1px solid #e5eafa;border-radius:13px;padding:12px 15px;
+  font-size:.82rem;color:#556b89;display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:13px;}
+.dvs-mode strong{color:#243653;}
+.dvs-mode em{margin-left:auto;background:#e6f8f0;border-radius:99px;padding:5px 10px;
+  font-size:.68rem;font-style:normal;color:#1d7854;font-weight:850;}
+.dvs-foot{color:#7887a0;font-size:.75rem;margin:35px 0 0;border-top:1px solid #e2e9f3;padding:20px 0;}
+@media(max-width:850px){.dvs-hero{grid-template-columns:1fr;padding:26px 24px;}
+  .dvs-right{display:none;}.dvs-hero h1{font-size:2rem;}}
+@media(max-width:520px){.dvs-hero{padding:21px 18px;}.dvs-mode em{margin-left:0;}
+  [data-testid="stMetric"]{padding:12px;min-height:106px;}}
+</style>
+""")
 
 
-def classify_actions(table: pd.DataFrame, target_acos: float, min_clicks: int, min_orders: int) -> pd.DataFrame:
-    result = table.copy()
-    actions, priorities, reasons, adjustments = [], [], [], []
-    for _, row in result.iterrows():
-        clicks, orders = row[COL["clicks"]], row[COL["orders"]]
-        spend, sales, acos = row[COL["spend"]], row[COL["sales"]], row["ACOS %"]
-        if clicks == 0:
-            action, priority, reason, adjustment = "Collect data", "Low", "No clicks recorded", 0
-        elif orders == 0 and clicks >= min_clicks:
-            action, priority, reason, adjustment = "Negative / pause review", "High", f"{int(clicks)} clicks and spend with no orders", -100
-        elif orders == 0:
-            action, priority, reason, adjustment = "Monitor", "Medium", "No orders yet; evidence below negative threshold", 0
-        elif orders < min_orders:
-            action, priority, reason, adjustment = "Collect more data", "Low", f"Only {int(orders)} order(s)", 0
-        elif acos <= target_acos * 0.8:
-            action, priority, reason = "Scale carefully", "High", "ACOS materially below target with conversions"
-            adjustment = min(30, max(5, round((target_acos / max(acos, 0.01) - 1) * 100)))
-        elif acos <= target_acos:
-            action, priority, reason, adjustment = "Maintain / harvest", "Medium", "Profitable at target ACOS", 0
-        elif acos <= target_acos * 1.5:
-            action, priority, reason = "Reduce bid", "Medium", "ACOS above target"
-            adjustment = max(-30, min(-5, round((target_acos / acos - 1) * 100)))
-        else:
-            action, priority, reason = "Reduce bid / pause review", "High", "ACOS materially above target"
-            adjustment = max(-50, round((target_acos / acos - 1) * 100))
-        actions.append(action);
-        priorities.append(priority);
-        reasons.append(reason);
-        adjustments.append(adjustment)
-
-    result["Recommended Action"] = actions
-    result["Priority"] = priorities
-    result["Reason"] = reasons
-    result["Bid Adjustment %"] = adjustments
-    result["Suggested CPC"] = (result["CPC"] * (1 + result["Bid Adjustment %"] / 100)).clip(lower=0)
-    return result
-
-
-def add_health_status(table: pd.DataFrame, target_acos: float, min_clicks: int,
-                      min_orders: int) -> pd.DataFrame:
-    """Add an evidence-aware health status and plain-English explanation."""
-    result = table.copy()
-    statuses, explanations = [], []
-
-    for _, row in result.iterrows():
-        clicks, orders = row[COL["clicks"]], row[COL["orders"]]
-        sales, acos = row[COL["sales"]], row["ACOS %"]
-
-        if clicks < 5:
-            status = "⚪ Insufficient Data"
-            explanation = "Fewer than 5 clicks are available"
-        elif orders == 0 and clicks >= min_clicks:
-            status = "🔴 Unhealthy"
-            explanation = f"{int(clicks)} clicks but no attributed orders"
-        elif orders == 0:
-            status = "🟠 Monitor"
-            explanation = "No orders yet; evidence is below the action threshold"
-        elif orders < min_orders:
-            status = "🟠 Monitor"
-            explanation = f"Only {int(orders)} attributed order(s)"
-        elif sales > 0 and acos <= target_acos:
-            status = "🟢 Healthy"
-            explanation = f"ACOS {acos:.2f}% is within the {target_acos:.2f}% target"
-        elif sales > 0 and acos <= target_acos * 1.25:
-            status = "🟠 Monitor"
-            explanation = f"ACOS {acos:.2f}% is slightly above target"
-        else:
-            status = "🔴 Unhealthy"
-            explanation = "ACOS is materially above target"
-
-        statuses.append(status)
-        explanations.append(explanation)
-
-    result["Health Status"] = statuses
-    result["Health Explanation"] = explanations
-    return result
-
-
-def is_asin(value: str) -> bool:
-    value = str(value).strip().upper()
-    return bool(re.fullmatch(r"B[A-Z0-9]{9}", value))
-
-
-def build_action_tables(df: pd.DataFrame, target_acos: float, negative_clicks: int, min_orders: int):
-    search = aggregate(df, [COL["search_term"]])
-    search["Is ASIN"] = search[COL["search_term"]].map(is_asin)
-    search = classify_actions(search, target_acos, negative_clicks, min_orders)
-
-    harvest = search[
-        (~search["Is ASIN"])
-        & (search[COL["orders"]] >= 3)
-        & (search[COL["clicks"]] >= 10)
-        & (search[COL["sales"]] >= 50)
-        & search["ACOS %"].notna()
-        & (search["ACOS %"] <= target_acos)
-        ].sort_values([COL["sales"], COL["orders"]], ascending=False)
-    negatives = search[
-        (~search["Is ASIN"]) & (search[COL["orders"]] == 0)
-        & (search[COL["clicks"]] >= negative_clicks)
-        ].sort_values(COL["spend"], ascending=False)
-    asins = search[
-        search["Is ASIN"]
-        & (search[COL["orders"]] >= 3)
-        & (search[COL["sales"]] >= 50)
-        & search["ACOS %"].notna()
-        & (search["ACOS %"] <= target_acos)
-        ].sort_values(COL["sales"], ascending=False)
-    return search, harvest, negatives, asins
-
-
-def totals(df: pd.DataFrame) -> dict[str, float]:
-    spend, sales = df[COL["spend"]].sum(), df[COL["sales"]].sum()
-    clicks, impressions = df[COL["clicks"]].sum(), df[COL["impressions"]].sum()
-    orders, units = df[COL["orders"]].sum(), df[COL["units"]].sum()
-    return {
-        "Spend": spend, "Sales": sales, "Orders": orders, "Units": units,
-        "Impressions": impressions, "Clicks": clicks,
-        "ACOS": safe_divide(spend, sales, 100), "ROAS": safe_divide(sales, spend),
-        "CTR": safe_divide(clicks, impressions, 100), "CVR": safe_divide(orders, clicks, 100),
-        "CPC": safe_divide(spend, clicks), "AOV": safe_divide(sales, orders),
-    }
-
-
-def business_totals(df: pd.DataFrame):
-    sales = pd.to_numeric(
-        df["Ordered Product Sales"]
-        .astype(str)
-        .str.replace("$", "", regex=False)
-        .str.replace(",", "", regex=False),
-        errors="coerce"
-    ).fillna(0).sum()
-
-    units = pd.to_numeric(
-        df["Units Ordered"],
-        errors="coerce"
-    ).fillna(0).sum()
-
-    orders = pd.to_numeric(
-        df["Total Order Items"],
-        errors="coerce"
-    ).fillna(0).sum()
-
-    sessions = pd.to_numeric(
-        df["Sessions - Total"]
-        .astype(str)
-        .str.replace(",", "", regex=False),
-        errors="coerce"
-    ).fillna(0).sum()
-
-    conversion_rate = (
-        orders / sessions * 100
-        if sessions > 0
-        else 0
+def section(title: str, description: str, eyebrow: str = "WORKSPACE") -> None:
+    st.html(
+        '<div class="dvs-headerline"><div>'
+        f'<span class="dvs-eyebrow">{escape(eyebrow)}</span>'
+        f'<h2>{escape(title)}</h2><p>{escape(description)}</p>'
+        '</div></div>'
     )
 
-    return {
-        "Total Sales": sales,
-        "Units": units,
-        "Orders": orders,
-        "Sessions": sessions,
-        "Conversion Rate": conversion_rate
-    }
 
-
-def format_excel_sheet(writer, sheet_name: str, frame: pd.DataFrame, currency_symbol: str):
-    frame.to_excel(writer, sheet_name=sheet_name, index=False)
-    workbook, worksheet = writer.book, writer.sheets[sheet_name]
-    header = workbook.add_format({"bold": True, "font_color": "white", "bg_color": "#17365D", "border": 1})
-    money = workbook.add_format(
-        {"num_format": f'{currency_symbol}#,##0.00'}
+def draw_chart(fig: go.Figure, *, height: int = 385) -> None:
+    fig.update_layout(
+        template="plotly_white",
+        title=None,
+        height=height,
+        margin=dict(l=30, r=32, t=30, b=76),
+        paper_bgcolor="white", plot_bgcolor="white",
+        font=dict(family="Arial", color="#33435f", size=12),
+        legend=dict(
+            orientation="h", x=0, y=1.13, yanchor="bottom",
+            bgcolor="rgba(255,255,255,0)", font=dict(size=11),
+        ),
     )
-    for col_num, name in enumerate(frame.columns):
-        worksheet.write(0, col_num, name, header)
-        width = min(42, max(12, len(str(name)) + 2, *(len(str(v)) + 1 for v in frame[name].head(200))))
-        cell_format = money if name in [COL["spend"], COL["sales"], "CPC", "AOV", "Suggested CPC"] else None
-        worksheet.set_column(col_num, col_num, width, cell_format)
-    worksheet.freeze_panes(1, 0)
-    worksheet.autofilter(0, 0, max(len(frame), 1), max(len(frame.columns) - 1, 0))
+    st.plotly_chart(fig, use_container_width=True)
 
 
-def make_export(summary: pd.DataFrame, campaign: pd.DataFrame, ad_group: pd.DataFrame,
-                search: pd.DataFrame, harvest: pd.DataFrame, negatives: pd.DataFrame,
-                asins: pd.DataFrame, wasted: pd.DataFrame,
-                currency_symbol: str) -> bytes:
-    output = io.BytesIO()
-    with pd.ExcelWriter(output, engine="xlsxwriter") as writer:
-        for name, frame in [
-            ("Executive Summary", summary), ("Campaign Performance", campaign),
-            ("Ad Group Performance", ad_group), ("All Search Terms", search),
-            ("Harvest Keywords", harvest), ("Negative Candidates", negatives),
-            ("Winning ASINs", asins), ("Wasted Spend", wasted),
-        ]:
-            format_excel_sheet(writer, name, frame, currency_symbol)
-    return output.getvalue()
-
-
-def display_table(frame: pd.DataFrame, currency_symbol: str):
-    currency_cols = [c for c in [COL["spend"], COL["sales"], "CPC", "AOV", "Suggested CPC"] if c in frame.columns]
-    percent_cols = [c for c in ["CTR %", "CVR %", "ACOS %", "Bid Adjustment %"] if c in frame.columns]
-    formats = {c: f"{currency_symbol}%.2f" for c in currency_cols}
-    formats.update({c: "%.2f%%" for c in percent_cols})
-    st.dataframe(frame, use_container_width=True, hide_index=True, column_config={
-        "Reason": st.column_config.TextColumn(width="large"),
-        "Recommended Action": st.column_config.TextColumn(width="medium"),
-    })
-
-
-st.set_page_config(page_title="Amazon PPC Intelligence Hub | Decision Intelligence", page_icon="📈", layout="wide")
-inject_styles()
-inject_experience_styles()
-render_landing()
+st.html("""
+<header class="dvs-hero" aria-label="Devanandha VS PPC Intelligence Hub">
+  <div class="dvs-left">
+    <div class="dvs-brand"><span class="dvs-logo">DVS</span>
+      DEVANANDHA VS &nbsp; / &nbsp; PPC INTELLIGENCE HUB V3</div>
+    <h1>Smarter PPC insights.<br><strong>Decisions you can explain.</strong></h1>
+    <p>Explore advertising performance with transparent rules, statistical uncertainty,
+       exploratory machine learning and human-reviewed decision assurance.</p>
+    <div class="dvs-badges"><span class="dvs-badge">Sponsored Products</span>
+      <span class="dvs-badge">Experimental AI</span>
+      <span class="dvs-badge">Evidence-first</span>
+      <span class="dvs-badge">Built by Devanandha VS</span></div>
+  </div>
+  <div class="dvs-right">
+    <small>HOW THE WORKSPACE THINKS</small>
+    <div class="dvs-flow">
+      <div><i>01</i> Observe advertising signals</div>
+      <div><i>02</i> Check evidence quality</div>
+      <div><i>03</i> Detect unusual patterns</div>
+      <div><i>04</i> Recommend human review</div>
+    </div>
+  </div>
+</header>
+""")
 
 with st.sidebar:
-    render_sidebar_brand()
-    st.header("Analysis settings")
+    st.markdown("### 🤖 DVS / PPC Studio")
+    st.caption("Independent analytics workspace — built by Devanandha VS.")
+    source_choice = st.radio(
+        "Data source",
+        ["Explore fictional demo", "Upload my own report"],
+        index=0,
+        help="All figures in the demo are synthetic. Do not share private account reports publicly.",
+    )
+    demo_mode = source_choice == "Explore fictional demo"
+    uploaded = None
+    if not demo_mode:
+        uploaded = st.file_uploader(
+            "Sponsored Products Search Term report", type=["xlsx", "xls"]
+        )
+    st.divider()
     target_acos = st.number_input("Target ACOS (%)", min_value=1.0, max_value=200.0, value=25.0, step=1.0)
-    negative_clicks = st.number_input("Clicks before negative review", min_value=1, max_value=200, value=15)
-    min_orders = st.number_input("Minimum orders for a winner", min_value=1, max_value=50, value=3)
-    st.caption(
-        "Recommendations are decision support. Review relevance, profitability, placement and campaign strategy before applying changes.")
+    negative_clicks = st.number_input("Clicks before negative review", min_value=1, max_value=500, value=15)
+    min_orders = st.number_input("Minimum orders for positive review", min_value=1, max_value=100, value=3)
+    st.divider()
+    st.caption("AI anomaly signals are exploratory. No automatic changes are made to Amazon Ads.")
+    st.markdown("[GitHub source](https://github.com/devanandha/amazon-ppc-intelligence-hub)")
+    st.markdown("[Developer LinkedIn](https://www.linkedin.com/in/devanandhavs21)")
 
-with st.expander("Data source · Try the demo or upload your own report", expanded=False):
-    demo_mode = st.toggle(
-        "Explore the built-in fictional demo",
-        value=True,
-        help="Starts with generated data so external reviewers can explore instantly. Switch OFF to upload your own report.",
-    )
-    uploaded = st.file_uploader(
-        "Sponsored Products Search Term report",
-        type=["xlsx", "xls"],
-        disabled=demo_mode,
-    )
-    business_uploaded = st.file_uploader(
-        "Optional Business Report (Sales & Traffic by Date)",
-        type=["csv"],
-        disabled=demo_mode,
-    )
-    st.caption("Use only fictional data on a public demonstration. Never upload confidential employer or client reports.")
-
-render_data_context(demo_mode=demo_mode)
-
-if not demo_mode and uploaded is None:
-    render_empty_state()
-    render_footer()
-    st.caption(
-        "Reports are analysed within this application session. Do not upload "
-        "confidential employer or client data to a public demo."
-    )
-    st.stop()
 
 if demo_mode:
     raw = make_synthetic_dataframe()
+    st.html(
+        '<div class="dvs-mode"><strong>Fictional demo active</strong>'
+        '<span>All figures are generated for demonstration and do not represent real clients.</span>'
+        '<em>SYNTHETIC DATA</em></div>'
+    )
+elif uploaded is None:
+    st.info("Upload a Sponsored Products Search Term report in the sidebar to view your dashboard.")
+    st.stop()
 else:
     try:
         raw = load_report(uploaded.getvalue())
     except Exception as exc:
-        st.error(f"The workbook could not be read: {exc}")
+        st.error(f"Could not read the uploaded workbook: {exc}")
         st.stop()
-
-df, missing = clean_report(raw)
-business_kpi = None
-if business_uploaded is not None and not demo_mode:
-    business_df = load_business_report(
-        business_uploaded.getvalue()
+    st.html(
+        '<div class="dvs-mode"><strong>Uploaded report active</strong>'
+        '<span>Keep search-term data confidential. No production automation is enabled.</span>'
+        '<em>HUMAN REVIEW ONLY</em></div>'
     )
 
-    business_kpi = business_totals(
-        business_df
-    )
-
+clean, missing = clean_report(raw)
 if missing:
-    st.error("Required columns are missing: " + ", ".join(missing))
+    st.error("The report is missing required Amazon fields: " + ", ".join(missing))
+    st.stop()
+if clean.empty:
+    st.warning("The selected report contains no rows.")
     st.stop()
 
-with st.sidebar:
-    campaigns = sorted(df[COL["campaign"]].unique())
-    selected_campaigns = st.multiselect("Campaigns", campaigns, default=campaigns)
-    match_types = sorted(df[COL["match_type"]].unique())
-    selected_match_types = st.multiselect("Match types", match_types, default=match_types)
-
-filtered = df[df[COL["campaign"]].isin(selected_campaigns) & df[COL["match_type"]].isin(selected_match_types)].copy()
-if filtered.empty:
-    st.warning("The selected filters contain no rows.")
+campaign_choices = sorted(clean[COL["campaign"]].dropna().astype(str).unique())
+selected_campaigns = st.multiselect(
+    "Campaign filter (optional)",
+    options=campaign_choices,
+    default=[],
+    placeholder="All campaigns",
+    help="The demo shows all campaigns by default.",
+)
+data = clean.loc[
+    clean[COL["campaign"]].isin(selected_campaigns)
+    if selected_campaigns else pd.Series(True, index=clean.index)
+].copy()
+if data.empty:
+    st.warning("No rows match this filter.")
     st.stop()
 
-currency_code = str(filtered[COL["currency"]].mode().iloc[0]) if COL["currency"] in filtered and not filtered[
-    COL["currency"]].mode().empty else "GBP"
-symbol = CURRENCY_SYMBOLS.get(currency_code.upper(), currency_code + " ")
+currency = str(data["Currency"].dropna().iloc[0]).upper() if "Currency" in data and data["Currency"].notna().any() else "GBP"
+symbol = CURRENCY_SYMBOLS.get(currency, "")
+kpi = totals(data)
+campaign = aggregate(data, [COL["campaign"]])
+ad_group = aggregate(data, [COL["campaign"], COL["ad_group"]])
+search, harvest, negatives, asins = build_action_tables(
+    data, float(target_acos), int(negative_clicks), int(min_orders),
+)
+wasted = search[(search[COL["orders"]] == 0) & (search[COL["spend"]] > 0)].copy()
+wasted_spend = float(wasted[COL["spend"]].sum())
 
-campaign = classify_actions(aggregate(filtered, [COL["campaign"]]), target_acos, negative_clicks, min_orders)
-ad_group = classify_actions(aggregate(filtered, [COL["campaign"], COL["ad_group"]]), target_acos, negative_clicks,
-                            min_orders)
-campaign = add_health_status(campaign, target_acos, negative_clicks, min_orders)
-ad_group = add_health_status(ad_group, target_acos, negative_clicks, min_orders)
-search, harvest, negatives, asins = build_action_tables(filtered, target_acos, negative_clicks, min_orders)
-wasted = search[(search[COL["orders"]] == 0) & (search[COL["clicks"]] >= negative_clicks)].sort_values(COL["spend"],
-                                                                                                       ascending=False)
-kpi = totals(filtered)
-if business_kpi:
-    total_sales = business_kpi["Total Sales"]
-    organic_sales = max(
-        0,
-        total_sales - kpi["Sales"]
-    )
-
-    tacos = (
-        (kpi["Spend"] / total_sales) * 100
-        if total_sales > 0
-        else 0
-    )
-
-    ad_contribution = (
-        (kpi["Sales"] / total_sales) * 100
-        if total_sales > 0
-        else 0
-    )
-
-else:
-
-    total_sales = 0
-    organic_sales = 0
-    tacos = 0
-    ad_contribution = 0
-wasted_total = wasted[COL["spend"]].sum()
-waste_rate = safe_divide(wasted_total, kpi["Spend"], 100)
-
-# Visible immediately after the data source and before the metrics / tabs.
-# The iframe supplies its own height and is not affected by st.html filtering.
+# Dedicated HTML component (isolated iframe); guaranteed vertical space
+# and a visible robot before any tabs or charts.
 render_buddy(
-    account_acos=kpi["ACOS"],
-    target_acos=target_acos,
-    ad_sales=kpi["Sales"],
+    account_acos=float(kpi["ACOS"]),
+    target_acos=float(target_acos),
+    ad_sales=float(kpi["Sales"]),
     harvest_count=len(harvest),
     negative_count=len(negatives),
     demo_mode=bool(demo_mode),
 )
 
-if business_kpi:
-    st.subheader("Account Performance")
-    account_cols = st.columns(7)
-
-    account_cols[0].metric(
-        "Total Sales",
-        f"{symbol}{total_sales:,.2f}"
-    )
-
-    account_cols[1].metric(
-        "Organic Sales",
-        f"{symbol}{organic_sales:,.2f}"
-    )
-
-    account_cols[2].metric(
-        "Ad Sales",
-        f"{symbol}{kpi['Sales']:,.2f}"
-    )
-
-    account_cols[3].metric(
-        "TACOS",
-        f"{tacos:.2f}%"
-    )
-
-    account_cols[4].metric(
-        "Ad Contribution",
-        f"{ad_contribution:.2f}%"
-    )
-
-    account_cols[5].metric(
-        "Sessions",
-        f"{int(business_kpi['Sessions']):,}"
-    )
-
-    account_cols[6].metric(
-        "Account CVR",
-        f"{business_kpi['Conversion Rate']:.2f}%"
-    )
-
-render_section(
-    "Executive overview",
-    "A clear view of advertising performance, opportunity signals and decision evidence.",
-    "INTELLIGENCE / PERFORMANCE",
+section(
+    "Performance at a glance",
+    "The core metrics and opportunity signals from the selected report.",
+    "01 / EXECUTIVE OVERVIEW",
 )
+metric_specs = [
+    ("Ad spend", f"{symbol}{kpi['Spend']:,.2f}"),
+    ("Attributed sales", f"{symbol}{kpi['Sales']:,.2f}"),
+    ("Observed ACOS", f"{kpi['ACOS']:.2f}%" if kpi["Sales"] > 0 else "Undefined"),
+    ("Observed ROAS", f"{kpi['ROAS']:.2f}x"),
+]
+for column, (label, value) in zip(st.columns(4), metric_specs):
+    column.metric(label, value)
 
-top = st.columns(4)
-for box, label, value in zip(
-    top,
-    ["Ad Spend", "Ad Sales", "ACOS", "ROAS"],
-    [
-        f"{symbol}{kpi['Spend']:,.2f}",
-        f"{symbol}{kpi['Sales']:,.2f}",
-        f"{kpi['ACOS']:.2f}%",
-        f"{kpi['ROAS']:.2f}x",
-    ],
-):
-    box.metric(label, value)
-
-secondary = st.columns(4)
-for box, label, value in zip(
-    secondary,
-    ["Orders", "Wasted Spend", "CTR", "CVR"],
-    [
-        f"{int(kpi['Orders']):,}",
-        f"{symbol}{wasted_total:,.2f}",
-        f"{kpi['CTR']:.2f}%",
-        f"{kpi['CVR']:.2f}%",
-    ],
-):
-    box.metric(label, value)
-
-render_section(
-    "Opportunity radar",
-    "Potential actions flagged by the current rules. Human review is required.",
-    "EVIDENCE / DISCOVERY",
-)
-render_action_pulse(len(harvest), len(negatives), waste_rate)
-st.caption("*Zero-order spend share is a screening metric, not verified wasted advertising spend.")
-
-with st.expander("See additional operational metrics"):
-    details = st.columns(4)
-    for box, label, value in zip(
-        details,
-        ["Impressions", "Clicks", "CPC", "Average order value"],
-        [
-            f"{int(kpi['Impressions']):,}",
-            f"{int(kpi['Clicks']):,}",
-            f"{symbol}{kpi['CPC']:.2f}",
-            f"{symbol}{kpi['AOV']:.2f}",
-        ],
-    ):
-        box.metric(label, value)
+small_specs = [
+    ("Attributed orders", f"{int(kpi['Orders']):,}"),
+    ("Zero-order spend", f"{symbol}{wasted_spend:,.2f}"),
+    ("CTR", f"{kpi['CTR']:.2f}%"),
+    ("Observed orders / clicks", f"{kpi['CVR']:.2f}%"),
+]
+for column, (label, value) in zip(st.columns(4), small_specs):
+    column.metric(label, value)
 
 st.caption(
-    f"Evidence-aware screening: {len(harvest):,} potential harvest terms · "
-    f"{len(negatives):,} negative-review candidates · "
-    f"{len(asins):,} possible ASIN targeting opportunities. "
-    "These are NOT independently validated or authorised ad changes."
+    "Zero-order spend is a screening metric, not verified waste. "
+    "Attributed orders can exceed clicks; attribution must be reviewed before interpreting conversion rates."
 )
 
-overview_tab, campaigns_tab, terms_tab, actions_tab, scenario_tab, ai_tab, studio_tab, quality_tab = st.tabs([
-    "Overview", "Sponsored Products", "Search Terms", "Action Centre",
-    "Scenario Lab", "AI Review", "Decision Studio", "Data Quality"
+section(
+    "Explore your PPC intelligence",
+    "Choose a workspace to inspect performance, recommendations, evidence or exports.",
+    "02 / INTERACTIVE WORKSPACE",
+)
+
+overview_tab, action_tab, assurance_tab, export_tab = st.tabs([
+    "📊 Overview", "🎯 Opportunities", "🧠 AI & Assurance", "📥 Scenarios & Export",
 ])
 
 with overview_tab:
     left, right = st.columns(2)
     with left:
         st.markdown("#### Campaign spend vs attributed sales")
-        st.caption("Spend and attributed advertising sales by campaign.")
-        chart_data = campaign.sort_values(COL["spend"], ascending=False).head(15)
-        fig = px.bar(chart_data, x=COL["campaign"], y=[COL["spend"], COL["sales"]], barmode="group",
-                     title=None, labels={"value": currency_code},
-                     color_discrete_sequence=["#746aff", "#17bac8"])
-        fig.update_layout(
-            template="plotly_white",
-            plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
-            font=dict(color="#243552", family="Arial"),
-            title=None, height=435,
-            margin=dict(l=15, r=15, t=54, b=108),
-            legend=dict(
-                orientation="h", yanchor="bottom", y=1.06, x=0,
-                font=dict(size=11), bgcolor="rgba(255,255,255,0)"
-            ),
+        st.caption("Two observed metrics, not predicted future performance.")
+        top_campaigns = campaign.sort_values(COL["spend"], ascending=False).head(10)
+        chart = px.bar(
+            top_campaigns,
+            x=COL["campaign"],
+            y=[COL["spend"], COL["sales"]],
+            barmode="group",
+            labels={"value": currency, COL["campaign"]: "", "variable": "Metric"},
+            color_discrete_sequence=["#7369f3", "#19b9c8"],
         )
-        fig.update_xaxes(title=None, tickangle=-25, automargin=True)
-        st.plotly_chart(fig, use_container_width=True)
+        chart.update_xaxes(tickangle=-25, automargin=True)
+        draw_chart(chart)
     with right:
-        st.markdown("#### Campaign efficiency map")
-        st.caption("Campaign sales and spend compared with the selected target ACOS.")
-        scatter = campaign[campaign[COL["clicks"]] > 0].copy()
-        fig = px.scatter(scatter, x="ACOS %", y=COL["sales"], size=COL["spend"], color="Priority",
-                         hover_name=COL["campaign"], title=None,
-                         color_discrete_map={"High":"#ec8b69","Medium":"#6c73ff","Low":"#23bcb3"})
-        fig.add_vline(x=target_acos, line_dash="dash", line_color="red", annotation_text="Target ACOS")
-        fig.update_layout(
-            template="plotly_white",
-            plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
-            font=dict(color="#243552", family="Arial"),
-            title=None, height=435,
-            margin=dict(l=20, r=28, t=56, b=58),
-            legend=dict(orientation="h", yanchor="bottom", y=1.04, x=0,
-                        font=dict(size=11), bgcolor="rgba(255,255,255,0)"),
-        )
-        st.plotly_chart(fig, use_container_width=True)
-
-    if COL["date"] in filtered.columns and filtered[COL["date"]].notna().any():
-        trend = aggregate(filtered.dropna(subset=[COL["date"]]), [COL["date"]]).sort_values(COL["date"])
-        from plotly.subplots import make_subplots
-        import plotly.graph_objects as go
-
-        fig = make_subplots(specs=[[{"secondary_y": True}]])
-
-        fig.add_trace(
-            go.Scatter(
-                x=trend[COL["date"]],
-                y=trend[COL["spend"]],
-                name="Spend",
-                mode="lines+markers"
-            ),
-            secondary_y=False
-        )
-
-        fig.add_trace(
-            go.Scatter(
-                x=trend[COL["date"]],
-                y=trend[COL["sales"]],
-                name="Sales",
-                mode="lines+markers"
-            ),
-            secondary_y=True
-        )
-
-        st.markdown("#### Performance over time")
-        st.caption("Daily attributed sales and advertising spend; synthetic in demo mode.")
-        fig.update_layout(
-            title=None, hovermode="x unified",
-            template="plotly_white",
-            plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
-            margin=dict(l=40, r=38, t=35, b=50),
-            legend=dict(orientation="h", yanchor="bottom", y=1.03, x=0),
-            height=360,
-        )
-
-        fig.update_yaxes(
-            title_text=f"Spend ({currency_code})",
-            secondary_y=False
-        )
-
-        fig.update_yaxes(
-            title_text=f"Sales ({currency_code})",
-            secondary_y=True
-        )
-
-        st.plotly_chart(fig, use_container_width=True)
-
-with campaigns_tab:
-    st.subheader("Campaign Health Summary")
-    health_columns = st.columns(4)
-    health_columns[0].metric("🟢 Healthy", int(campaign["Health Status"].eq("🟢 Healthy").sum()))
-    health_columns[1].metric("🟠 Monitor", int(campaign["Health Status"].eq("🟠 Monitor").sum()))
-    health_columns[2].metric("🔴 Unhealthy", int(campaign["Health Status"].eq("🔴 Unhealthy").sum()))
-    health_columns[3].metric("⚪ Insufficient Data", int(campaign["Health Status"].eq("⚪ Insufficient Data").sum()))
-    st.subheader("Campaign-level performance and recommendations")
-    display_table(campaign.sort_values(COL["spend"], ascending=False), symbol)
-    st.subheader("Ad-group-level performance")
-    display_table(ad_group.sort_values(COL["spend"], ascending=False), symbol)
-
-with terms_tab:
-    st.subheader("Top-performing customer search terms")
-    winners = search[(search[COL["orders"]] > 0)].sort_values([COL["sales"], COL["orders"]], ascending=False).head(100)
-    display_table(winners, symbol)
-    st.subheader("All aggregated search terms")
-    st.caption("Repeated search terms are aggregated before KPIs and recommendations are calculated.")
-    display_table(search.sort_values(COL["spend"], ascending=False), symbol)
-
-with actions_tab:
-    a, b, c, d = st.tabs(["Harvest", "Negatives", "Winning ASIN targets", "Wasted spend"])
-    with a:
-        st.caption("Search terms with sufficient orders and ACOS at or below target. Review for exact-match campaigns.")
-        display_table(harvest, symbol)
-    with b:
-        st.caption(
-            "Non-ASIN terms above the selected click threshold with no attributed orders. Check relevance before negating.")
-        display_table(negatives, symbol)
-    with c:
-        st.caption("Converting ASIN search terms at or below target ACOS. Review as product-targeting opportunities.")
-        display_table(asins, symbol)
-    with d:
-        display_table(wasted, symbol)
-
-with scenario_tab:
-    st.subheader("Scenario Lab: target ACOS sensitivity")
-    st.caption(
-        "Compare how the same observed search-term data would be classified "
-        "under another target ACOS. This is a sensitivity check, not a "
-        "forecast of sales or proof of improved performance."
-    )
-    scenario_target = st.slider(
-        "Alternative target ACOS (%)",
-        min_value=1,
-        max_value=200,
-        value=min(200, max(1, int(round(target_acos)) + 10)),
-        step=1,
-        help="Only the target ACOS changes. Click and order thresholds stay fixed.",
-    )
-    simulated_search = classify_actions(
-        search, float(scenario_target), negative_clicks, min_orders
-    )
-    comparison = pd.DataFrame({
-        "Search Term": search[COL["search_term"]],
-        "Clicks": search[COL["clicks"]],
-        "Orders": search[COL["orders"]],
-        "ACOS %": search["ACOS %"],
-        "Current action": search["Recommended Action"],
-        "Scenario action": simulated_search["Recommended Action"],
-        "Current bid adjustment %": search["Bid Adjustment %"],
-        "Scenario bid adjustment %": simulated_search["Bid Adjustment %"],
-    })
-    action_changed = comparison[
-        comparison["Current action"] != comparison["Scenario action"]
-    ].copy()
-    bid_changed = (
-        comparison["Current bid adjustment %"]
-        != comparison["Scenario bid adjustment %"]
-    ).sum()
-    stat_a, stat_b, stat_c = st.columns(3)
-    stat_a.metric("Search terms evaluated", f"{len(comparison):,}")
-    stat_b.metric("Actions changed", f"{len(action_changed):,}")
-    stat_c.metric("Bid suggestions changed", f"{int(bid_changed):,}")
-    st.markdown("#### Changed recommendations")
-    if action_changed.empty:
-        st.success(
-            "No action labels change under this target. Bid suggestions "
-            "may still differ, as indicated above."
-        )
-    else:
-        st.dataframe(
-            action_changed.sort_values(["Clicks", "Orders"], ascending=False),
-            use_container_width=True,
-            hide_index=True,
-        )
-    with st.expander("What this scenario does and does not show"):
-        st.markdown(
-            "- Reapplies the existing transparent rules to the same "
-            "observations under an alternative target ACOS.\n"
-            "- Does **not** predict changes in clicks, sales, demand or profit.\n"
-            "- Does **not** account for attribution lag, competition, "
-            "seasonality, placement, contribution margin or budget constraints.\n"
-            "- Suggestions must be reviewed before changing live bids."
-        )
-
-
-with ai_tab:
-    st.subheader("AI-assisted search-term review")
-    st.caption(
-        "An exploratory unsupervised machine-learning model flags unusual "
-        "patterns within the uploaded data. It does not forecast sales, "
-        "determine wasted spend, or automatically change bids."
-    )
-    ml_min_clicks = st.slider(
-        "Minimum clicks for ML comparison", 1, 40, 5,
-        help="Search terms with fewer clicks are withheld from ML scoring.",
-    )
-    ml_data, ml_meta = analyse_search_terms(
-        search, min_clicks=int(ml_min_clicks)
-    )
-    # Triangulate the original transparent action with an independent
-    # exploratory outlier signal. This is a review queue, not auto-optimisation.
-    ml_data["Existing rule action"] = search["Recommended Action"].to_numpy()
-    favourable = ml_data["Existing rule action"].isin(
-        ["Scale carefully", "Maintain / harvest"]
-    )
-    unusual = ml_data["ML review flag"].eq("Unusual pattern — review")
-    ml_data["Hybrid review note"] = np.select(
-        [
-            unusual & favourable,
-            unusual,
-        ],
-        [
-            "Check unusual evidence before scaling or harvesting",
-            "Unusual pattern: inspect the underlying observations",
-        ],
-        default="Use normal human review; no unusual ML signal",
-    )
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Search terms with usable evidence", f"{ml_meta['eligible_terms']:,}")
-    c2.metric("Flagged for human review", f"{ml_meta['flagged_terms']:,}")
-    c3.metric("Model status", "Analysed" if ml_meta["trained"] else "Not fitted")
-    st.info(
-        "An Isolation Forest detects unusual combinations of click volume, "
-        "spend, attributed orders, sales and efficiency rates. It is fitted "
-        "only to this uploaded dataset. Its scores are **not** validated "
-        "probabilities or measures of profitability."
-    )
-    if not ml_meta["trained"]:
-        st.warning(ml_meta["reason"])
-    else:
-        flagged = ml_data[ml_data["ML review flag"] == "Unusual pattern — review"]
-        st.markdown("#### Human-review queue: statistical signals + existing actions")
-        if flagged.empty:
-            st.success("No unusual patterns met the model's review threshold.")
+        st.markdown("#### Efficiency map")
+        st.caption("Reported sales versus ACOS; bubble size represents spend.")
+        points = campaign[(campaign[COL["clicks"]] > 0) & campaign["ACOS %"].notna()].copy()
+        if points.empty:
+            st.info("No campaign has enough attributed sales to show ACOS.")
         else:
-            st.dataframe(
-                flagged.sort_values("Anomaly score", ascending=False),
-                use_container_width=True,
-                hide_index=True,
+            fig = px.scatter(
+                points, x="ACOS %", y=COL["sales"],
+                size=COL["spend"], hover_name=COL["campaign"],
+                labels={COL["sales"]: f"Attributed sales ({currency})"},
+                color_discrete_sequence=["#746aff"],
             )
-        st.caption(
-            "The hybrid review note pairs an existing rule action with an "
-            "unsupervised flag; it is not a trained action recommender. "
-            "The peer differences are descriptive comparisons, "
-            "not exact feature attributions explaining the model's output."
-        )
-    with st.expander("Conversion-rate uncertainty and evidence notes"):
-        st.write(
-            "90% Bayesian credible intervals estimate uncertainty in the "
-            "observed orders-per-click rate using a Jeffreys prior. They "
-            "assume a binomial model; some Ads attribution patterns violate "
-            "this assumption, so intervals are withheld where orders exceed clicks."
-        )
-        st.dataframe(
-            ml_data[
-                [
-                    "Customer Search Term",
-                    "Clicks",
-                    "7 Day Total Orders (#)",
-                    "CVR 90% lower",
-                    "CVR 90% upper",
-                    "Evidence note",
-                    "ML review flag",
-                ]
-            ],
-            use_container_width=True,
-            hide_index=True,
-        )
-    st.download_button(
-        "Download AI review audit (CSV)",
-        data=ml_data.to_csv(index=False).encode("utf-8"),
-        file_name="PPC_Exploratory_ML_Review.csv",
-        mime="text/csv",
-        key="download_ml_review",
-    )
-    st.caption(
-        "This is an experimental model-driven screening feature. Every "
-        "suggestion requires human validation before any real-world action."
-    )
+            fig.add_vline(
+                x=float(target_acos), line_color="#ed8d6b",
+                line_dash="dash", annotation_text="Target ACOS",
+            )
+            draw_chart(fig)
 
+    if COL["date"] in data.columns and data[COL["date"]].notna().any():
+        st.markdown("#### Daily advertising trend")
+        st.caption("Historical attributed sales and spend in the selected period.")
+        trend = aggregate(data.dropna(subset=[COL["date"]]), [COL["date"]]).sort_values(COL["date"])
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(
+            x=trend[COL["date"]], y=trend[COL["spend"]],
+            name="Spend", mode="lines", line=dict(color="#7369f3", width=3),
+        ))
+        fig.add_trace(go.Scatter(
+            x=trend[COL["date"]], y=trend[COL["sales"]],
+            name="Attributed sales", mode="lines", line=dict(color="#16b9c1", width=3),
+        ))
+        fig.update_yaxes(title_text=currency)
+        draw_chart(fig, height=340)
 
-
-with studio_tab:
-    st.subheader("Decision Assurance Studio")
-    st.caption(
-        "A transparent human-review workflow: combine the existing "
-        "threshold rules with statistical uncertainty and exploratory "
-        "ML signals. An evidence gate never approves or executes a bid change."
-    )
-    st.markdown("#### Review policy")
-    policy1, policy2, policy3 = st.columns(3)
-    with policy1:
-        review_clicks = st.number_input(
-            "Minimum clicks for high-impact review", 5, 300, 30, 5,
-            key="assurance_review_clicks",
-        )
-    with policy2:
-        review_orders = st.number_input(
-            "Minimum attributed orders for high-impact review", 1, 50, 5, 1,
-            key="assurance_review_orders",
-        )
-    with policy3:
-        max_width = st.number_input(
-            "Maximum 90% CVR interval width (pp)", 1.0, 80.0, 15.0, 1.0,
-            key="assurance_width",
-        )
-
-    # The model is unsupervised and fitted only within the supplied report.
-    assurance_ml, assurance_meta = analyse_search_terms(search, min_clicks=5)
-    audit = build_decision_ledger(
-        search, assurance_ml,
-        review_clicks=int(review_clicks),
-        review_orders=int(review_orders),
-        max_interval_width_pp=float(max_width),
-    )
-    attention = audit[
-        (audit["High-impact baseline action"])
-        & (audit["Evidence status"] != "Manual review ready")
-    ]
-    conflicts = audit[
-        audit["Evidence status"] == "Investigate model-rule conflict"
-    ]
-    c1, c2, c3, c4 = st.columns(4)
-    c1.metric("Search terms audited", f"{len(audit):,}")
-    c2.metric("High-impact rule suggestions", f"{int(audit['High-impact baseline action'].sum()):,}")
-    c3.metric("High-impact actions needing review", f"{len(attention):,}")
-    c4.metric("ML–rule attention flags", f"{len(conflicts):,}")
-    st.caption(
-        "These numbers describe a review queue on the current report, "
-        "not real-world improvement, predictive accuracy or approval rates."
-    )
-    st.markdown("#### Review queue")
-    queue = audit[[
-        COL["search_term"], COL["clicks"], COL["orders"],
-        "Recommended Action", "High-impact baseline action",
-        "Evidence status", "Evidence justification",
-        "ML review flag", "CVR interval width (pp)",
-    ]].copy()
+    st.markdown("#### Campaign comparison")
     st.dataframe(
-        queue.sort_values(["High-impact baseline action", COL["clicks"]],
-                          ascending=[False, False]),
+        campaign.sort_values(COL["spend"], ascending=False),
         use_container_width=True, hide_index=True,
     )
-    st.markdown("#### Inspect a decision")
-    terms_to_inspect = audit[COL["search_term"]].astype(str).tolist()
-    selected_term = st.selectbox(
-        "Select an aggregated search term",
-        terms_to_inspect, key="assurance_selected_term",
+
+with action_tab:
+    cards = st.columns(4)
+    cards[0].metric("Search terms analysed", f"{len(search):,}")
+    cards[1].metric("Potential harvest terms", f"{len(harvest):,}")
+    cards[2].metric("Negative-review candidates", f"{len(negatives):,}")
+    cards[3].metric("ASIN opportunities", f"{len(asins):,}")
+    st.caption(
+        "These are transparent rule-based screening categories, not automated "
+        "keyword changes or independently validated results."
     )
-    case = audit.loc[audit[COL["search_term"]].astype(str) == selected_term].iloc[0]
+    st.markdown("#### Search-term review queue")
+    st.dataframe(
+        search.sort_values(COL["spend"], ascending=False),
+        use_container_width=True, hide_index=True,
+    )
+    lcol, rcol = st.columns(2)
+    with lcol:
+        st.markdown("#### Keyword harvest candidates")
+        st.dataframe(harvest, use_container_width=True, hide_index=True)
+    with rcol:
+        st.markdown("#### Possible negative candidates")
+        st.dataframe(negatives, use_container_width=True, hide_index=True)
+    st.markdown("#### Potential ASIN opportunities")
+    st.dataframe(asins, use_container_width=True, hide_index=True)
+
+with assurance_tab:
+    st.markdown("#### AI-assisted evidence review")
+    st.caption(
+        "An unsupervised Isolation Forest identifies unusual patterns within this "
+        "report. It does not predict sales, profit or the effect of bid changes."
+    )
+    minimum_ml_clicks = st.slider(
+        "Minimum clicks for model comparison", 1, 40, 5,
+        key="v3_minimum_ml_clicks",
+    )
+    ml, meta = analyse_search_terms(search, min_clicks=int(minimum_ml_clicks))
+    ledger = build_decision_ledger(
+        search, ml,
+        review_clicks=30, review_orders=5, max_interval_width_pp=15.0,
+    )
     a, b, c = st.columns(3)
-    a.metric("Observed clicks", f"{int(case[COL['clicks']]):,}")
-    b.metric("Attributed orders", f"{int(case[COL['orders']]):,}")
-    c.metric("Observed ACOS", f"{case['ACOS %']:.2f}%" if pd.notna(case["ACOS %"]) else "Undefined")
-    st.markdown(f"**Existing rule:** {case['Recommended Action']}")
-    st.markdown(f"**Evidence gate:** {case['Evidence status']}")
-    st.write(case["Evidence justification"])
-    st.markdown(f"**ML review:** {case['ML review flag']}")
-    st.caption(
-        "A ML anomaly is a relative pattern difference, not an attribution "
-        "of profitability or proof a recommendation is wrong."
+    a.metric("Model-eligible terms", int(meta["eligible_terms"]))
+    b.metric("Unusual pattern flags", int(meta["flagged_terms"]))
+    c.metric(
+        "High-impact cases needing attention",
+        int(
+            (
+                ledger["High-impact baseline action"]
+                & ledger["Evidence status"].ne("Manual review ready")
+            ).sum()
+        ),
     )
-    if pd.notna(case["CVR 90% lower"]):
+    if not meta["trained"]:
+        st.warning(meta["reason"])
+    else:
         st.info(
-            f"Observed orders-per-click model: 90% Bayesian interval "
-            f"{case['CVR 90% lower']:.1f}% to {case['CVR 90% upper']:.1f}%. "
-            "Assumes a simplified binomial attribution model."
+            "AI anomalies are relative to this dataset. A flagged term is "
+            "not necessarily underperforming or unsafe."
         )
-    else:
-        st.warning(
-            "No valid conversion-rate interval is available for this term. "
-            "Do not substitute missing statistical evidence with an AI score."
-        )
-
-    st.markdown("#### Practitioner review workspace")
-    st.caption(
-        "Record an independent practitioner's assessment of this case. "
-        "Feedback stays only in this Streamlit session until you export it. "
-        "These labels do not train or validate the ML model automatically."
-    )
-    dataset_fingerprint = hashlib.sha256(
-        search[[COL["search_term"], COL["clicks"], COL["orders"],
-                COL["spend"], COL["sales"]]].to_csv(index=False).encode("utf-8")
-    ).hexdigest()[:16]
-    if (
-        "ppc_practitioner_reviews" not in st.session_state
-        or st.session_state["ppc_practitioner_reviews"].get("fingerprint")
-            != dataset_fingerprint
-    ):
-        st.session_state["ppc_practitioner_reviews"] = {
-            "fingerprint": dataset_fingerprint, "assessments": {}
-        }
-    with st.form("practitioner_review_form", clear_on_submit=True):
-        judgement = st.selectbox(
-            "Your independent assessment of the original suggested action",
-            [
-                "Needs more evidence",
-                "Potentially useful after manual checks",
-                "Not appropriate for this case",
-                "Cannot assess from available data",
-            ],
-        )
-        practitioner_note = st.text_area(
-            "Specific technical feedback or missing business context (optional)",
-            max_chars=1800,
-            placeholder="For example: attribution, relevance, margin, seasonality, data quality...",
-        )
-        save_assessment = st.form_submit_button("Save case assessment")
-    if save_assessment:
-        st.session_state["ppc_practitioner_reviews"]["assessments"][selected_term] = {
-            "Search Term": selected_term,
-            "Dataset Fingerprint": dataset_fingerprint,
-            "Original Rule Action": str(case["Recommended Action"]),
-            "Evidence Status": str(case["Evidence status"]),
-            "Practitioner Assessment": judgement,
-            "Feedback": practitioner_note.strip(),
-        }
-        st.success("Assessment stored in this session. Download the feedback CSV to retain it.")
-    stored = st.session_state["ppc_practitioner_reviews"]["assessments"]
-    if stored:
-        review_table = pd.DataFrame(list(stored.values()))
-        st.write(f"**Recorded assessments:** {len(review_table):,}")
-        st.dataframe(review_table, use_container_width=True, hide_index=True)
-        st.download_button(
-            "Download practitioner feedback (CSV)",
-            review_table.to_csv(index=False).encode("utf-8"),
-            "DevanandhaVS_Independent_PPC_Review_Feedback.csv",
-            mime="text/csv",
-            key="download_external_feedback",
-        )
-        st.caption(
-            "This file is feedback from reviewers, not an independent award "
-            "or endorsement. Share attributed feedback only with reviewer permission."
-        )
-    else:
-        st.caption("No reviewer assessments recorded in this session yet.")
-
-    st.markdown("#### Decision sensitivity map")
-    stability = acossensitivity(
-        search, classify_actions, target_acos,
-        negative_clicks=negative_clicks, min_orders=min_orders,
-    )
-    scenario_columns = [
-        name for name in stability.columns
-        if name.startswith("Target ACOS ")
-    ]
-    top_names = (
-        search.sort_values(COL["spend"], ascending=False)
-        [COL["search_term"]].astype(str).head(15).tolist()
-    )
-    show_stability = stability[
-        stability[COL["search_term"]].astype(str).isin(top_names)
-    ].copy()
-    show_stability["_sort"] = show_stability[COL["search_term"]].astype(str).map(
-        {name: i for i, name in enumerate(top_names)}
-    )
-    show_stability = show_stability.sort_values("_sort")
-    if not show_stability.empty:
-        # 1 = same rule label as current setting, 0 = different label.
-        labels = show_stability[scenario_columns].eq(
-            show_stability["Target ACOS 100% of current"], axis=0
-        ).astype(int)
-        fig = px.imshow(
-            labels.to_numpy(),
-            x=["60%", "80%", "100%", "120%", "140%"],
-            y=show_stability[COL["search_term"]].astype(str).to_list(),
-            zmin=0, zmax=1,
-            labels={"x": "ACOS target relative to current", "y": "Search term",
-                    "color": "Same action"},
-            title="Does the rule recommendation change when the target changes?",
-            aspect="auto",
-            color_continuous_scale=[[0, "#f5ad97"], [0.49, "#f5ad97"],
-                                    [0.5, "#79d9dd"], [1, "#79d9dd"]],
-        )
-        fig.update_layout(height=max(350, 35 * len(show_stability) + 135))
-        st.plotly_chart(fig, use_container_width=True)
-    st.caption(
-        "Teal = original rule label stays the same; orange = rule label changes. "
-        "This checks sensitivity to five ACOS thresholds on unchanged historic "
-        "observations. It is not causal simulation or a sales forecast."
-    )
+    st.markdown("#### Auditable decision ledger")
+    st.dataframe(ledger, use_container_width=True, hide_index=True)
     st.download_button(
         "Download decision evidence ledger (CSV)",
-        audit.to_csv(index=False).encode("utf-8"),
-        "PPC_DevanandhaVS_Decision_Assurance_Audit.csv",
-        "text/csv",
-        key="download_assurance_ledger",
+        data=ledger.to_csv(index=False).encode("utf-8"),
+        file_name="DevanandhaVS_PPC_Decision_Ledger.csv",
+        mime="text/csv",
     )
-    st.download_button(
-        "Download branded review report (HTML)",
-        create_evidence_report(
-            audit, target_acos=float(target_acos),
-            synthetic_demo=bool(demo_mode),
-        ),
-        file_name="DevanandhaVS_PPC_Decision_Assurance.html",
-        mime="text/html",
-        key="download_branded_assurance_html",
+    st.caption(
+        "Conversion-rate credible intervals use a simplified binomial model "
+        "and may be inappropriate for Amazon's attributed-order counts."
     )
-    if not demo_mode:
-        st.warning(
-            "The HTML report includes real uploaded search terms and "
-            "performance information. Do not share without permission."
+
+with export_tab:
+    st.markdown("#### Target ACOS sensitivity")
+    alternative = st.slider(
+        "Alternative target ACOS (%)", 1, 100,
+        value=min(100, max(1, int(target_acos) + 10)),
+    )
+    alt = classify_actions(
+        search, float(alternative), int(negative_clicks), int(min_orders),
+    )
+    comparison = pd.DataFrame({
+        "Search term": search[COL["search_term"]],
+        "Observed ACOS %": search["ACOS %"],
+        "Current rule action": search["Recommended Action"],
+        "Alternative rule action": alt["Recommended Action"],
+    })
+    changed = comparison[
+        comparison["Current rule action"] != comparison["Alternative rule action"]
+    ]
+    st.metric("Rule labels that would change", int(len(changed)))
+    if changed.empty:
+        st.info("No original rule labels change under this target.")
+    else:
+        st.dataframe(changed, use_container_width=True, hide_index=True)
+    st.caption(
+        "This is a sensitivity analysis of existing rules on fixed observations, "
+        "not a sales forecast or counterfactual return estimate."
+    )
+    st.markdown("#### Export the eight-sheet PPC report")
+    summary = pd.DataFrame(
+        [{"Metric": key, "Value": value} for key, value in kpi.items()]
+    )
+    try:
+        workbook = make_export(
+            summary, campaign, ad_group, search,
+            harvest, negatives, asins, wasted, symbol,
         )
-    st.caption(
-        "Devanandha VS · Experimental decision assurance prototype. "
-        "All marketing and bid changes require qualified human judgement."
-    )
+        st.download_button(
+            "Download PPC report (Excel)",
+            data=workbook,
+            file_name="DevanandhaVS_PPC_Intelligence_v3.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
+    except Exception as exc:
+        st.error(f"Export failed: {exc}")
 
-
-with quality_tab:
-    duplicate_rows = int(raw.duplicated().sum())
-    zero_click_rows = int((df[COL["clicks"]] == 0).sum())
-    st.write({
-        "Uploaded rows": len(raw), "Analysed rows after filters": len(filtered),
-        "Exact duplicate rows": duplicate_rows, "Rows with zero clicks": zero_click_rows,
-        "Detected currency": currency_code,
-    })
-    st.caption(
-        "Rates such as ACOS, ROAS, CTR and CVR are recalculated from aggregated totals rather than averaged from report rows.")
-
-summary_metrics = {
-    "Spend": kpi["Spend"], "Sales": kpi["Sales"], "Orders": kpi["Orders"], "Units": kpi["Units"],
-    "Impressions": kpi["Impressions"], "Clicks": kpi["Clicks"], "ACOS": kpi["ACOS"], "ROAS": kpi["ROAS"],
-    "CTR": kpi["CTR"], "CVR": kpi["CVR"], "CPC": kpi["CPC"], "AOV": kpi["AOV"], "Wasted Spend": wasted_total,
-    "Waste Rate %": waste_rate, "Harvest Opportunities": len(harvest), "Negative Candidates": len(negatives),
-    "Winning ASINs": len(asins)
-}
-
-if business_kpi:
-    summary_metrics.update({
-        "Total Sales": total_sales, "Organic Sales": organic_sales, "TACOS %": tacos,
-        "Ad Contribution %": ad_contribution, "Sessions": business_kpi["Sessions"],
-        "Account Conversion Rate %": business_kpi["Conversion Rate"]
-    })
-
-summary = pd.DataFrame(
-    summary_metrics.items(),
-    columns=["KPI", "Value"]
+st.html(
+    '<footer class="dvs-foot"><strong>Devanandha VS</strong> · '
+    'Independent PPC Intelligence Hub v3 · Experimental human-reviewed '
+    'decision support · Not endorsed by Amazon. '
+    '<a href="https://github.com/devanandha/amazon-ppc-intelligence-hub">'
+    'Source code</a></footer>'
 )
-export = make_export(summary, campaign, ad_group, search, harvest, negatives, asins, wasted, symbol)
-st.download_button("Download PPC Intelligence Action Report", export, "PPC_Intelligence_Action_Report.xlsx",
-                   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", type="primary")
-
-with st.expander("Methodology and limitations"):
-    st.markdown("""
-
-        - KPIs (ACOS, ROAS, CTR, CVR and AOV) are recalculated from aggregated totals to ensure accuracy.
-
-        - Search terms are aggregated before recommendations are generated, preventing duplicate terms from being analysed separately.
-
-        - Harvest opportunities require:
-                - Minimum 3 orders
-                - Minimum 10 clicks
-                - Minimum 50 sales
-                - ACOS at or below the selected target
-
-            - Negative candidates require:
-                - Zero orders
-                - Clicks at or above the selected negative-review threshold
-
-            - Winning ASIN targets require:
-                - Minimum 3 orders
-                - Minimum 50 sales
-                - ACOS at or below the selected target
-
-            - Suggested bid adjustments are directional recommendations only and are not applied automatically.
-
-            - Attribution windows, organic sales, contribution margin, placement performance, budget constraints and seasonality are not available within the Search Term Report and should be considered before making changes.
-    """)
-
-render_footer()
