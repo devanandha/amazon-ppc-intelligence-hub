@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 
-def main() -> None:
+def make_synthetic_dataframe() -> pd.DataFrame:
     rng = np.random.default_rng(42)
     rows = []
     campaigns = ["Demo | Core | Exact", "Demo | Discovery | Broad", "Demo | Product Targeting"]
@@ -39,8 +39,12 @@ def main() -> None:
                     "7 Day Total Orders (#)": orders, "7 Day Total Units (#)": orders,
                     "7 Day Conversion Rate": orders / clicks if clicks else 0,
                 })
+    return pd.DataFrame(rows)
+
+
+def main() -> None:
     output = Path(__file__).with_name("Synthetic_Sponsored_Products_Report.xlsx")
-    pd.DataFrame(rows).to_excel(output, index=False)
+    make_synthetic_dataframe().to_excel(output, index=False)
     print(f"Created {output.name} with fictional data.")
 
 
