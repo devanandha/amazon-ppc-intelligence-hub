@@ -34,6 +34,8 @@ This independently developed product is branded **Devanandha VS · Applied AI & 
 
 The draft release includes a human-centred **Decision Assurance Studio**: a transparent evidence gate that compares the existing PPC action, experimental Isolation Forest review signal, conversion-rate uncertainty and selected evidence thresholds. It flags high-impact suggestions for manual investigation or more data, without overriding the original action or approving live changes.
 
+A **session-only practitioner review workspace** allows an independent evaluator to record whether an original rule is useful, inappropriate or insufficiently supported and download their responses as a CSV. No training or external validation is inferred from those labels, and they are not stored permanently by the app.
+
 An interactive **ACOS sensitivity map** shows how existing rule labels change when the target ACOS is varied; it does not predict campaign performance. Reviewers can also export a **branded, standalone HTML evidence report** or CSV audit. Both exports include search-term data from the active session: share real-account reports only with explicit permission.
 
 See the [reviewer walkthrough](docs/REVIEWER_SHOWCASE.md), [ML methodology](docs/ML_REVIEW_METHOD.md) and the [innovation roadmap](docs/INNOVATION_ROADMAP.md). These features have not been independently validated or demonstrated real advertising uplift.
