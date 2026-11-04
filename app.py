@@ -20,7 +20,7 @@ import streamlit as st
 from ui_theme import inject_styles, render_empty_state, render_sidebar_brand, render_footer
 from landing_experience import (
     inject_experience_styles, render_landing, render_data_context,
-    render_section, render_action_pulse,
+    render_section, render_action_pulse, render_ppc_buddy,
 )
 from ml_insights import analyse_search_terms
 from decision_assurance import build_decision_ledger, acossensitivity
@@ -560,6 +560,14 @@ overview_tab, campaigns_tab, terms_tab, actions_tab, scenario_tab, ai_tab, studi
 ])
 
 with overview_tab:
+    render_ppc_buddy(
+        account_acos=kpi["ACOS"],
+        target_acos=target_acos,
+        ad_sales=kpi["Sales"],
+        harvest_count=len(harvest),
+        negative_count=len(negatives),
+        demo_mode=bool(demo_mode),
+    )
     left, right = st.columns(2)
     with left:
         st.markdown("#### Campaign spend vs attributed sales")
