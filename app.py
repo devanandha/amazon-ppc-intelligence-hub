@@ -562,24 +562,42 @@ overview_tab, campaigns_tab, terms_tab, actions_tab, scenario_tab, ai_tab, studi
 with overview_tab:
     left, right = st.columns(2)
     with left:
+        st.markdown("#### Campaign spend vs attributed sales")
+        st.caption("Spend and attributed advertising sales by campaign.")
         chart_data = campaign.sort_values(COL["spend"], ascending=False).head(15)
         fig = px.bar(chart_data, x=COL["campaign"], y=[COL["spend"], COL["sales"]], barmode="group",
-                     title="Campaign spend vs attributed sales", labels={"value": currency_code},
+                     title=None, labels={"value": currency_code},
                      color_discrete_sequence=["#746aff", "#17bac8"])
-        fig.update_layout(template="plotly_white", plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
-                          font=dict(color="#243552", family="Arial"),
-                          title_font=dict(size=17), margin=dict(l=18,r=18,t=65,b=20),
-                          legend=dict(orientation="h",yanchor="bottom",y=1.02,x=0))
+        fig.update_layout(
+            template="plotly_white",
+            plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
+            font=dict(color="#243552", family="Arial"),
+            title=None, height=435,
+            margin=dict(l=15, r=15, t=54, b=108),
+            legend=dict(
+                orientation="h", yanchor="bottom", y=1.06, x=0,
+                font=dict(size=11), bgcolor="rgba(255,255,255,0)"
+            ),
+        )
+        fig.update_xaxes(title=None, tickangle=-25, automargin=True)
         st.plotly_chart(fig, use_container_width=True)
     with right:
+        st.markdown("#### Campaign efficiency map")
+        st.caption("Campaign sales and spend compared with the selected target ACOS.")
         scatter = campaign[campaign[COL["clicks"]] > 0].copy()
         fig = px.scatter(scatter, x="ACOS %", y=COL["sales"], size=COL["spend"], color="Priority",
-                         hover_name=COL["campaign"], title="Campaign efficiency map",
+                         hover_name=COL["campaign"], title=None,
                          color_discrete_map={"High":"#ec8b69","Medium":"#6c73ff","Low":"#23bcb3"})
         fig.add_vline(x=target_acos, line_dash="dash", line_color="red", annotation_text="Target ACOS")
-        fig.update_layout(template="plotly_white", plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
-                          font=dict(color="#243552",family="Arial"),
-                          title_font=dict(size=17),margin=dict(l=20,r=20,t=65,b=20))
+        fig.update_layout(
+            template="plotly_white",
+            plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
+            font=dict(color="#243552", family="Arial"),
+            title=None, height=435,
+            margin=dict(l=20, r=28, t=56, b=58),
+            legend=dict(orientation="h", yanchor="bottom", y=1.04, x=0,
+                        font=dict(size=11), bgcolor="rgba(255,255,255,0)"),
+        )
         st.plotly_chart(fig, use_container_width=True)
 
     if COL["date"] in filtered.columns and filtered[COL["date"]].notna().any():
@@ -609,18 +627,24 @@ with overview_tab:
             secondary_y=True
         )
 
+        st.markdown("#### Performance over time")
+        st.caption("Daily attributed sales and advertising spend; synthetic in demo mode.")
         fig.update_layout(
-            title="Performance over time",
-            hovermode="x unified"
+            title=None, hovermode="x unified",
+            template="plotly_white",
+            plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
+            margin=dict(l=40, r=38, t=35, b=50),
+            legend=dict(orientation="h", yanchor="bottom", y=1.03, x=0),
+            height=360,
         )
 
         fig.update_yaxes(
-            title_text="Spend ($)",
+            title_text=f"Spend ({currency_code})",
             secondary_y=False
         )
 
         fig.update_yaxes(
-            title_text="Sales ($)",
+            title_text=f"Sales ({currency_code})",
             secondary_y=True
         )
 
