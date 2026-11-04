@@ -309,6 +309,17 @@ st.caption(
     "Attributed orders can exceed clicks; attribution must be reviewed before interpreting conversion rates."
 )
 
+# Campaign state is never inferred from historical search-term activity.
+# A separate uploaded state roster can identify campaigns missing from the report.
+from campaign_status import render_status_panel
+campaign_status_data = campaign.rename(columns={
+    COL["campaign"]: "Campaign",
+    COL["spend"]: "Spend",
+    COL["sales"]: "Sales",
+    COL["clicks"]: "Clicks",
+})
+render_status_panel(campaign_status_data, float(target_acos), key="search_term")
+
 section(
     "Explore your PPC intelligence",
     "Choose a workspace to inspect performance, recommendations, evidence or exports.",
