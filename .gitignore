@@ -216,3 +216,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Confidential / externally sourced data and local benchmark artifacts
+benchmark_output/
+benchmark_outputs/
+private_reports/
+client_data/
+ppc_weekly_2025*.csv
+PPC_*_Evidence.csv
+*Search_term_report*.xlsx
