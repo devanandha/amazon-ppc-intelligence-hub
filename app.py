@@ -19,6 +19,7 @@ import streamlit as st
 from ui_theme import inject_styles, render_hero, render_empty_state, render_sidebar_brand, render_footer
 from ml_insights import analyse_search_terms
 from decision_assurance import build_decision_ledger, acossensitivity
+from evidence_report import create_evidence_report
 from create_synthetic_demo import make_synthetic_dataframe
 
 COL = {
@@ -903,6 +904,21 @@ with studio_tab:
         "text/csv",
         key="download_assurance_ledger",
     )
+    st.download_button(
+        "Download branded review report (HTML)",
+        create_evidence_report(
+            audit, target_acos=float(target_acos),
+            synthetic_demo=bool(demo_mode),
+        ),
+        file_name="DevanandhaVS_PPC_Decision_Assurance.html",
+        mime="text/html",
+        key="download_branded_assurance_html",
+    )
+    if not demo_mode:
+        st.warning(
+            "The HTML report includes real uploaded search terms and "
+            "performance information. Do not share without permission."
+        )
     st.caption(
         "Devanandha VS · Experimental decision assurance prototype. "
         "All marketing and bid changes require qualified human judgement."
