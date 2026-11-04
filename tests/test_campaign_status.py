@@ -52,6 +52,26 @@ class CampaignStatusTests(unittest.TestCase):
         self.assertEqual(delta["Status classification"], "Not verified")
         self.assertEqual(delta["Strategy status"], "Status unknown")
 
+    def test_efficiency_review_has_severity_and_explanation(self):
+        perf = pd.DataFrame([
+            {"Campaign": "Near Target", "Spend": 26, "Sales": 100, "Clicks": 20},
+            {"Campaign": "Above Target", "Spend": 34, "Sales": 100, "Clicks": 20},
+            {"Campaign": "High Gap", "Spend": 58, "Sales": 100, "Clicks": 20},
+            {"Campaign": "Below Target", "Spend": 18, "Sales": 100, "Clicks": 20},
+        ])
+        roster = parse_campaign_status(
+            b"Campaign Name,Status\\nNear Target,Enabled\\nAbove Target,Enabled\\n"
+            b"High Gap,Enabled\\nBelow Target,Enabled\\n",
+            "status.csv",
+        )
+        result = reconcile_campaigns(perf, roster, 25).set_index("Campaign")
+        self.assertEqual(result.loc["Near Target", "Strategy status"], "Near-target watch")
+        self.assertEqual(result.loc["Above Target", "Strategy status"], "Efficiency review")
+        self.assertEqual(result.loc["High Gap", "Strategy status"], "High ACOS review")
+        self.assertEqual(result.loc["Below Target", "Strategy status"], "Maintain / investigate")
+        self.assertIn("33.0 percentage points", result.loc["High Gap", "Human review suggestion"])
+        self.assertIn("26.0%", result.loc["Near Target", "Human review suggestion"])
+
     def test_no_snapshot_does_not_invent_enabled_state(self):
         perf = pd.DataFrame([
             {"Campaign": "Demo Alpha", "Spend": 15, "Sales": 75, "Clicks": 10},
