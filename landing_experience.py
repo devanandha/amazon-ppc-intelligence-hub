@@ -221,6 +221,73 @@ _PREMIUM_CSS = """
 .dv-pulse-k{color:#64738a;font-size:.72rem;text-transform:uppercase;letter-spacing:.045em;font-weight:700;}
 .dv-pulse-v{font-size:1.24rem;font-weight:830;color:#1c2944;line-height:1.2;letter-spacing:-.03em;}
 .dv-pulse-caption{color:#8a95a8;font-size:.72rem;max-width:170px;text-align:right;}
+
+/* PPC Buddy: friendly accessible pure-CSS mascot — no downloaded assets. */
+.dv-buddy-panel {
+  display:grid; grid-template-columns:150px minmax(0,1fr);
+  gap:20px;align-items:center;position:relative;overflow:hidden;
+  border:1px solid #dfe4fd;border-radius:21px;
+  background:linear-gradient(112deg,#edf0ff 0%,#f8fbff 48%,#ecfbff 100%);
+  box-shadow:0 12px 32px rgba(43,61,135,.06);
+  padding:22px 27px 21px;margin:15px 0 19px;
+}
+.dv-buddy-panel::after{
+  content:"";position:absolute;width:260px;height:260px;right:-100px;top:-160px;
+  border-radius:50%;background:rgba(124,118,255,.075);pointer-events:none;
+}
+.dv-buddy-stage{position:relative;min-height:128px;display:flex;align-items:center;justify-content:center}
+.dv-buddy-halo{position:absolute;width:125px;height:125px;border-radius:50%;
+  background:radial-gradient(circle,#b5c7ff 0%,#daeaff 48%,rgba(255,255,255,0) 72%);}
+.dv-robot{position:relative;z-index:1;width:93px;height:118px;transform-origin:50% 90%;
+  animation:dv-bob 4.8s ease-in-out infinite;}
+.dv-robot-antenna{position:absolute;z-index:0;width:5px;height:21px;border-radius:3px;
+  background:#647adb;left:44px;top:0;}
+.dv-robot-antenna::before{content:"";position:absolute;left:-4px;top:-5px;width:13px;height:13px;
+  background:#53d9d0;border:3px solid #ffffff;border-radius:50%;box-shadow:0 0 0 2px #6778d6;}
+.dv-robot-head{position:absolute;z-index:2;left:11px;top:17px;width:72px;height:65px;
+  border:3px solid #6475ca;border-radius:23px;background:linear-gradient(145deg,#fff,#dceaff);
+  box-shadow:inset 0 5px 8px rgba(255,255,255,.85),0 7px 13px rgba(61,81,148,.18);}
+.dv-robot-face{position:absolute;left:9px;right:9px;top:12px;height:35px;
+  border-radius:15px;background:linear-gradient(120deg,#1c2c59,#344984);
+  box-shadow:inset 0 3px 7px rgba(0,0,0,.2);}
+.dv-robot-eye{position:absolute;top:10px;width:10px;height:12px;border-radius:50%;
+  background:#90f5ef;box-shadow:0 0 7px rgba(94,250,226,.7);animation:dv-blink 6s infinite;}
+.dv-robot-eye.left{left:11px}.dv-robot-eye.right{right:11px}
+.dv-robot-mouth{position:absolute;width:12px;height:6px;left:calc(50% - 6px);top:21px;
+  border-bottom:2px solid #91fbef;border-radius:0 0 10px 10px;}
+.dv-robot-cheek{position:absolute;top:43px;width:10px;height:5px;border-radius:50%;background:#ffaacb;opacity:.8}
+.dv-robot-cheek.left{left:10px}.dv-robot-cheek.right{right:10px}
+.dv-robot-ear{position:absolute;top:39px;width:10px;height:22px;
+  border:2px solid #6475ca;background:#80a2ff;border-radius:6px;}
+.dv-robot-ear.left{left:4px}.dv-robot-ear.right{right:4px}
+.dv-robot-body{position:absolute;z-index:1;left:21px;top:74px;width:52px;height:42px;
+  border:3px solid #6475ca;border-radius:15px 15px 20px 20px;background:linear-gradient(140deg,#e4f2ff,#bdceff);}
+.dv-robot-heart{position:absolute;left:17px;top:10px;width:13px;height:13px;border-radius:5px;
+  background:#65d9cb;box-shadow:0 0 0 4px rgba(102,237,217,.2);}
+.dv-robot-arm{position:absolute;top:85px;width:14px;height:29px;border:3px solid #6475ca;
+  background:#dcecff;border-radius:12px;}
+.dv-robot-arm.left{left:8px;transform:rotate(20deg)}
+.dv-robot-arm.right{right:8px;transform:rotate(-26deg)}
+.dv-buddy-copy{position:relative;z-index:1;min-width:0;}
+.dv-buddy-eyebrow{font-weight:850;color:#5d5ac8;font-size:.69rem;letter-spacing:.12em;}
+.dv-buddy-copy h3{margin:6px 0 5px;font-size:1.25rem;letter-spacing:-.035em;color:#1a2b4e;}
+.dv-buddy-copy h3 .dv-buddy-hello{color:#6f67ec;}
+.dv-buddy-copy p{margin:0 0 9px;line-height:1.52;font-size:.88rem;color:#455a7b;}
+.dv-buddy-chips{display:flex;flex-wrap:wrap;gap:7px;}
+.dv-buddy-chip{display:inline-flex;align-items:center;gap:6px;border-radius:99px;
+  padding:6px 10px;font-size:.73rem;font-weight:690;border:1px solid #dce4fa;
+  background:rgba(255,255,255,.87);color:#284369;}
+.dv-buddy-fine{display:block;margin-top:9px;color:#7283a0;font-size:.69rem;line-height:1.4;}
+@keyframes dv-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes dv-blink{0%,45%,49%,100%{transform:scaleY(1)}47%{transform:scaleY(.17)}}
+@media(max-width:760px){
+  .dv-buddy-panel{grid-template-columns:86px minmax(0,1fr);gap:10px;padding:15px 14px;}
+  .dv-buddy-stage{transform:scale(.76);margin-left:-15px;}
+  .dv-buddy-copy h3{font-size:1.05rem;}
+  .dv-buddy-copy p{font-size:.82rem;}
+}
+@media(prefers-reduced-motion:reduce){.dv-robot,.dv-robot-eye{animation:none !important;}}
+
 @media(max-width:940px){
   .dv-grid{grid-template-columns:1fr;padding:28px;}
   .dv-visual{min-height:220px;max-width:580px;}
@@ -350,4 +417,69 @@ def render_action_pulse(harvest_count: int, negative_count: int, waste_rate: flo
         f'<div class="dv-pulse-v">{rate:.1f}%</div></div>'
         f'<div class="dv-pulse-ico teal">◈</div></div>'
         f'</div>'
+    )
+
+
+def render_ppc_buddy(
+    *, account_acos: float, target_acos: float, ad_sales: float,
+    harvest_count: int, negative_count: int, demo_mode: bool,
+) -> None:
+    """A friendly, evidence-based overview; not a chatbot or AI prediction."""
+    from html import escape
+    acos = float(account_acos)
+    target = float(target_acos)
+    if not math.isfinite(acos) or float(ad_sales) <= 0:
+        insight = "There are no attributed sales to calculate a meaningful account ACOS yet."
+    elif acos > target:
+        insight = (
+            f"Your observed account ACOS is {acos - target:.1f} percentage "
+            "points above your target. Review the underlying search terms "
+            "before changing bids."
+        )
+    else:
+        insight = (
+            f"Your observed account ACOS is {target - acos:.1f} percentage "
+            "points within your target. Check whether individual terms "
+            "have enough evidence before scaling."
+        )
+    source = "Fictional demonstration" if demo_mode else "Uploaded report"
+    harvest = max(0, int(harvest_count))
+    negatives = max(0, int(negative_count))
+    # All dynamic values originate from numeric calculations or fixed strings.
+    st.html(
+        f"""
+        <section class="dv-buddy-panel" aria-label="PPC Buddy overview assistant">
+          <div class="dv-buddy-stage">
+            <div class="dv-buddy-halo" aria-hidden="true"></div>
+            <div class="dv-robot" role="img" aria-label="Cute smiling robot mascot">
+              <div class="dv-robot-antenna"></div>
+              <div class="dv-robot-ear left"></div>
+              <div class="dv-robot-ear right"></div>
+              <div class="dv-robot-head">
+                <div class="dv-robot-face">
+                  <span class="dv-robot-eye left"></span>
+                  <span class="dv-robot-eye right"></span>
+                  <span class="dv-robot-mouth"></span>
+                </div>
+                <span class="dv-robot-cheek left"></span>
+                <span class="dv-robot-cheek right"></span>
+              </div>
+              <div class="dv-robot-arm left"></div>
+              <div class="dv-robot-arm right"></div>
+              <div class="dv-robot-body"><span class="dv-robot-heart"></span></div>
+            </div>
+          </div>
+          <div class="dv-buddy-copy">
+            <div class="dv-buddy-eyebrow">DVS / YOUR EVIDENCE COMPANION</div>
+            <h3><span class="dv-buddy-hello">Hi there!</span> I'm PPC Buddy.</h3>
+            <p>{escape(insight)}</p>
+            <div class="dv-buddy-chips">
+              <span class="dv-buddy-chip">↗ {harvest:,} harvest candidates</span>
+              <span class="dv-buddy-chip">◎ {negatives:,} negative-review candidates</span>
+              <span class="dv-buddy-chip">◈ {escape(source)}</span>
+            </div>
+            <span class="dv-buddy-fine">A friendly summary of observed metrics and transparent rules; not a conversational AI or an automatic bid recommendation.</span>
+          </div>
+        </section>
+        """
     )
