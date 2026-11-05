@@ -24,6 +24,14 @@ All research data are synthetic. These experiments are separate from the live ap
 
 Experienced Amazon Ads practitioners are welcome to review the prototype using fictional data. See the [independent evaluation guide](docs/EXTERNAL_PPC_EVALUATION.md) for a suggested 20–30 minute review and feedback questions.
 
+### Open call for practitioner feedback
+
+An independent review request is open: **[GitHub Issue #2 — Synthetic-data PPC practitioner evaluation](https://github.com/devanandha/amazon-ppc-intelligence-hub/issues/2)**.
+
+A reviewer can follow the [20–30 minute independent evaluation guide](docs/EXTERNAL_PPC_EVALUATION.md), generate a fictional Sponsored Products workbook using `python create_synthetic_demo.py`, and review the explanations, target ACOS/evidence thresholds, suggested actions and Excel export. Reports of defects or negative findings are welcome.
+
+**Data safety:** Use only fictional data in the public demonstration. Do not upload genuine Amazon advertising exports, client information or employer data. Practitioner feedback is not evidence of business impact or an endorsement unless independently documented and expressly authorised.
+
 ## Key capabilities
 
 * Calculates ACOS, ROAS, CTR, CPC, CVR and AOV from aggregated totals.
