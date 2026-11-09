@@ -10,7 +10,7 @@ Try the live application: [Amazon PPC Intelligence Hub](https://devanandha-amazo
 
 ## Research manuscript and reproducibility
 
-**Current related submission (3 November 2026):** *When Profitable Exploration Does Not Demonstrate Learning: Diagnostics from a Synthetic Sponsored-Search Study*, submitted to *Electronic Commerce Research* (manuscript ID ELEC-D-26-02630). Submission has been confirmed; no acceptance, publication or external peer review is claimed.
+**Most recent journal decision:** *When Profitable Exploration Does Not Demonstrate Learning: Diagnostics from a Synthetic Sponsored-Search Study* was submitted to *Electronic Commerce Research* on 3 November 2026 (manuscript ID ELEC-D-26-02630) and declined at editorial screening on 5 November 2026 as outside the journal's scope. The manuscript has not been accepted or published, and no external peer review is claimed.
 
 **Earlier submission:** *Separating Profitability from Information Value in Sponsored Search Evidence Collection* was submitted to *Operations Research Forum* on 29 October 2026 and declined at editorial screening on 30 October 2026.
 
